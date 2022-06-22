@@ -1,0 +1,1 @@
+ROOT_PATH_DATA = '.\\data\\data_test'
