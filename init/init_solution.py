@@ -1,4 +1,4 @@
-﻿from until import read_data
+﻿from until.read_data import load_data
 from until.caculator import find_nearest_point
 from config import ROOT_PATH_DATA
 
