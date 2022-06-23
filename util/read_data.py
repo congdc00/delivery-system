@@ -13,8 +13,8 @@ def extract_info(path):
         "num_drone": 2,
         "cap_drone" :40,
         "duration_drone" : 30,
-        "speed_drone": 0.06,
-        "speed_truck": 0.04,
+        "speed_drone": 0.6,
+        "speed_truck": 0.4,
         "working_time": 60,
         }
 
@@ -108,4 +108,4 @@ def load_data(root_path):
     
     dict_param,list_target = extract_info(list_path[64])
 
-    return dict_param,list_target
+    return dict_param, list_target
