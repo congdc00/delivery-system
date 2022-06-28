@@ -1,7 +1,7 @@
 ﻿import csv
 import glob
 import os
-import matplotlib.pyplot as plt
+
 
 
 
@@ -22,7 +22,7 @@ def extract_info(path):
     list_target = []
 
     # đọc tên của file
-    list_path = path.split("\\")
+    list_path = path.split("/")
     name = list_path[3]
     list_tmp = name.split('.')
 
@@ -67,45 +67,13 @@ def get_all_path(root_path):
 
     return list_path
 
-def showHistogram(list_target):
-
-    list_cordinate = []
-
-    for target in list_target:
-        list_cordinate.append([target[1],target[2]])
-
-    '''
-    input: coordinates (x,y)
-    output: map of point
-    '''
-    x=[]
-    y=[]
-
-    #depot
-    x.append(0)
-    y.append(0)
-
-    for target in list_cordinate:
-        x.append(target[0])
-        y.append(target[1])
-
-    plt.title("Cordinate")
-
-    plt.xlabel("Value X")
-
-    plt.ylabel("Value Y")
-
-    plt.plot(x, y, "go")
-
-    plt.show()
-
 def load_data(root_path):
     '''
     Lấy toàn bộ tham số của bài toán
     '''
 
     list_path = get_all_path(root_path)
-    
+    print(list_path)
     dict_param,list_target = extract_info(list_path[64])
 
     return dict_param, list_target
