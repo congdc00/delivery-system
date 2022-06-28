@@ -1,3 +1,8 @@
 # truck-drone-routing-delivery
-python -m pip freeze > requirements.txt
-Tìm đường đi giao hàng tối ưu dùng truck và drone
+Mô tả bài toán: Tìm đường đi giao hàng tối ưu dùng truck và drone
+## Hướng dẫn cài đặt môi trường
+```
+conda create -n delivery
+pip install requirements.txt
+```
+
