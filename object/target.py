@@ -1,5 +1,4 @@
-from re import X
-from tkinter import Y
+
 
 
 class Target():
@@ -40,3 +39,6 @@ class Target():
     
     def get_id(self):
         return self.id
+
+    def get_trip(self):
+        return self.list_trip

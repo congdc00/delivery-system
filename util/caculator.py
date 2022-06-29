@@ -75,4 +75,30 @@ def find_nearest_point(matrix_distant, index_target_start, list_index_target_end
     
     return result, result_index
 
+
+def find_furthest_point(matrix_distant, index_target_start, list_index_target_end):
+    '''
+    Hàm tìm điểm gần nhất với index start cho trước
+    OUTPUT: result la so cua diem gan nhat trong list_index_target_end [1,..20]
+    result_index la index cua diem gan nhat trong list_index_target_end [1,..20]
+    '''
+    max_distant = 0
+    result = 0
+    index_target_in_list_index = -1
+    for index_target_end in list_index_target_end:
+        index_target_in_list_index += 1
+
+        # neu la chinh no thi khong tinh
+        if index_target_start == index_target_end:
+            continue
+
+        if matrix_distant[index_target_start][index_target_end] > max_distant:
+            max_distant = matrix_distant[index_target_start][index_target_end]
+            result = index_target_end
+            result_index = index_target_in_list_index
+        
+    
+    return result, result_index
+
+
     

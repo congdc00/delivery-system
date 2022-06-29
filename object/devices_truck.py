@@ -1,3 +1,10 @@
+
+import sys
+
+sys.path.append('/home/congdc/project/scheduled-delivery')
+
+from config import NUM_DRONE
+
 class Truck():
 
     def __init__(self,id,  speed, capacity, working_time):
@@ -16,7 +23,6 @@ class Truck():
     #working time
     def update_time(self, used_time):
         self.working_time -= used_time
-        self.duration -= used_time
 
     def update_capacity(self, weight_package):
         self.capacity -= weight_package
@@ -56,7 +62,7 @@ def create_list_truck(num_truck, info_truck_base):
     capacity= info_truck_base[1]
     working_time= info_truck_base[2]
 
-    for i in range (0, num_truck):
+    for i in range (NUM_DRONE, num_truck + NUM_DRONE):
         new_truck = Truck(i, speed, capacity, working_time) 
         list_truck.append(new_truck)
 
