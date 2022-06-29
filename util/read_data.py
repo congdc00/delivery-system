@@ -85,6 +85,25 @@ def load_list_device():
     
     return list_drone, list_truck
 
+def read_solution(path):
+    with open(path) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter='\n')
+        list_trip_drone = []
+        index_drone = -1
+        for row in csv_reader:
+            if row[0] == '/':
+                break
+
+            index_drone +=1
+            list_trip_drone.append([])
+            
+            for trip in row:
+                list_trip_drone[index_drone].append(trip)
+
+    list_trip_truck = []
+    list_target = []
+    return list_trip_drone, list_trip_truck, list_target
+
 #test
 if __name__ == "__main__":
     type_test = 1

@@ -34,6 +34,9 @@ class Target():
     def get_bound(self):
         return self.lower_bound, self.upper_bound
 
+    def get_bound_base(self):
+        return self.lower_bound_base, self.upper_bound_base
+
     def get_cordinate(self):
         return [self.x, self.y]
     
@@ -42,3 +45,6 @@ class Target():
 
     def get_trip(self):
         return self.list_trip
+    
+    def get_weight(self):
+        return self.weight

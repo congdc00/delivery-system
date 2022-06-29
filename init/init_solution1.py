@@ -2,7 +2,7 @@
 import sys
 
 sys.path.append('/home/congdc/project/scheduled-delivery')
-
+import numpy as np
 import csv
 from util.read_data import load_list_device, load_list_target
 from util.caculator import find_nearest_point,find_furthest_point, build_matrix_distant, get_time
@@ -51,7 +51,7 @@ def create_trip(device, matrix_distant, list_index_target_wait, list_index_targe
 
     
     while check_condition(device, cor_start, cor_end, type = type):
-        print("+ them hang")
+        #print("+ them hang")
         target = list_target[id_target]
 
         # neu lower bound bang 0 thi co gang giao 
@@ -63,14 +63,14 @@ def create_trip(device, matrix_distant, list_index_target_wait, list_index_targe
             else:
                 weight_package = uper_bound
                 list_index_target_done.append(list_index_target_wait.pop(index_pop))
-                print("danh sach khach hang con lai: {}".format(list_index_target_wait))
+                #print("danh sach khach hang con lai: {}".format(list_index_target_wait))
         else:
             if weight_drone <= lower_bound:
                 weight_package = weight_drone
             else:
                 weight_package = lower_bound
                 list_index_target_done.append(list_index_target_wait.pop(index_pop))
-                print("danh sach khach hang con lai: {}".format(list_index_target_wait))
+                #print("danh sach khach hang con lai: {}".format(list_index_target_wait))
             
             
             
@@ -88,14 +88,14 @@ def create_trip(device, matrix_distant, list_index_target_wait, list_index_targe
         list_target[id_target].update_bound(weight_package, type = 1)
         list_target[id_target].add_trip([device.get_id(), weight_package])
         
-        print("giao them hang {}".format([id_target, weight_package]))
-        print("target bound {}".format(list_target[id_target].get_bound()))
-        print("trong luong con lai cua device: {}".format(device.get_capacity()))
+        #print("giao them hang {}".format([id_target, weight_package]))
+        #print("target bound {}".format(list_target[id_target].get_bound()))
+        #print("trong luong con lai cua device: {}".format(device.get_capacity()))
 
-        if type == "drone":
-            print("thoi gian nhiem vu con lai cua device: {}".format(device.get_duration()))
+        #if type == "drone":
+            #print("thoi gian nhiem vu con lai cua device: {}".format(device.get_duration()))
 
-        print("thoi gian con lai toan nhiem vu: {}".format(device.get_working_time()))
+        #print("thoi gian con lai toan nhiem vu: {}".format(device.get_working_time()))
         new_trip.append([id_target, weight_package])
 
         #chuyen sang diem tiep theo
@@ -135,7 +135,7 @@ def schedule_drone(list_drone, matrix_distant, list_index_target_wait, list_targ
 
             # tao trip moi cho drone
             old_time = list_drone[i].get_working_time()
-            print("-------Tao trip cho drone {} ------------".format(list_drone[i].get_id()))
+            #print("-------Tao trip cho drone {} ------------".format(list_drone[i].get_id()))
             new_trip, list_drone[i], list_index_target_wait, list_index_target_done, list_target = create_trip(list_drone[i], matrix_distant, list_index_target_wait, list_index_target_done, list_target, type ="drone")
             
             #quay ve kho va reset lai suc chua va thoi gian
@@ -146,7 +146,7 @@ def schedule_drone(list_drone, matrix_distant, list_index_target_wait, list_targ
 
             # Neu drone khong di chuyen => pop
             if new_time == old_time:
-                print("!!! drone bi loai {}".format(list_drone_available[index]))
+                #print("!!! drone bi loai {}".format(list_drone_available[index]))
                 list_drone_available.pop(index)
                 index -= 1
             else:
@@ -176,17 +176,33 @@ def schedule_truck(list_truck, matrix_distant, list_index_target_wait,list_index
 
 def save_result(list_trip_drone, list_trip_truck, list_target_result):
     data_path = 'data/init_solution/init_solution1.csv'
-    with open(data_path, mode='w') as employee_file:
-        init_solution = csv.writer(employee_file)
-        for trip_for_device in list_trip_drone:
-            init_solution.writerow(trip_for_device)
-        init_solution.writerow("/")
-        for trip_for_device in list_trip_truck:
-            init_solution.writerow(trip_for_device)
-        init_solution.writerow("/")
-        for target in list_target_result:
-            init_solution.writerow(target)
-        
+
+    np.savetxt(data_path, 
+           list_trip_drone,
+           delimiter =", ", 
+           fmt ='% s')
+
+def load_init1():        
+    # Load tập object target, drone, truck
+    list_target = load_list_target(ROOT_PATH_DATA)
+    #showHistogram(list_target)
+    list_drone, list_truck = load_list_device()
+
+    # xay dung ma tran khoang cach
+    matrix_distant = build_matrix_distant(list_target)
+
+
+    # khoi tao hang doi target
+    num_target = len(list_target)
+    list_index_target_wait = list ( range ( 1, num_target+1, 1 ))
+    list_trip_drone, list_index_target_wait,list_index_target_done, list_target = schedule_drone(list_drone, matrix_distant, list_index_target_wait, list_target)
+    
+    list_trip_truck, list_index_target_wait,list_index_target_done, list_target = schedule_truck(list_truck, matrix_distant, list_index_target_wait,list_index_target_done, list_target)
+
+    list_target_result = []
+    for target in list_target:
+        list_target_result.append(target.get_trip())
+    return list_trip_drone, list_trip_truck, list_target_result
 
 if __name__ == "__main__":
 
