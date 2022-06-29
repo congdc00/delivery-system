@@ -1,11 +1,12 @@
+from cProfile import label
 import matplotlib.pyplot as plt
 
 def showHistogram(list_target):
-
+    list_lable = []
     list_cordinate = []
-
     for target in list_target:
-        list_cordinate.append([target[1],target[2]])
+        cordinate = target.get_cordinate()
+        list_cordinate.append(cordinate)
 
     '''
     input: coordinates (x,y)

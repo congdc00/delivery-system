@@ -1,58 +1,46 @@
-﻿import csv
+﻿import sys
+
+sys.path.append('/home/congdc/project/scheduled-delivery')
+
+import csv
 import glob
 import os
+from object.target import Target
+from object.devices_drone import create_list_drone
+from config import NUM_TRUCK, CAP_TRUCK, NUM_DRONE, CAP_DRONE, DURATION_DRONE, SPEED_DRONE, SPEED_TRUCK, WORKING_TIME
 
 
 
-
-def extract_info(path):
-
-    dict_param = {
-        "num_truck": 2,
-        "cap_truck": 1500,
-        "num_drone": 2,
-        "cap_drone" :40,
-        "duration_drone" : 30,
-        "speed_drone": 0.6,
-        "speed_truck": 0.4,
-        "working_time": 60,
-        }
-
-    list_param = []
-    list_target = []
-
-    # đọc tên của file
-    list_path = path.split("/")
-    name = list_path[3]
-    list_tmp = name.split('.')
-
-    # đọc các thông tin về tham số đầu vào
-    for param in list_tmp:
-        if param != 'csv':
-            list_param.append(param)
-
-
+def extract_info_target(path):
 
     # đọc dữ liệu trong file
     with open(path) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
-
+        list_target = []
         #read info target
         for row in csv_reader:
             if line_count != 0:
-
-                list_tmp = []
-                for i in range (0,6):
-                    if i == 1 or i == 2:
-                        list_tmp.append(float(row[i]))
-                    else:
-                        list_tmp.append(int(row[i]))
-                list_target.append(list_tmp)
-
+                
+                id = int(row[0])
+                x = float(row[1])
+                y = float(row[2])
+                lower_bound = int(row[3])
+                upper_bound = int(row[4])
+                weight = int(row[5])
+                target = Target(id, x, y, lower_bound, upper_bound, weight)
+                list_target.append(target)
             line_count += 1
 
-        return dict_param, list_target
+        return list_target
+
+def extract_name(path):
+
+    list_info = path.split("/")
+    len_name = len(list_info) - 1
+    name = list_info[len_name]
+
+    return name
 
 def get_all_path(root_path):
 
@@ -64,16 +52,43 @@ def get_all_path(root_path):
 
     # Tìm tất cả các path csv
     list_path = glob.glob(os.path.join(root_path, "*.csv"))
+    dict_path = {}
+    for path in list_path:
+        name = extract_name(path)
+        dict_path[name] = path
 
-    return list_path
+    return dict_path
 
-def load_data(root_path):
+def load_list_target(root_path):
+
     '''
     Lấy toàn bộ tham số của bài toán
     '''
 
-    list_path = get_all_path(root_path)
-    print(list_path)
-    dict_param,list_target = extract_info(list_path[64])
+    # Lấy danh sách các path
+    dict_path = get_all_path(root_path)
 
-    return dict_param, list_target
+    # Trích xuất thông tin 
+    name_file = '20.5.1.csv'
+    
+    list_target = extract_info_target(dict_path[name_file])
+
+
+    return list_target 
+
+def load_list_device():
+    info_drone_base = [SPEED_DRONE, CAP_DRONE, DURATION_DRONE, WORKING_TIME]
+    list_drone = create_list_drone(NUM_DRONE, info_drone_base)
+    list_truck = []
+    return list_drone, list_truck
+
+#test
+if __name__ == "__main__":
+    type_test = 1
+    if type_test == 0:
+        list_target = load_list_target("/home/congdc/project/scheduled-delivery/data/data_test")
+        low, up = list_target[1].get_bound()
+        print(up)
+    elif type_test == 1:
+        list_drone = load_list_device()
+        print(list_drone[1].get_duration())

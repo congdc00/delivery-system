@@ -3,108 +3,88 @@ import sys
 
 sys.path.append('/home/congdc/project/scheduled-delivery')
 
-from util.read_data import load_data
-from util.caculator import find_nearest_point, get_distant
+from util.read_data import load_list_device, load_list_target
+from util.caculator import find_nearest_point, build_matrix_distant, get_time
+from util.show_histogram import showHistogram
 from config import ROOT_PATH_DATA, COORDINATES_DEPOT
 
-def create_list_drone(num_drone):
-    '''
-    Tạo danh sách các thiết bị drone
-    '''
 
-    list_drone = list ( range ( 0, num_drone, 1 )) 
-    return list_drone
-
-def get_info_point_next(speed_drone, point_start, list_target_wait):
-    '''
-    Lấy các thông tin về điểm tới tiếp theo
-    '''
-    index_target, distant = find_nearest_point(point_start, list_target_wait)
-    target = list_target_wait[index_target]
-
-    x = target[1]
-    y = target[2]
-    cor_target = [x, y]
-
-    time_forward = distant/speed_drone
-    time_backward = get_distant(COORDINATES_DEPOT, cor_target) / speed_drone
-    return index_target, time_forward, time_backward
-
-def drop_package(limit_weigth, list_target, index_target):
-    '''
-    Hàm thực hiện chức năng thả gói hàng xuống
-    '''
-    lower_bound = list_target[index_target][3]
-
-    if limit_weigth >= lower_bound:
-        weight_package = lower_bound
-        limit_weigth -= lower_bound
-        list_target.pop(index_target)
-
-    else:
-        weight_package = limit_weigth
-        lower_bound -= limit_weigth
-        list_target[index_target][3] = lower_bound
-        limit_weigth = 0
-
-    return weight_package, limit_weigth, list_target
-
-def check_drone_limit(info_drone_limit, time_forward, time_backward):
-
-    if info_drone_limit[1] == 0:
+def check_condition(device , cor_start, cor_end):
+    speed = device.get_speed()
+    duration = device.get_duration()
+    working_time = device.get_working_time()
+    time_need = get_time(speed, cor_start, cor_end) + get_time(speed, cor_end, COORDINATES_DEPOT)
+    if time_need > duration or time_need > working_time:
         return False
-
-    if info_drone_limit[2] - time_forward < time_backward:
+    
+    weight = device.get_capacity()
+    if weight == 0:
         return False
-
-    if info_drone_limit[3] - time_forward < time_backward:
-        return False
-
+    
     return True
 
-def create_trip(info_drone_limit, list_target_wait):
 
+def create_trip(drone, matrix_distant, list_index_target_wait, list_index_target_done, list_target):
     '''
-    Hàm tạo ra đường đi trong 1 trip
-    input: danh sách target chưa giao
-    output: lịch trình giao các target như thế nào
+    INPUT: list_target: danh sách target khởi tạo ban đầu
+    OUTPUT: 
     '''
-    list_point = []
-    speed_drone = info_drone_limit[0]
+    new_chip =[]
 
-    # Xuất phát tại vị trí kho
-    point_start = COORDINATES_DEPOT
+    cor_start = COORDINATES_DEPOT
+    index_end, index_pop = find_nearest_point(matrix_distant, 0, list_index_target_wait)
+    id_target = index_end - 1
+    cor_end = list_target[id_target].get_cordinate()
 
-    index_target, time_forward, time_backward = get_info_point_next(speed_drone, point_start, list_target_wait)
-    i_target = list_target_wait[index_target][0]
+    
+    while check_condition(drone, cor_start, cor_end):
+        print("+ them hang")
+        target = list_target[id_target]
 
-    while check_drone_limit(info_drone_limit, time_forward, time_backward):
+        # tinh weigh can giao
+        lower_bound,_ = target.get_bound()
+        weight_drone = drone.get_capacity()
+        if weight_drone <= lower_bound:
+            weight_package = weight_drone
+        else:
+            weight_package = lower_bound
+            
+            
+            list_index_target_done.append(list_index_target_wait.pop(index_pop))
+            print("danh sach khach hang con lai: {}".format(list_index_target_wait))
 
-        #Di chuyển đến điểm cần giao
-        info_drone_limit[2] -= time_forward
-        info_drone_limit[3] -= time_forward
-        point_start[0] = list_target_wait[index_target][1]
-        point_start[1] = list_target_wait[index_target][2]
 
+        # tinh thoi gian can di 
+        speed_drone = drone.get_speed()
+        time = get_time(speed_drone, cor_start, cor_end)
 
-        #Thả gói hàng xuống 
-        weight_package, new_weight, new_list_target = drop_package(info_drone_limit[1], list_target_wait, index_target)
-        info_drone_limit[1] = new_weight
+        # cap nhap gia tri cho drone
+        drone.update_time(time)
+        drone.update_capacity(weight_package)
 
-        list_target_wait = new_list_target
+        # cap nhap gia tri cho target
+        list_target[id_target].update_bound(weight_package, type = 1)
+        list_target[id_target].add_trip([drone.get_id(), weight_package])
+        
+        print("giao them hang {}".format([id_target, weight_package]))
+        print("target bound {}".format(list_target[id_target].get_bound()))
+        print("trong luong con lai cua drone: {}".format(drone.get_capacity()))
+        print("thoi gian nhiem vu con lai cua drone: {}".format(drone.get_duration()))
+        print("thoi gian con lai toan nhiem vu: {}".format(drone.get_working_time()))
+        new_chip.append([id_target, weight_package])
 
-        # Lưu hành trình vào trip 
-        list_point.append([i_target, weight_package])
+        #chuyen sang diem tiep theo
+        if len(list_index_target_wait) == 0:
+            break
 
-        if len(list_target_wait) == 0:
-            return list_point, info_drone_limit[3]
+        cor_start = cor_end
+        index_end, index_pop = find_nearest_point(matrix_distant, index_end, list_index_target_wait)
+        id_target = index_end - 1
+        cor_end = list_target[id_target].get_cordinate()
 
-        # Tìm điểm gần nhất cho chuyến đi tiếp theo
-        index_target, time_forward, time_backward = get_info_point_next(speed_drone, point_start, list_target_wait)
+    return new_chip, drone, list_index_target_wait, list_index_target_done, list_target
 
-    return list_point, info_drone_limit[3]
-
-def schedule_drone(list_drone, info_drone_limit , list_target_wait):
+def schedule_drone(list_drone, matrix_distant, list_index_target_wait, list_target):
 
     '''
     Hàm lập lịch di chuyển cho drone
@@ -113,64 +93,72 @@ def schedule_drone(list_drone, info_drone_limit , list_target_wait):
     '''
 
     list_trip_drone = []
-    i_trip = -1
-    working_time = []
+    list_index_target_done = []
+    list_drone_available = list (range(0, len(list_drone), 1 ))
+    index_trip = -1
 
-    while len(list_drone) > 0 :
-        i_trip += 1
-        index = -1
-        for i_drone in list_drone:
-            if len(list_target_wait) == 0:
-                break
-
-            index += 1
-            #Tạo mảng để lưu các trip của drone i
-
-            if i_trip == 0:
+    # Neu van con thiet bi de giao
+    while len(list_drone_available) > 0 and len(list_index_target_wait) > 0:
+        index_trip += 1
+        index = 0
+        while index < len(list_drone_available):
+            
+            i = list_drone_available[index]
+            # Tao dong cho chinh thiet bi drone do
+            if index_trip == 0:
                 list_trip_drone.append([])
-                working_time.append(info_drone_limit[3])
-                print("Tạo trip mới")
 
-            # Tạo trip mới
-            info_drone = [info_drone_limit[0],info_drone_limit[1],info_drone_limit[2],working_time[index]]
-            trip, new_working_time = create_trip(info_drone,list_target_wait)
-            working_time[index] = new_working_time
+            # tao trip moi cho drone
+            old_time = list_drone[i].get_working_time()
+            print("-------Tao trip cho drone {} ------------".format(list_drone[i].get_id()))
+            new_chip, list_drone[i], list_index_target_wait, list_index_target_done, list_target = create_trip(list_drone[i], matrix_distant, list_index_target_wait, list_index_target_done, list_target)
+            
+            #quay ve kho va reset lai suc chua va thoi gian
+            list_drone[i].reset_capacity()
+            list_drone[i].reset_duration()
+            new_time = list_drone[i].get_working_time()
 
-            if len(trip) != 0:
-      
-                # Thêm trip vào hành trình của drone
-                list_trip_drone[i_drone].append(trip)
-                print("tạo thành công trip cho drone {}, thời gian còn lại {}".format(list_drone[index],working_time[index]))
-            else:
 
-                #Loại drone ra khỏi danh sách sẵn sàng
-                print("tạo thất bại trip cho drone {}, thời gian còn lại {}".format(list_drone[index],working_time[index]))
-                list_drone.pop(index)
+            # Neu drone khong di chuyen => pop
+            if new_time == old_time:
+                print("!!! drone bi loai {}".format(list_drone_available[index]))
+                list_drone_available.pop(index)
                 index -= 1
-        if len(list_target_wait) == 0:
+            else:
+                id = list_drone[i].get_id()
+                list_trip_drone[id].append(new_chip)
+
+            #neu het target de giao => ket thuc
+            if len(list_index_target_wait) == 0:
                 break
-    return list_trip_drone
+                
+            index += 1
+            
+
+    return list_trip_drone, list_index_target_wait, list_index_target_done, list_target
 
 if __name__ == "__main__":
 
-    # load tập data lên
-    dict_param, list_target = load_data(ROOT_PATH_DATA)
-    list_target_wait = list_target
+    # Load tập object target, drone, truck
+    list_target = load_list_target(ROOT_PATH_DATA)
+    #showHistogram(list_target)
+    list_drone, list_truck = load_list_device()
 
-    # Khởi tạo tập drone
-    list_drone = create_list_drone(dict_param['num_drone'])
+    # xay dung ma tran khoang cach
+    matrix_distant = build_matrix_distant(list_target)
 
-    info_drone_limit = [ dict_param["speed_drone"], dict_param["cap_drone"], dict_param['duration_drone'],dict_param["working_time"]]
+    # khoi tao hang doi target
+    num_target = len(list_target)
+    list_index_target_wait = list ( range ( 1, num_target+1, 1 ))
 
 
     # Lập lịch cho các drone
-    list_trip_drone = schedule_drone(list_drone,info_drone_limit, list_target_wait)
+    list_trip_drone, list_index_target_wait,list_index_target_done, list_target = schedule_drone(list_drone, matrix_distant, list_index_target_wait, list_target)
 
+
+    print("-------------------ket thuc qua trinh giao hang cua drone ------------------------------")
     print(list_trip_drone)
+    print ("danh sach target còn lại: {}".format(list_index_target_wait))
+    print("-------------------khoi dong giao hang bang truck----------------------------------------")
 
-    # Khởi tạo tập drone
-    list_truck = create_list_drone(dict_param['num_truck'])
-
-    # Lập lịch cho các drone
-    list_trip_truck = schedule_drone(list_truck,info_drone_limit, list_target_wait) 
     
