@@ -29,7 +29,7 @@ def create_trip(drone, matrix_distant, list_index_target_wait, list_index_target
     INPUT: list_target: danh sách target khởi tạo ban đầu
     OUTPUT: 
     '''
-    new_chip =[]
+    new_trip =[]
 
     cor_start = COORDINATES_DEPOT
     index_end, index_pop = find_nearest_point(matrix_distant, 0, list_index_target_wait)
@@ -71,7 +71,7 @@ def create_trip(drone, matrix_distant, list_index_target_wait, list_index_target
         print("trong luong con lai cua drone: {}".format(drone.get_capacity()))
         print("thoi gian nhiem vu con lai cua drone: {}".format(drone.get_duration()))
         print("thoi gian con lai toan nhiem vu: {}".format(drone.get_working_time()))
-        new_chip.append([id_target, weight_package])
+        new_trip.append([id_target, weight_package])
 
         #chuyen sang diem tiep theo
         if len(list_index_target_wait) == 0:
@@ -82,7 +82,7 @@ def create_trip(drone, matrix_distant, list_index_target_wait, list_index_target
         id_target = index_end - 1
         cor_end = list_target[id_target].get_cordinate()
 
-    return new_chip, drone, list_index_target_wait, list_index_target_done, list_target
+    return new_trip, drone, list_index_target_wait, list_index_target_done, list_target
 
 def schedule_drone(list_drone, matrix_distant, list_index_target_wait, list_target):
 
@@ -111,7 +111,7 @@ def schedule_drone(list_drone, matrix_distant, list_index_target_wait, list_targ
             # tao trip moi cho drone
             old_time = list_drone[i].get_working_time()
             print("-------Tao trip cho drone {} ------------".format(list_drone[i].get_id()))
-            new_chip, list_drone[i], list_index_target_wait, list_index_target_done, list_target = create_trip(list_drone[i], matrix_distant, list_index_target_wait, list_index_target_done, list_target)
+            new_trip, list_drone[i], list_index_target_wait, list_index_target_done, list_target = create_trip(list_drone[i], matrix_distant, list_index_target_wait, list_index_target_done, list_target)
             
             #quay ve kho va reset lai suc chua va thoi gian
             list_drone[i].reset_capacity()
@@ -126,7 +126,7 @@ def schedule_drone(list_drone, matrix_distant, list_index_target_wait, list_targ
                 index -= 1
             else:
                 id = list_drone[i].get_id()
-                list_trip_drone[id].append(new_chip)
+                list_trip_drone[id].append(new_trip)
 
             #neu het target de giao => ket thuc
             if len(list_index_target_wait) == 0:
@@ -137,6 +137,17 @@ def schedule_drone(list_drone, matrix_distant, list_index_target_wait, list_targ
 
     return list_trip_drone, list_index_target_wait, list_index_target_done, list_target
 
+
+def schedule_truck(list_truck, matrix_distant, list_index_target_wait,list_index_target_done, list_target):
+    list_trip_truck = []
+
+    for i in range (0, len(list_truck)):
+        new_trip, list_truck[i], list_index_target_wait, list_index_target_done, list_target = create_trip(list_truck[i], matrix_distant, list_index_target_wait, list_index_target_done, list_target)
+        list_trip_truck.append(new_trip)
+        if len(list_index_target_wait) == 0:
+            break
+
+    return list_trip_truck
 if __name__ == "__main__":
 
     # Load tập object target, drone, truck
@@ -159,6 +170,7 @@ if __name__ == "__main__":
     print("-------------------ket thuc qua trinh giao hang cua drone ------------------------------")
     print(list_trip_drone)
     print ("danh sach target còn lại: {}".format(list_index_target_wait))
+    print ("danh sach target giao xong : {}".format(list_index_target_done))
     print("-------------------khoi dong giao hang bang truck----------------------------------------")
-
     
+    #list_trip_truck, list_index_target_wait,list_index_target_done, list_target = schedule_truck(list_truck, matrix_distant, list_index_target_wait,list_index_target_done, list_target)

@@ -7,6 +7,7 @@ import glob
 import os
 from object.target import Target
 from object.devices_drone import create_list_drone
+from object.devices_truck import create_list_truck
 from config import NUM_TRUCK, CAP_TRUCK, NUM_DRONE, CAP_DRONE, DURATION_DRONE, SPEED_DRONE, SPEED_TRUCK, WORKING_TIME
 
 
@@ -79,7 +80,9 @@ def load_list_target(root_path):
 def load_list_device():
     info_drone_base = [SPEED_DRONE, CAP_DRONE, DURATION_DRONE, WORKING_TIME]
     list_drone = create_list_drone(NUM_DRONE, info_drone_base)
-    list_truck = []
+    info_truck_base = [SPEED_TRUCK, CAP_TRUCK, WORKING_TIME]
+    list_truck =  create_list_truck(NUM_TRUCK, info_truck_base)
+    
     return list_drone, list_truck
 
 #test

@@ -62,6 +62,11 @@ def find_nearest_point(matrix_distant, index_target_start, list_index_target_end
     index_target_in_list_index = -1
     for index_target_end in list_index_target_end:
         index_target_in_list_index += 1
+
+        # neu la chinh no thi khong tinh
+        if index_target_start == index_target_end:
+            continue
+
         if matrix_distant[index_target_start][index_target_end] < min_distant:
             min_distant = matrix_distant[index_target_start][index_target_end]
             result = index_target_end
