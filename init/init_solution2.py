@@ -1,4 +1,8 @@
-﻿
+﻿'''
+dron di nhung diem xa nhat, con truck di nhung diem gan nhat ben trong
+'''
+
+
 import sys
 
 sys.path.append('/home/congdc/project/scheduled-delivery')
@@ -41,7 +45,8 @@ def create_trip(device, matrix_distant, list_index_target_wait, list_index_targe
     new_trip =[]
 
     cor_start = COORDINATES_DEPOT
-    if type == "drone":
+
+    if type != "drone":
         index_end, index_pop = find_nearest_point(matrix_distant, 0, list_index_target_wait)
     else:
         index_end, index_pop = find_furthest_point(matrix_distant, 0, list_index_target_wait)
@@ -175,7 +180,7 @@ def schedule_truck(list_truck, matrix_distant, list_index_target_wait,list_index
     return list_trip_truck, list_index_target_wait, list_index_target_done, list_target
 
 def save_result(list_trip_drone, list_trip_truck, list_target_result):
-    data_path = 'data/init_solution/init_solution1.csv'
+    data_path = 'data/init_solution/init_solution2.csv'
     with open(data_path, mode='w') as employee_file:
         init_solution = csv.writer(employee_file)
         for trip_for_device in list_trip_drone:
