@@ -13,6 +13,9 @@ class Individual():
     def update_point(self, point):
         self.point = point
 
+    def update_info_target(self, list_target):
+        self.list_target = list_target
+
     def get_fitness(self):
         return self.fitness
     
