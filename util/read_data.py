@@ -1,6 +1,6 @@
 ﻿import sys
 
-sys.path.append('/home/congdc/project/scheduled-delivery')
+sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
 
 import csv
 import glob
@@ -68,7 +68,7 @@ def load_list_target(root_path):
 
     # Lấy danh sách các path
     dict_path = get_all_path(root_path)
-
+    print(root_path)
     # Trích xuất thông tin 
     name_file = '20.5.1.csv'
     
@@ -108,7 +108,7 @@ def read_solution(path):
 if __name__ == "__main__":
     type_test = 1
     if type_test == 0:
-        list_target = load_list_target("/home/congdc/project/scheduled-delivery/data/data_test")
+        list_target = load_list_target("/Users/dinhchicong/Project/scheduled-delivery/data/data_test")
         low, up = list_target[1].get_bound()
         print(up)
     elif type_test == 1:

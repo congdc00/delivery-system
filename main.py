@@ -118,6 +118,7 @@ if __name__ == "__main__":
         sum_f = sum_fitness(population)
 
         best_individual = find_best_individual(population)
+        index += 1
         print("ca the tot nhat sau {} vong lap: {}".format(index,best_individual.get_fitness()))
 
     
