@@ -1,6 +1,7 @@
 from turtle import width
 from config import SIZE_CROSSOVER
 import random
+import copy
 
 def sum_difference(individual0, individual1):
     '''
@@ -51,13 +52,13 @@ def crossover_chromosomes(individual_adam, individual_eva):
     '''
     Nên chọn 2 thằng nào có sự khác biệt nhất để lai ghép
     '''
+    individual_son0 = copy.deepcopy(individual_adam)
+    individual_son1 = copy.deepcopy(individual_eva)
 
-    list_target0 = individual_adam.get_list_target()
-    list_target1 = individual_eva.get_list_target()
+    list_target0 = individual_son0.get_list_target()
+    list_target1 = individual_son1.get_list_target()
     num_target = len(list_target0)
 
-    new_list_target0 = []
-    new_list_target1 = []
     for i in range (0, num_target):
         # cut trip
         target0 = list_target0[i]
@@ -79,8 +80,8 @@ def crossover_chromosomes(individual_adam, individual_eva):
         for trip in list_trip_pop_target_1:
             target0.add_trip(trip)
 
-        individual_adam.update_target(target0, i)
-        individual_eva.update_target(target1, i)
+        individual_son0.update_target(target0, i)
+        individual_son1.update_target(target1, i)
 
-    return individual_adam, individual_eva
+    return individual_son0, individual_son1
     #

@@ -34,15 +34,6 @@ class Truck():
     def reset_capacity(self):
         self.capacity = self.capacity_base
 
-    def get_capacity(self):
-        return self.capacity
-    
-    def get_speed(self):
-        return self.speed
-
-    def get_working_time(self):
-        return self.working_time
-
     #capacity
     def drop_down(self, weight_package):
         self.capacity -= weight_package
@@ -52,9 +43,21 @@ class Truck():
 
     def get_capacity(self):
         return self.capacity
+    
+    def get_speed(self):
+        return self.speed
+
+    def get_working_time(self):
+        return self.working_time
+
+    def get_capacity(self):
+        return self.capacity
 
     def get_id(self):
         return self.id
+
+    def get_trip(self):
+        return self.trip
 
 def create_list_truck(num_truck, info_truck_base):
     '''

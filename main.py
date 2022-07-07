@@ -15,13 +15,11 @@ from GA.selection import selection_chromosomes
 
 
 def find_best_individual(population):
-    max_fitness = 0
-    print("lay duoc fitness : {}".format(population[1].get_fitness()))
+    max_point = 0
     for i in range(0,len(population)):
-        print("tai index {}".format(i))
-        fitness_i = population[i].get_fitness()
-        if fitness_i> max_fitness:
-            max_fitness = fitness_i
+        point_i = population[i].get_point()
+        if point_i> max_point:
+            max_point = point_i
             index_max = i
 
     return population[index_max]
@@ -42,28 +40,26 @@ def create_param():
 
 if __name__ == "__main__":
 
-    
+  
+    depot, list_drone, list_truck, list_target = create_param()  
 
     list_solution_choice = [init_solution0, init_solution1]
 
+    # Tao init solution
     population = []
-
     index = -1
     for init_solution in list_solution_choice:
         index += 1
-
-        depot, list_drone, list_truck, list_target = create_param()
-
-        list_drone, list_truck, list_target = init_solution( list_drone, list_truck,depot, list_target )
-        new_individual = Individual(index, list_drone, list_truck, list_target)
+        new_list_drone, new_list_truck, new_list_target = init_solution( list_drone, list_truck,depot, list_target )
+        new_individual = Individual(index, new_list_drone, new_list_truck, new_list_target)
         population.append(new_individual)
 
     for i in range (0, 100):
         new_population = []
         
         #Chon thang tot nhat
-        new_individual0 = find_best_individual(population)
-        new_population.append(new_individual0)
+        best_individual = find_best_individual(population)
+        new_population.append(best_individual)
 
         #Chon loc
         for j in range (0,1):
@@ -84,11 +80,13 @@ if __name__ == "__main__":
             new_individual = mutate_chromosomes(individual_choice)
             new_population.append(new_individual)
 
-        population = []
-        for individual in new_population:
-            population.append(individual)
+       
+        population = new_population
+
         
-        print("so ca the trong quan the moi {}".format(len(population)))
+        print("-------vong lap thu {} -----------".format(i))
+        print("Best point = {}".format(best_individual.get_point()))
+        print("Best fitness = {}".format(best_individual.get_fitness()))
 
 
    

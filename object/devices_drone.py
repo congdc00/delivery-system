@@ -78,7 +78,7 @@ class Drone():
     def get_id(self):
         return self.id
 
-    def get_list_trip(self):
+    def get_trips(self):
         return self.trips
 
 def create_list_drone(num_drone, info_drone_base):

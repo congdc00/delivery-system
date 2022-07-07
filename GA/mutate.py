@@ -1,5 +1,7 @@
 
 import random
+import copy
+
 def choice_mutate(population):
     
     num_individual = len(population)-1
@@ -8,7 +10,9 @@ def choice_mutate(population):
     return population[random_number]
 
 def mutate_chromosomes(individual):
-    list_target = individual.get_list_target()
+
+    new_individual = copy.deepcopy(individual)
+    list_target = new_individual.get_list_target()
     for j in range(0,len(list_target)):
 
         target = list_target[j]
@@ -24,6 +28,6 @@ def mutate_chromosomes(individual):
         
         #gan lai
         target.change_list_trip(list_trip)
-        individual.update_target(target, j)
+        new_individual.update_target(target, j)
 
-    return individual
+    return new_individual

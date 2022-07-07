@@ -23,7 +23,6 @@ def selection_probability(population):
 def selection_chromosomes(population):
     probability = selection_probability(population)
     
-    
     num_random = random.random()
     for i in range (0, len(probability)):
             if probability[i][0] <= num_random and probability[i][1] >= num_random:
