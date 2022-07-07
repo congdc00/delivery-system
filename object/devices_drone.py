@@ -15,8 +15,9 @@ class Drone():
         self.capacity = capacity
         self.duration = duration
         self.working_time = working_time
+        self.trips = []
 
-    #working time
+    # SET
     def update_time(self, used_time):
         self.working_time -= used_time
         self.duration -= used_time
@@ -24,12 +25,41 @@ class Drone():
     def update_capacity(self, weight_package):
         self.capacity -= weight_package
 
+    def drop_down(self, weight_package):
+        self.capacity -= weight_package
+    
+    def reset_capacity(self):
+        self.capacity = self.capacity_base
+
+    def create_trip(self, new_trip):
+        self.trips.append(new_trip)
+
+
+    def update_trip(self, id_target, weight_package, index_trip, index_in_trip, type):
+        if type == "append":
+            new_trip = []
+
+            begin = self.trips[index_trip][:index_in_trip]
+            new_trip.append(begin)
+
+            new_trip.append([id_target, weight_package])
+
+            end = self.trips[index_trip][index_in_trip: ]
+            new_trip.append(end)
+            self.trips[index_trip] = new_trip
+        else:
+            self.trips[index_trip].pop(index_in_trip)
+        
+
+
+    # RESET lai khi ve kho
     def reset_duration(self):
         self.duration = self.duration_base
 
     def reset_capacity(self):
         self.capacity = self.capacity_base
 
+    # GET
     def get_capacity(self):
         return self.capacity
     
@@ -42,21 +72,14 @@ class Drone():
     def get_duration(self):
         return self.duration
 
-
-
-
-    #capacity
-    def drop_down(self, weight_package):
-        self.capacity -= weight_package
-    
-    def reset_capacity(self):
-        self.capacity = self.capacity_base
-
     def get_capacity(self):
         return self.capacity
 
     def get_id(self):
         return self.id
+
+    def get_list_trip(self):
+        return self.trips
 
 def create_list_drone(num_drone, info_drone_base):
     '''

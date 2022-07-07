@@ -19,6 +19,10 @@ class Truck():
         #now
         self.capacity = capacity
         self.working_time = working_time
+        self.trip = []
+
+    def create_trip(self, new_trip):
+        self.trip = new_trip
 
     #working time
     def update_time(self, used_time):

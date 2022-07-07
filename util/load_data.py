@@ -65,15 +65,13 @@ def load_list_target(root_path):
     '''
     Lấy toàn bộ tham số của bài toán
     '''
+    # File thuc hien
+    name_file = '20.5.1.csv'
 
     # Lấy danh sách các path
     dict_path = get_all_path(root_path)
-    print(root_path)
-    # Trích xuất thông tin 
-    name_file = '20.5.1.csv'
     
     list_target = extract_info_target(dict_path[name_file])
-
 
     return list_target 
 
@@ -85,24 +83,6 @@ def load_list_device():
     
     return list_drone, list_truck
 
-def read_solution(path):
-    with open(path) as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter='\n')
-        list_trip_drone = []
-        index_drone = -1
-        for row in csv_reader:
-            if row[0] == '/':
-                break
-
-            index_drone +=1
-            list_trip_drone.append([])
-            
-            for trip in row:
-                list_trip_drone[index_drone].append(trip)
-
-    list_trip_truck = []
-    list_target = []
-    return list_trip_drone, list_trip_truck, list_target
 
 #test
 if __name__ == "__main__":
