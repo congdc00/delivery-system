@@ -1,4 +1,7 @@
-﻿
+﻿'''
+su dung Genetic Algorithm
+'''
+
 from object.target import Target
 from util import load_data 
 from init.solution0 import init_solution0
@@ -7,7 +10,7 @@ from util.load_data import load_list_target, load_list_device
 from calculator.distant import set_distant
 from object.individual import Individual
 from config import ROOT_PATH_DATA, POP_SIZE, SIZE_CHOICE
-from calculator.fitness import get_fitness_and_point, sum_fitness
+from calculator.fitness_and_point import sum_point, sum_fitness
 from GA.mutate import choice_mutate, mutate_chromosomes
 from GA.crossover import choice_list_crossover, crossover_chromosomes, build_matrix_crossover_point
 from GA.selection import selection_chromosomes
@@ -57,17 +60,17 @@ if __name__ == "__main__":
     for i in range (0, 100):
         new_population = []
         
-        #Chon thang tot nhat
+        #Chon individual tot nhat
         best_individual = find_best_individual(population)
         new_population.append(best_individual)
 
         #Chon loc
-        for j in range (0,1):
+        for j in range (0,2):
             individual_choice = selection_chromosomes(population)
             new_population.append(individual_choice)
 
         #Lai ghep
-        for j in range (0, 1):
+        for j in range (0, 2):
             matrix_crossover = build_matrix_crossover_point(population)
             individual_adam, individual_eva = choice_list_crossover(population, matrix_crossover, rank = 0)
             new_individual1, new_individual2 = crossover_chromosomes(individual_adam, individual_eva)
@@ -84,9 +87,20 @@ if __name__ == "__main__":
         population = new_population
 
         
-        print("-------vong lap thu {} -----------".format(i))
+        print("------------------------------vong lap thu {} -----------------------------".format(i))
+        print("<lai ghep>")
+        print("ca the bo: {}".format(individual_adam.get_list_target()[0].get_trip()))
+        print("ca the me: {}".format(individual_eva.get_list_target()[0].get_trip()))
+        print("ca the con 1: {}".format(new_individual1.get_list_target()[0].get_trip()))
+        print("ca the con 2: {}".format(new_individual2.get_list_target()[0].get_trip()))
+        print("<dot bien>")
+        print("ca the lua chon :{}".format(individual_choice.get_list_target()[0].get_trip()))
+        print("ca the do bien xong: {}".format(new_individual.get_list_target()[0].get_trip()))
+        print("<info>")
         print("Best point = {}".format(best_individual.get_point()))
         print("Best fitness = {}".format(best_individual.get_fitness()))
+        print("sum point: {}".format(sum_point(population)))
+        print("sum fitness: {}".format(sum_fitness(population)))
 
 
    

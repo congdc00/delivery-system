@@ -2,7 +2,7 @@ import sys
 
 sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
 
-from calculator.fitness import get_fitness_and_point
+from calculator.fitness_and_point import get_fitness_and_point
 class Individual():
     def __init__(self,id, list_drone, list_truck, list_target):
         self.id = id
@@ -25,6 +25,7 @@ class Individual():
     
     def update_target(self,target, index):
         self.list_target[index] = target
+        self.point, self.fitness = get_fitness_and_point(self.list_target)
 
     def get_id(self):
         return self.id

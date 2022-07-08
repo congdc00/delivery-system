@@ -1,11 +1,10 @@
 import random
 
-def sum_fitness(population):
-	result = 0
-	for individual in population:
-		result += individual.get_fitness()
+import sys
 
-	return result
+sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
+
+from calculator.fitness_and_point import sum_fitness
 
 def selection_probability(population):
     sum_fitness_population = sum_fitness(population)

@@ -1,16 +1,20 @@
+import sys
 
-def sum_weight(target):
-	status = target.get_status()
-	if status == 0:
-		return 0
-	else:
-		return target.get_weight_delivered()
+sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
+
+from calculator.weight import sum_weight
 
 def sum_fitness(population):
 	result = 0
 	for individual in population:
 		result += individual.get_fitness()
 
+	return result
+
+def sum_point(population):
+	result = 0
+	for individual in population:
+		result += individual.get_point()
 	return result
 	
 def get_fitness_and_point(list_target):

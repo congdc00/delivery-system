@@ -23,7 +23,7 @@ def mutate_chromosomes(individual):
             tmp = random.random()
             if tmp<0.3:
                 id_target = list_trip[i][0]
-                weight_package = list_trip[i][1] + random.randint(0,3)
+                weight_package = list_trip[i][1] + random.randint(0,10)
                 list_trip[i] = [id_target, weight_package]
         
         #gan lai
