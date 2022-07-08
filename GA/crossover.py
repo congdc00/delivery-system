@@ -3,6 +3,12 @@ from config import SIZE_CROSSOVER
 import random
 import copy
 
+import sys
+
+sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
+
+from util.duplicate import copy_individual
+
 def sum_difference(individual0, individual1):
     '''
     Ham tinh su khac biet giua hai ca the
@@ -47,7 +53,7 @@ def choice_list_crossover(population, matrix_crossover, rank):
     
     return population[index_best_choice[0]], population[index_best_choice[1]]
 
-def crossover_chromosomes(individual_adam, individual_eva):
+def crossover_chromosomes(id, individual_adam, individual_eva):
 
     '''
     Nên chọn 2 thằng nào có sự khác biệt nhất để lai ghép
@@ -83,5 +89,8 @@ def crossover_chromosomes(individual_adam, individual_eva):
         individual_son0.update_target(target0, i)
         individual_son1.update_target(target1, i)
 
-    return individual_son0, individual_son1
+    new_individual0 = copy_individual(id-1, individual_son0)
+    new_individual1 = copy_individual(id, individual_son1)
+
+    return new_individual0, new_individual1
     #

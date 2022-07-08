@@ -5,6 +5,7 @@ import sys
 sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
 
 from calculator.fitness_and_point import sum_fitness
+from util.duplicate import copy_individual
 
 def selection_probability(population):
     sum_fitness_population = sum_fitness(population)
@@ -19,7 +20,7 @@ def selection_probability(population):
 
     return probability
 
-def selection_chromosomes(population):
+def selection_chromosomes(id, population):
     probability = selection_probability(population)
     
     num_random = random.random()
@@ -27,6 +28,7 @@ def selection_chromosomes(population):
             if probability[i][0] <= num_random and probability[i][1] >= num_random:
                 individual_choice = population[i]
                 break
+    new_individual = copy_individual(id, individual_choice)
 
-    return individual_choice
+    return new_individual
        

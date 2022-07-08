@@ -2,6 +2,12 @@
 import random
 import copy
 
+import sys
+
+sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
+
+from util.duplicate import copy_individual
+
 def choice_mutate(population):
     
     num_individual = len(population)-1
@@ -9,7 +15,7 @@ def choice_mutate(population):
 
     return population[random_number]
 
-def mutate_chromosomes(individual):
+def mutate_chromosomes(id, individual):
 
     new_individual = copy.deepcopy(individual)
     list_target = new_individual.get_list_target()
@@ -29,5 +35,7 @@ def mutate_chromosomes(individual):
         #gan lai
         target.change_list_trip(list_trip)
         new_individual.update_target(target, j)
+
+    new_individual = copy_individual(id, new_individual)
 
     return new_individual

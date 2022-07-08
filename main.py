@@ -14,10 +14,10 @@ from calculator.fitness_and_point import sum_point, sum_fitness
 from GA.mutate import choice_mutate, mutate_chromosomes
 from GA.crossover import choice_list_crossover, crossover_chromosomes, build_matrix_crossover_point
 from GA.selection import selection_chromosomes
+from util.duplicate import copy_individual
+    
 
-
-
-def find_best_individual(population):
+def find_best_individual(id, population):
     max_point = 0
     for i in range(0,len(population)):
         point_i = population[i].get_point()
@@ -25,7 +25,8 @@ def find_best_individual(population):
             max_point = point_i
             index_max = i
 
-    return population[index_max]
+    best_individual = copy_individual(id, population[index_max])
+    return best_individual
 
 
 def create_param():
@@ -59,28 +60,33 @@ if __name__ == "__main__":
 
     for i in range (0, 100):
         new_population = []
+
+        id = 0
         
         #Chon individual tot nhat
-        best_individual = find_best_individual(population)
+        best_individual = find_best_individual(id, population)
         new_population.append(best_individual)
 
         #Chon loc
         for j in range (0,2):
-            individual_choice = selection_chromosomes(population)
+            id += 1
+            individual_choice = selection_chromosomes(id, population)
             new_population.append(individual_choice)
 
         #Lai ghep
         for j in range (0, 2):
+            id += 2
             matrix_crossover = build_matrix_crossover_point(population)
             individual_adam, individual_eva = choice_list_crossover(population, matrix_crossover, rank = 0)
-            new_individual1, new_individual2 = crossover_chromosomes(individual_adam, individual_eva)
+            new_individual1, new_individual2 = crossover_chromosomes(id, individual_adam, individual_eva)
             new_population.append(new_individual1)
             new_population.append(new_individual2)
 
         #Dot bien
         for j in range (0,1):
+            id += 1
             individual_choice = choice_mutate(population)
-            new_individual = mutate_chromosomes(individual_choice)
+            new_individual = mutate_chromosomes(id, individual_choice)
             new_population.append(new_individual)
 
        
@@ -97,6 +103,7 @@ if __name__ == "__main__":
         print("ca the lua chon :{}".format(individual_choice.get_list_target()[0].get_trip()))
         print("ca the do bien xong: {}".format(new_individual.get_list_target()[0].get_trip()))
         print("<info>")
+        print("So luong ca the tao ra {}".format(len(population)))
         print("Best point = {}".format(best_individual.get_point()))
         print("Best fitness = {}".format(best_individual.get_fitness()))
         print("sum point: {}".format(sum_point(population)))
