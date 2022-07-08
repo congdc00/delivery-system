@@ -58,9 +58,10 @@ if __name__ == "__main__":
         new_individual = Individual(index, new_list_drone, new_list_truck, new_list_target)
         population.append(new_individual)
 
-    for i in range (0, 100):
+    for i in range (0, 5):
+        print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
+        
         new_population = []
-
         id = 0
         
         #Chon individual tot nhat
@@ -77,10 +78,21 @@ if __name__ == "__main__":
         for j in range (0, 2):
             id += 2
             matrix_crossover = build_matrix_crossover_point(population)
-            individual_adam, individual_eva = choice_list_crossover(population, matrix_crossover, rank = 0)
+            individual_adam, individual_eva = choice_list_crossover(population, matrix_crossover, rank = j)
             new_individual1, new_individual2 = crossover_chromosomes(id, individual_adam, individual_eva)
             new_population.append(new_individual1)
             new_population.append(new_individual2)
+
+            #show info
+            print("\n <lai ghep>")
+            print("ca the bo (ID: {}): {}".format(individual_adam.get_id(),individual_adam.get_list_target()[0].get_trip()))
+            print("ca the me (ID: {}): {}".format(individual_eva.get_id(),individual_eva.get_list_target()[0].get_trip()))
+            print("+ ca the con 1: {}".format(new_individual1.get_list_target()[0].get_trip()))
+            print("+ ca the con 2: {}".format(new_individual2.get_list_target()[0].get_trip()))
+            print("~drone (0) individual 1: {}".format(new_individual1.get_list_drone()[0].get_trips()))
+            print("~truck (2) individual 1: {}".format(new_individual1.get_list_truck()[0].get_trip()))
+            print("~drone (0) individual 2: {}".format(new_individual2.get_list_drone()[0].get_trips()))
+            print("~truck (2) individual 2: {}".format(new_individual2.get_list_truck()[0].get_trip()))
 
         #Dot bien
         for j in range (0,1):
@@ -89,20 +101,18 @@ if __name__ == "__main__":
             new_individual = mutate_chromosomes(id, individual_choice)
             new_population.append(new_individual)
 
+            #show info
+            print("\n <dot bien>")
+            print("choice Individua (ID: {}) :{}".format(individual_choice.get_id() ,individual_choice.get_list_target()[0].get_trip()))
+            print("+ new_individual: {}".format( new_individual.get_list_target()[0].get_trip()))
+            print("~drone (0) individual: {}".format(new_individual.get_list_drone()[0].get_trips()))
+            print("~truck (2) individual: {}".format(new_individual.get_list_truck()[0].get_trip()))
+
        
         population = new_population
-
         
-        print("------------------------------vong lap thu {} -----------------------------".format(i))
-        print("<lai ghep>")
-        print("ca the bo: {}".format(individual_adam.get_list_target()[0].get_trip()))
-        print("ca the me: {}".format(individual_eva.get_list_target()[0].get_trip()))
-        print("ca the con 1: {}".format(new_individual1.get_list_target()[0].get_trip()))
-        print("ca the con 2: {}".format(new_individual2.get_list_target()[0].get_trip()))
-        print("<dot bien>")
-        print("ca the lua chon :{}".format(individual_choice.get_list_target()[0].get_trip()))
-        print("ca the do bien xong: {}".format(new_individual.get_list_target()[0].get_trip()))
-        print("<info>")
+        
+        print("\n <info>")
         print("So luong ca the tao ra {}".format(len(population)))
         print("Best point = {}".format(best_individual.get_point()))
         print("Best fitness = {}".format(best_individual.get_fitness()))
