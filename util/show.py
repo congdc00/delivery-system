@@ -1,6 +1,10 @@
 from cProfile import label
 import matplotlib.pyplot as plt
+import sys
 
+sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
+
+from calculator.fitness_and_point import sum_fitness, sum_point
 from config import NUM_DRONE
 
 def showHistogram(list_target):
@@ -55,3 +59,10 @@ def show_info_individual(individual, text):
             print("device (ID :{}): {}".format(device.get_id(), device.get_trips()))
         else:
             print("device (ID :{}): {}".format(device.get_id(), device.get_trip()))
+
+def show_info_population(population):
+    print("+ So quan the tao ra: {}".format(len(population)))
+    print("+ Ham muc tieu: {}".format(sum_point(population)))
+    print("+ Ham fitness: {}". format(sum_fitness(population)))
+    print("(v.v)")
+    show_info_individual(population[0], "Ca the tot nhat" )

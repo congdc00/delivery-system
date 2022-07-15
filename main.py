@@ -8,7 +8,7 @@ from init.solution0 import init_solution0
 from init.solution1 import init_solution1
 from util.load_data import load_list_target, load_list_device
 from calculator.distant import set_distant
-from util.show import show_info_individual
+from util.show import show_info_individual, show_info_population
 from object.individual import Individual
 from config import ROOT_PATH_DATA, POP_SIZE, SIZE_CHOICE
 from calculator.fitness_and_point import sum_point, sum_fitness
@@ -61,7 +61,7 @@ if __name__ == "__main__":
 
     # show_info_individual(population[1], "tao individual")
 
-    for i in range (0, 1):
+    for i in range (0, 100):
         print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
         
         
@@ -79,7 +79,7 @@ if __name__ == "__main__":
             new_population.append(individual_choice)
 
         #Lai ghep
-        for j in range (0, 1):
+        for j in range (0, 2):
             id += 2
             matrix_crossover = build_matrix_crossover_point(population)
             
@@ -93,17 +93,17 @@ if __name__ == "__main__":
             
 
         #Dot bien
-        for j in range (0,1):
+        for j in range (0,2):
             id += 1
             individual_choice = choice_mutate(population)
             new_individual = mutate_chromosomes(id, individual_choice)
             new_population.append(new_individual)
 
 
-            show_info_individual(new_individual, "new_individual")
+            #show_info_individual(new_individual, "new_individual")
        
         population = new_population
-        
+        show_info_population(population)
 
 
    

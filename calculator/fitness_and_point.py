@@ -19,7 +19,7 @@ def sum_point(population):
 	
 def get_fitness_and_point(list_target):
 
-	point = 0
+	penalty = 0
 	all_weight = 0
 	lower_bound,upper_bound = list_target[0].get_bound_base()
 
@@ -27,16 +27,16 @@ def get_fitness_and_point(list_target):
 		weight = target.get_weight()
 		weight_deliver = sum_weight(target)
 		if weight_deliver == 0:
-			point -= 5*weight
+			penalty -= 5*weight
 		elif weight_deliver < lower_bound:
-			point -= 2*weight
+			penalty -= 2*weight
 		elif weight_deliver < upper_bound:
-			point -= 1*weight
+			penalty -= 1*weight
 		else:
-			point += 1*weight
+			penalty += 1*weight
 
 		all_weight += weight_deliver
-	fitness =  all_weight*weight + point
+	fitness =  all_weight*weight + penalty
 	count_point = all_weight*weight
 	# danh penaty thoi gian cho drone, truck 
 	# ty le penaty weght weght, timetimmett

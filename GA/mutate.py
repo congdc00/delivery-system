@@ -41,17 +41,7 @@ def mutate_chromosomes(id, individual):
                 id_device = trip[0]
                 weight_package = trip[1] + random.randint(1,50)
                 new_list_trip.append([id_device, weight_package])
-                print("bach bach bach --------------")
-                if id_device < NUM_DRONE:
-                    print("trip truoc dot bien {}".format(list_device[id_device].get_trips()))
-                else: 
-                    print("trip truoc dot bien {}".format(list_device[id_device].get_trip()))
                 list_device[id_device].update_trip(id_target, dict[trip[0]], weight_package)
-
-                if id_device < NUM_DRONE:
-                    print("trip sau dot bien {}".format(list_device[id_device].get_trips()))
-                else: 
-                    print("trip sau dot bien {}".format(list_device[id_device].get_trip()))
 
             else:
                 new_list_trip.append([trip[0], trip[1] ])
