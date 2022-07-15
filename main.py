@@ -59,7 +59,7 @@ if __name__ == "__main__":
         new_individual = Individual(index, new_list_device, new_list_target)
         population.append(new_individual)
 
-    show_info_individual(population[1], "tao individual")
+    # show_info_individual(population[1], "tao individual")
 
     for i in range (0, 1):
         print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
@@ -84,13 +84,8 @@ if __name__ == "__main__":
             matrix_crossover = build_matrix_crossover_point(population)
             
             individual_adam, individual_eva = choice_list_crossover(population, matrix_crossover, rank = j)
-            show_info_individual(individual_adam, "individual_adam")
-            show_info_individual(individual_eva, "individual_eva")
             new_individual1, new_individual2 = crossover_chromosomes(id, individual_adam, individual_eva)
 
-            
-            show_info_individual(new_individual1, "individual 1")
-            show_info_individual(new_individual2, "individual 2")
 
             new_population.append(new_individual1)
             new_population.append(new_individual2)
@@ -104,6 +99,8 @@ if __name__ == "__main__":
             new_individual = mutate_chromosomes(id, individual_choice)
             new_population.append(new_individual)
 
+
+            show_info_individual(new_individual, "new_individual")
        
         population = new_population
         

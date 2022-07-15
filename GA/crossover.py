@@ -69,7 +69,6 @@ def cut_trips(target, list_device):
     list_cut, list_num = target.pop_trip_from(num_choice)
 
     # cap nhap lai device
-    print("Target(ID: {}) can cat :{} va vi tri {}".format(target.get_id(),list_cut, list_num))
     if len(list_cut) != 0:
         for trip, num in zip(list_cut,list_num):
             id_device = trip[0]
@@ -90,15 +89,15 @@ def crossover_chromosomes(id, individual_adam, individual_eva):
 
     num_target = len(list_target0)
 
-    for i in range (0, num_target):
+    for i in range (0, 5):
         
-        target0 = list_target0[i]
-        target1 = list_target1[i]
+        x = random.randint (0,num_target-1)
+        y = random.randint (0,num_target-1)
+        target0 = list_target0[x]
+        target1 = list_target1[y]
         list_target = [target1, target0]
         # cut trip
-        print("--------------------0-----------------------")
         list_cut0, list_device0 = cut_trips(target0, list_device0)
-        print("--------------------1-----------------------")
         list_cut1, list_device1 = cut_trips(target1, list_device1)
 
         #append trip
@@ -107,7 +106,6 @@ def crossover_chromosomes(id, individual_adam, individual_eva):
             i+=1
             target = list_target[i]
             if trips != []:
-                print("target (ID {}) duoc them trip:  {}".format(target.get_id(), trips))
                 for trip in trips:
                     target.add_trip(trip)
 
