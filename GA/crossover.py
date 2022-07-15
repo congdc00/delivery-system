@@ -58,19 +58,24 @@ def choice_list_crossover(population, matrix_crossover, rank):
     
     return population[index_best_choice[0]], population[index_best_choice[1]]
 
-def cut_trips(target):
+def cut_trips(target, list_device):
     '''
     cat trip tu mot diem bat ky
     OUTPUT = 
     '''
     list_trip = target.get_trip()
     num_trip = len(list_trip)
-    num_choice = random.randint(0,num_trip)
-    list_cut = target.pop_trip_from(num_choice)
-    return list_cut
+    num_choice = random.randint(0,num_trip-1)
+    list_cut, list_num = target.pop_trip_from(num_choice)
 
-def append_trip(trip, target):
-    target.add_trip(trip)
+    # cap nhap lai device
+    print("Target(ID: {}) can cat :{} va vi tri {}".format(target.get_id(),list_cut, list_num))
+    if len(list_cut) != 0:
+        for trip, num in zip(list_cut,list_num):
+            id_device = trip[0]
+            list_device[id_device].pop_target(target.get_id(), num)
+
+    return list_cut, list_device
 
 def crossover_chromosomes(id, individual_adam, individual_eva):
 
@@ -89,21 +94,27 @@ def crossover_chromosomes(id, individual_adam, individual_eva):
         
         target0 = list_target0[i]
         target1 = list_target1[i]
-
+        list_target = [target1, target0]
         # cut trip
-        list_cut0 = cut_trips(target0)
-        list_cut1 = cut_trips(target1)
+        print("--------------------0-----------------------")
+        list_cut0, list_device0 = cut_trips(target0, list_device0)
+        print("--------------------1-----------------------")
+        list_cut1, list_device1 = cut_trips(target1, list_device1)
 
         #append trip
-        for trips, target, list_device in zip([list_cut0,list_cut1],[target1, target0],[list_device0, list_device1]):
+        i=-1
+        for trips , target, list_device in zip([list_cut0,list_cut1],[target1, target0], [list_device1, list_device0]):
+            i+=1
+            target = list_target[i]
             if trips != []:
+                print("target (ID {}) duoc them trip:  {}".format(target.get_id(), trips))
                 for trip in trips:
-                    append_trip(trip, target)
-                    #id_device = trip[0]
+                    target.add_trip(trip)
+
+                    # chinh sua ben device 
+                    id_device = trip[0]
+                    list_device[id_device].append_target([target.get_id(), trip[1]])
                     
-                    # cap nhap trip cho device
-                    #device = list_device[id_device]
-                    # device.change_trip(index_trip, target.get_id(), type = "id_target")
 
 
     new_individual0 = Individual(id-1, list_device0,  list_target0)

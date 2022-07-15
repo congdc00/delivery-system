@@ -1,4 +1,7 @@
 
+from tabnanny import check
+
+
 class Drone():
 
     def __init__(self,id,  speed, capacity, duration, working_time):
@@ -34,22 +37,54 @@ class Drone():
     def create_trip(self, new_trip):
         self.trips.append(new_trip)
 
+    def append_target(self,info):
+        self.trips[0].append(info)
 
-    def update_trip(self, id_target, weight_package, index_trip, index_in_trip, type):
-        if type == "append":
-            new_trip = []
+    def update_trip(self, id_target, numerical, new_id_target=-1, new_weight_package = -1 ):
+        '''
+        INPUT: 
+            id_target: id cua target mua thay doi
+            numerical: so thu tu cua target day trong trip cua device 
+            weight_package: trong luong cua goi hang moi (bang 0 la khong thay doi)
+        '''
+        if new_id_target != -1:
+            count = -1
+            break_now = False
+            
+            for j in  range(0,len(self.trips)):
+                for i in range (0,len(self.trips[j])):
+                    id = self.trips[j][i][0]
+                    if id == id_target:
+                        count += 1
+                    if count == numerical:
+                        self.trips[j][i][0] = new_id_target
+                        break_now = True
 
-            begin = self.trips[index_trip][:index_in_trip]
-            new_trip.append(begin)
+                    if break_now:
+                        break
+                if break_now:
+                    break   
 
-            new_trip.append([id_target, weight_package])
-
-            end = self.trips[index_trip][index_in_trip: ]
-            new_trip.append(end)
-            self.trips[index_trip] = new_trip
-        else:
-            self.trips[index_trip].pop(index_in_trip)
+    def pop_target(self, id_target, numerical):
+        count = -1
+        break_now = False
         
+        for j in  range(0,len(self.trips)):
+            for i in range (0,len(self.trips[j])):
+                id = self.trips[j][i][0]
+                if id == id_target:
+                    count += 1
+                if count == numerical:
+                    print("truoc khi pop: {}".format(self.trips))
+                    print("drone (ID{}) se pop {}".format(self.id, self.trips[j].pop(i)))
+                    print("sau khi pop: {}".format(self.trips))
+                    break_now = True
+                if self.trips[j] == []:
+                    self.id, self.trips.pop(j)
+                if break_now:
+                    break 
+            if break_now:
+                break    
 
 
     # RESET lai khi ve kho

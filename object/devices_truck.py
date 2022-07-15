@@ -34,9 +34,48 @@ class Truck():
     def reset_capacity(self):
         self.capacity = self.capacity_base
 
+    def update_trip(self, id_target, numerical, new_id_target=-1, new_weight_package = -1 ):
+        '''
+        INPUT: 
+            id_target: id cua target mua thay doi
+            numerical: so thu tu cua target day trong trip cua device 
+            weight_package: trong luong cua goi hang moi (bang 0 la khong thay doi)
+        '''
+        if new_id_target != -1:
+            count = -1
+            
+            for i in range (0, len(self.trip)):
+                id = self.trip[i][0]
+                if id == id_target:
+                    count += 1
+                if count == numerical:
+                    self.trip[i][0] = new_id_target
+                    break
+    
+
+    def pop_target(self, id_target, numerical ):
+        '''
+        INPUT: 
+            id_target: id cua target mua thay doi
+            numerical: so thu tu cua target day trong trip cua device 
+            weight_package: trong luong cua goi hang moi (bang 0 la khong thay doi)
+        '''   
+        count = -1
+        
+        for i in range (0, len(self.trip)):
+            id = self.trip[i][0]
+            if id == id_target:
+                count += 1
+            if count == numerical:
+                print("xe tai (ID {}) se pop {}".format(self.id, self.trip.pop(i)))
+                break
+
     #capacity
     def drop_down(self, weight_package):
         self.capacity -= weight_package
+
+    def append_target(self,info):
+        self.trip.append(info)
     
     def reset_capacity(self):
         self.capacity = self.capacity_base

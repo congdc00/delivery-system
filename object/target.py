@@ -2,6 +2,7 @@
 from unittest import result
 
 
+
 def take_second(elem):
     return elem[1]
 class Target():
@@ -52,9 +53,24 @@ class Target():
 
         
     def pop_trip_from(self, index):
+        # tao trip con tach ra tu index
         list_trip_pop = self.list_trip[index:]
+
+        # cat trip
         self.list_trip = self.list_trip[:index]
-        return list_trip_pop
+
+        # tim chi muc cac trip con
+        dict_num = {}
+        list_num = []
+        for id_device_pop, _ in list_trip_pop:
+            if id_device_pop not in dict_num:
+                dict_num[id_device_pop] = 0
+                for id_device, _ in self.list_trip:
+                    if id_device_pop == id_device:
+                        dict_num[id_device_pop] += 1
+            list_num.append(dict_num[id_device_pop])
+        
+        return list_trip_pop, list_num
         
     def add_neighbor(self,id, distant):
         self.list_neighbor.append([id, distant])
