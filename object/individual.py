@@ -4,10 +4,9 @@ sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
 
 from calculator.fitness_and_point import get_fitness_and_point
 class Individual():
-    def __init__(self,id, list_drone, list_truck, list_target):
+    def __init__(self,id, list_device, list_target):
         self.id = id
-        self.list_drone = list_drone
-        self.list_truck = list_truck
+        self.list_device = list_device
         self.list_target = list_target
         self.point, self.fitness = get_fitness_and_point(list_target)
 
@@ -39,8 +38,5 @@ class Individual():
     def get_list_target(self):
         return self.list_target 
     
-    def get_list_drone(self):
-        return self.list_drone
-
-    def get_list_truck(self):
-        return self.list_truck
+    def get_list_device(self):
+        return self.list_device

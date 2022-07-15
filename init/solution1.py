@@ -6,8 +6,8 @@ import numpy as np
 import csv
 from util.load_data import load_list_device, load_list_target
 from calculator.distant import get_time
-from util.show_histogram import showHistogram
-from config import ROOT_PATH_DATA, COORDINATES_DEPOT
+from util.show import showHistogram
+from config import ROOT_PATH_DATA, COORDINATES_DEPOT, NUM_DRONE, NUM_TRUCK
 
 
 def check_condition(device , cor_start, cor_end, type):
@@ -165,16 +165,18 @@ def schedule_truck(list_truck, mask_target_wait,depot, list_target):
     return list_truck, mask_target_wait, list_target
 
 
-def init_solution1(list_drone, list_truck,depot, list_target):       
+def init_solution1(list_device ,depot, list_target):       
     
     ''' Khoi tao init solution 1
     descript: drone di nhung diem gan nhat, truck di nhung diem xa nhat roi moi di cac diem gan diem do
     '''       
 
     # Tach dia chi bo nho doc lap voi bai toan
-    new_list_drone = copy.deepcopy(list_drone)
-    new_list_truck = copy.deepcopy(list_truck)
     new_list_target = copy.deepcopy(list_target)
+    new_list_device = copy.deepcopy(list_device)
+
+    new_list_drone = new_list_device[:NUM_DRONE]
+    new_list_truck = new_list_device[NUM_DRONE:] 
 
     # khoi tao hang doi target
     num_target = len(list_target)
@@ -184,8 +186,10 @@ def init_solution1(list_drone, list_truck,depot, list_target):
     new_list_drone, mask_target_wait, new_list_target = schedule_drone(new_list_drone, mask_target_wait,depot, new_list_target)
     
     new_list_truck, mask_target_wait, new_list_target = schedule_truck(new_list_truck, mask_target_wait,depot, new_list_target)
+
+    new_list_device = new_list_drone + new_list_truck
     
-    return new_list_drone, new_list_truck, new_list_target
+    return new_list_device , new_list_target
 
 if __name__ == "__main__":
 

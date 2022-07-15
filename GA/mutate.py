@@ -25,12 +25,12 @@ def mutate_chromosomes(id, individual):
         list_trip = target.get_trip()
 
         # dot bien
-        for i in range (0, len(list_trip)):
+        for trip in list_trip:
             tmp = random.random()
             if tmp<0.3:
-                id_target = list_trip[i][0]
-                weight_package = list_trip[i][1] + random.randint(0,10)
-                list_trip[i] = [id_target, weight_package]
+                id_target = trip[0]
+                weight_package = trip[1] + random.randint(0,10)
+                trip = [id_target, weight_package]
         
         #gan lai
         target.change_list_trip(list_trip)

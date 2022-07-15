@@ -80,8 +80,9 @@ def load_list_device():
     list_drone = create_list_drone(NUM_DRONE, info_drone_base)
     info_truck_base = [SPEED_TRUCK, CAP_TRUCK, WORKING_TIME]
     list_truck =  create_list_truck(NUM_TRUCK, info_truck_base)
+    list_device = list_drone + list_truck
     
-    return list_drone, list_truck
+    return list_device 
 
 
 #test
