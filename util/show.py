@@ -60,9 +60,13 @@ def show_info_individual(individual, text):
         else:
             print("device (ID :{}): {}".format(device.get_id(), device.get_trip()))
 
-def show_info_population(population):
+def show_info_population(population, type):
     print("+ So quan the tao ra: {}".format(len(population)))
-    print("+ Ham muc tieu: {}".format(sum_point(population)))
-    print("+ Ham fitness: {}". format(sum_fitness(population)))
-    print("(v.v)")
-    show_info_individual(population[0], "Ca the tot nhat" )
+    print("+ Tong ham muc tieu: {}".format(sum_point(population)))
+    print("+ Tong fitness: {}". format(sum_fitness(population)))
+    if type != "mini":
+        print("(v.v)")
+        show_info_individual(population[0], "Ca the tot nhat" )
+
+    else:
+        print("Ca the tot nhat point {}, fitness {}".format( population[0].get_point(), population[0].get_fitness()))

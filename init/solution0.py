@@ -169,7 +169,7 @@ def schedule_truck(list_truck, mask_target_wait,depot, list_target):
     return list_truck, mask_target_wait, list_target
 
 
-def init_solution0(list_device, depot, list_target):
+def is0(list_device, depot, list_target):
     ''' Khoi tao init solution 0
     descript: drone di nhung diem gan nhat, truck di nhung diem xa nhat roi moi di cac diem gan diem do
     '''   

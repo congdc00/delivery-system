@@ -4,7 +4,7 @@ su dung Genetic Algorithm
 
 from object.target import Target
 from util import load_data 
-from init.solution0 import init_solution0
+from init.solution0 import is0
 from init.solution1 import init_solution1
 from util.load_data import load_list_target, load_list_device
 from calculator.distant import set_distant
@@ -15,15 +15,16 @@ from calculator.fitness_and_point import sum_point, sum_fitness
 from GA.mutate import choice_mutate, mutate_chromosomes
 from GA.crossover import choice_list_crossover, crossover_chromosomes, build_matrix_crossover_point
 from GA.selection import selection_chromosomes
+from GA.education import education
 from util.duplicate import copy_individual
     
 
 def find_best_individual(id, population):
-    max_point = 0
+    max_fitness = 0
     for i in range(0,len(population)):
-        point_i = population[i].get_point()
-        if point_i> max_point:
-            max_point = point_i
+        fitness_i = population[i].get_fitness()
+        if fitness_i> max_fitness:
+            max_fitness = fitness_i
             index_max = i
 
     best_individual = copy_individual(id, population[index_max])
@@ -36,19 +37,20 @@ def create_param():
     
     #Khoi tao list target
     list_target = load_list_target(ROOT_PATH_DATA)
-    depot, list_target = set_distant(depot, list_target)
+    depot, list_target, matrix_distance = set_distant(depot, list_target)
 
     # Khoi tao hang doi drone va truck
     list_device = load_list_device()
 
-    return depot, list_device, list_target
+    return depot, list_device, list_target, matrix_distance
 
 if __name__ == "__main__":
 
-  
-    depot, list_device, list_target = create_param()  
 
-    list_solution_choice = [init_solution0, init_solution1]
+  
+    depot, list_device, list_target, matrix_distance = create_param()  
+
+    list_solution_choice = [is0, init_solution1]
 
     # Tao init solution
     population = []
@@ -101,10 +103,12 @@ if __name__ == "__main__":
 
 
             #show_info_individual(new_individual, "new_individual")
-       
-        population = new_population
-        show_info_population(population)
+        
+        #new_population = education(new_population, matrix_distance)
 
+        population = new_population
+        
+        show_info_population(population, type = "mini")
 
    
 

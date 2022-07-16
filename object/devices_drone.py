@@ -38,7 +38,10 @@ class Drone():
         self.trips.append(new_trip)
 
     def append_target(self,info):
-        self.trips[0].append(info)
+        try:
+            self.trips[0].append(info)
+        except:
+            self.trips.append(info)
 
     def update_trip(self, id_target, numerical, new_weight_package ):
         '''

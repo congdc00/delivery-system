@@ -20,7 +20,7 @@ def get_time(speed, cor_start, cor_end):
     return time
 
 def set_distant(depot, list_target):
-
+    matrix_distance = []
     for i in range (0,len(list_target) + 1):
         
         id_start = i - 1
@@ -31,7 +31,7 @@ def set_distant(depot, list_target):
             target_start = list_target[id_start]
             cor_start = target_start.get_coordinate()
         
-        
+        matrix_distance.append([])
         for j in range (0, len(list_target) + 1):
 
             id_end = j - 1
@@ -45,7 +45,7 @@ def set_distant(depot, list_target):
             distant = get_distant(cor_start, cor_end)
 
             target_start.add_neighbor(id_end, distant)
-        
+            matrix_distance[i].append(distant)
         target_start.sort_neighbor()
 
         if id_start == -1:
@@ -53,7 +53,7 @@ def set_distant(depot, list_target):
         else:
             list_target[id_start] = target_start
     
-    return depot, list_target
+    return depot, list_target, matrix_distance
 
 
 

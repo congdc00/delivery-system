@@ -8,7 +8,7 @@ class Individual():
         self.id = id
         self.list_device = list_device
         self.list_target = list_target
-        self.point, self.fitness = get_fitness_and_point(list_target)
+        self.point, self.fitness = get_fitness_and_point(list_target, list_device)
 
     def update_fitness(self, fitness):
         self.fitness = fitness
@@ -16,15 +16,14 @@ class Individual():
     def update_point(self, point):
         self.point = point
 
-    def update_individual(self,list_drone,list_truck, list_target):
-        self.list_drone = list_drone
-        self.list_truck = list_truck
+    def update_individual(self,list_device, list_target):
+        self.list_device = list_device
         self.list_target = list_target
-        self.point, self.fitness = get_fitness_and_point(list_target)
+        self.point, self.fitness = get_fitness_and_point(list_target, list_device)
     
     def update_target(self,target, index):
         self.list_target[index] = target
-        self.point, self.fitness = get_fitness_and_point(self.list_target)
+        self.point, self.fitness = get_fitness_and_point(self.list_target, self.list_device)
 
     def get_id(self):
         return self.id
