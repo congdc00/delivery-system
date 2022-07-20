@@ -5,6 +5,7 @@ import copy
 sys.path.append('/Users/dinhchicong/Project/scheduled-deliver')
 import numpy as np
 import csv
+import random
 from util.load_data import load_list_device, load_list_target
 from calculator.distant import get_time
 from util.show import showHistogram
@@ -47,11 +48,13 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
 
     new_trip = []
     cd_start = COORDINATES_DEPOT
-    
+    list_neighbor = depot.get_list_neighbor()
+    max_rank = len(list_neighbor) - 10
+    rank = random.randint(-1, max_rank)
     if type == "drone":
-        index_target_next,_ = depot.get_neighbor_by_rank(1, mask_target_wait)
+        index_target_next,_ = depot.get_neighbor_by_rank(rank, mask_target_wait)
     else:
-        index_target_next,_ = depot.get_neighbor_by_rank(-1, mask_target_wait)
+        index_target_next,_ = depot.get_neighbor_by_rank(rank, mask_target_wait)
 
     cd_end = list_target[index_target_next].get_coordinate()
 
@@ -169,7 +172,7 @@ def schedule_truck(list_truck, mask_target_wait,depot, list_target):
     return list_truck, mask_target_wait, list_target
 
 
-def init_solution0(list_device, depot, list_target):
+def init_solution2to100(list_device, depot, list_target):
     ''' Khoi tao init solution 0
     descript: drone di nhung diem gan nhat, truck di nhung diem xa nhat roi moi di cac diem gan diem do
     '''   

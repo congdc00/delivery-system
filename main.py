@@ -4,8 +4,9 @@ su dung Genetic Algorithm
 
 from object.target import Target
 from util import load_data 
-from init.solution0 import is0
+from init.solution0 import init_solution0
 from init.solution1 import init_solution1
+from init.solution2to100 import init_solution2to100
 from util.load_data import load_list_target, load_list_device
 from calculator.distant import set_distant
 from util.show import show_info_individual, show_info_population
@@ -50,7 +51,7 @@ if __name__ == "__main__":
   
     depot, list_device, list_target, matrix_distance = create_param()  
 
-    list_solution_choice = [is0, init_solution1]
+    list_solution_choice = [init_solution0, init_solution1]
 
     # Tao init solution
     population = []
@@ -60,6 +61,11 @@ if __name__ == "__main__":
         new_list_device, new_list_target = init_solution( list_device, depot, list_target )
         new_individual = Individual(index, new_list_device, new_list_target)
         population.append(new_individual)
+    # for i in range (2, 10):
+        # index += 1
+        # new_list_device, new_list_target = init_solution2to100( list_device, depot, list_target )
+        # new_individual = Individual(index, new_list_device, new_list_target)
+        # population.append(new_individual)
 
     # show_info_individual(population[1], "tao individual")
 
