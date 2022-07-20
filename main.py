@@ -6,7 +6,7 @@ from object.target import Target
 from util import load_data 
 from init.solution0 import init_solution0
 from init.solution1 import init_solution1
-from init.solution2to100 import init_solution2to100
+from init.solution_random import init_solution_random
 from util.load_data import load_list_target, load_list_device
 from calculator.distant import set_distant
 from util.show import show_info_individual, show_info_population
@@ -61,13 +61,14 @@ if __name__ == "__main__":
         new_list_device, new_list_target = init_solution( list_device, depot, list_target )
         new_individual = Individual(index, new_list_device, new_list_target)
         population.append(new_individual)
-    # for i in range (2, 10):
-        # index += 1
-        # new_list_device, new_list_target = init_solution2to100( list_device, depot, list_target )
-        # new_individual = Individual(index, new_list_device, new_list_target)
-        # population.append(new_individual)
 
-    # show_info_individual(population[1], "tao individual")
+    for i in range (2, 100):
+        index += 1
+        new_list_device, new_list_target = init_solution_random( list_device, depot, list_target )
+        new_individual = Individual(index, new_list_device, new_list_target)
+        population.append(new_individual)
+    
+    # show_info_individual(new_individual, "tao individual")
 
     for i in range (0, 100):
         print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
@@ -81,13 +82,13 @@ if __name__ == "__main__":
         new_population.append(best_individual)
         
         #Chon loc
-        for j in range (0,2):
+        for j in range (0,20):
             id += 1
             individual_choice = selection_chromosomes(id, population)
             new_population.append(individual_choice)
 
         #Lai ghep
-        for j in range (0, 2):
+        for j in range (0, 50):
             id += 2
             matrix_crossover = build_matrix_crossover_point(population)
             
@@ -101,7 +102,7 @@ if __name__ == "__main__":
             
 
         #Dot bien
-        for j in range (0,2):
+        for j in range (0,20):
             id += 1
             individual_choice = choice_mutate(population)
             new_individual = mutate_chromosomes(id, individual_choice)

@@ -49,12 +49,11 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
     new_trip = []
     cd_start = COORDINATES_DEPOT
     list_neighbor = depot.get_list_neighbor()
-    max_rank = len(list_neighbor) - 10
-    rank = random.randint(-1, max_rank)
-    if type == "drone":
-        index_target_next,_ = depot.get_neighbor_by_rank(rank, mask_target_wait)
-    else:
-        index_target_next,_ = depot.get_neighbor_by_rank(rank, mask_target_wait)
+   
+    max_rank = len(mask_target_wait)
+    index_target_next = 0
+    while mask_target_wait[index_target_next] == 1:
+        index_target_next = random.randint(0, max_rank - 1)
 
     cd_end = list_target[index_target_next].get_coordinate()
 
@@ -100,9 +99,12 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
         
         # Chuyen sang diem tiep theo
         cd_start = cd_end
-
-        index_target_next, _ = target.get_neighbor_by_rank(1, mask_target_wait)
-        cd_end = list_target[index_target_next].get_coordinate()
+        try:
+            index_target_next, _ = target.get_neighbor_by_rank(1, mask_target_wait)
+            cd_end = list_target[index_target_next].get_coordinate()
+        except:
+            break
+        
     #print("--------")
     #print("trip duoc them vao {}".format(new_trip))
     #print("--------")
@@ -172,7 +174,7 @@ def schedule_truck(list_truck, mask_target_wait,depot, list_target):
     return list_truck, mask_target_wait, list_target
 
 
-def init_solution2to100(list_device, depot, list_target):
+def init_solution_random(list_device, depot, list_target):
     ''' Khoi tao init solution 0
     descript: drone di nhung diem gan nhat, truck di nhung diem xa nhat roi moi di cac diem gan diem do
     '''   
