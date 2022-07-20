@@ -73,15 +73,17 @@ class Drone():
         break_now = False
         
         for j in  range(0,len(self.trips)):
+            if self.trips[j] == []:
+                self.trips.pop(j)
             for i in range (0,len(self.trips[j])):
+
                 id = self.trips[j][i][0]
                 if id == id_target:
                     count += 1
                 if count == numerical:
                     self.trips[j].pop(i)
                     break_now = True
-                if self.trips[j] == []:
-                    self.id, self.trips.pop(j)
+                
                 if break_now:
                     break 
             if break_now:
