@@ -74,7 +74,7 @@ class Truck():
     def drop_down(self, weight_package):
         self.capacity -= weight_package
 
-    def append_target(self,info):
+    def append_target(self,info, type):
         self.trip.append(info)
     
     def reset_capacity(self):

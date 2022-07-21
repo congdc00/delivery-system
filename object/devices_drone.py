@@ -37,10 +37,11 @@ class Drone():
     def create_trip(self, new_trip):
         self.trips.append(new_trip)
 
-    def append_target(self,info):
+    def append_target(self,info, type = -1):
         try:
-            self.trips[0].append(info)
+            self.trips[type].append(info)
         except:
+            self.trips.append([])
             self.trips.append(info)
 
     def update_trip(self, id_target, numerical, new_weight_package ):
@@ -48,7 +49,7 @@ class Drone():
         INPUT: 
             id_target: id cua target mua thay doi
             numerical: so thu tu cua target day trong trip cua device 
-            weight_package: trong luong cua goi hang moi (bang 0 la khong thay doi)
+            weight_package: trong luong cua goi hang moi 
         '''
         
         count = -1
@@ -56,6 +57,7 @@ class Drone():
         
         for j in  range(0,len(self.trips)):
             for i in range (0,len(self.trips[j])):
+                print("mac o day {}".format(self.trips[j][i]))
                 id = self.trips[j][i][0]
                 if id == id_target:
                     count += 1
@@ -82,6 +84,11 @@ class Drone():
                     count += 1
                 if count == numerical:
                     self.trips[j].pop(i)
+
+                    # neu trip rong thi xoa di
+                    if len(self.trips[j]) == 0 and len(self.trips) >1:
+                        self.trips.pop(j)
+
                     break_now = True
                 
                 if break_now:

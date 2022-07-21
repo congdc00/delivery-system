@@ -60,6 +60,7 @@ def get_fitness_and_point(list_target, list_device):
 	working_time = list_device[0].get_working_time()
 	duration = list_device[0].get_duration()
 	sum_time_device = []
+	
 	#kiem tra drone
 	for id_device in range (0, NUM_DRONE):
 		device = list_device[id_device]
@@ -73,7 +74,7 @@ def get_fitness_and_point(list_target, list_device):
 
 			if trip == []:
 				break
-
+		
 			for id_target, d in trip:
 				distance += matrix_distance[id_target+1][pre_point]
 				pre_point = id_target

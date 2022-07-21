@@ -111,7 +111,7 @@ def crossover_chromosomes(id, individual_adam, individual_eva):
 
                     # chinh sua ben device 
                     id_device = trip[0]
-                    list_device[id_device].append_target([target.get_id(), trip[1]])
+                    list_device[id_device].append_target([target.get_id(), trip[1]], type = 0)
                     
 
 

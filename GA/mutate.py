@@ -3,7 +3,7 @@ import random
 import copy
 
 import sys
-from config import NUM_DRONE
+from config import NUM_DRONE, NUM_TRUCK
 
 sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
 
@@ -37,6 +37,7 @@ def mutate_chromosomes(id, individual):
                 dict[trip[0]] = 0
 
             tmp = random.random()
+
             if tmp<0.4:
                 id_device = trip[0]
                 weight_package = trip[1] + random.randint(1,50)
@@ -44,8 +45,13 @@ def mutate_chromosomes(id, individual):
                 list_device[id_device].update_trip(id_target, dict[trip[0]], weight_package)
 
             else:
-                new_list_trip.append([trip[0], trip[1] ])
-                
+                new_list_trip.append([trip[0], trip[1]])
+
+        # if random.random()>0.9:
+        #         id_device = random.randint(0, NUM_DRONE+NUM_TRUCK-1)
+        #         weight_package = random.randint(1,50)
+        #         new_list_trip.append([id_device, weight_package])
+        #         list_device[id_device].append_target([target.get_id(), weight_package], type = -1)        
         #gan lai
         target.change_list_trip(new_list_trip)
         new_individual.update_target(target, j)

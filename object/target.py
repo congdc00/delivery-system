@@ -7,6 +7,8 @@ def take_second(elem):
     return elem[1]
 class Target():
     def __init__(self,id,x,y,lower_bound, upper_bound, weight):
+
+        #self.penalty = penalty
         self.id =id
         self.x = x
         self.y = y 

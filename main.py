@@ -62,13 +62,13 @@ if __name__ == "__main__":
         new_individual = Individual(index, new_list_device, new_list_target)
         population.append(new_individual)
 
-    for i in range (2, 100):
+    for i in range (2, 2):
         index += 1
         new_list_device, new_list_target = init_solution_random( list_device, depot, list_target )
         new_individual = Individual(index, new_list_device, new_list_target)
         population.append(new_individual)
     
-    # show_info_individual(new_individual, "tao individual")
+        #show_info_individual(new_individual, "tao individual")
 
     for i in range (0, 100):
         print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
@@ -110,12 +110,12 @@ if __name__ == "__main__":
 
 
             #show_info_individual(new_individual, "new_individual")
-        
-        #new_population = education(new_population, matrix_distance)
+        # show_info_individual(new_individual1, text= "education")
+        # new_population = education(new_population, matrix_distance)
 
         population = new_population
         
-        show_info_population(population, type = "mini")
+        #show_info_population(population, type = "mini")
 
    
 
