@@ -1,6 +1,6 @@
 def sum_weight(target):
-	status = target.get_status()
-	if status == 0:
-		return 0
-	else:
-		return target.get_weight_delivered()
+	list_trip = target.get_trip()
+	weight = 0
+	for trip in list_trip:
+		weight += trip[1]
+	return weight

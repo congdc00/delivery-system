@@ -66,8 +66,7 @@ def load_list_target(root_path):
     Lấy toàn bộ tham số của bài toán
     '''
     # File thuc hien
-    name_file = '20.5.1.csv'
-
+    name_file = '20.5.4.csv'
     # Lấy danh sách các path
     dict_path = get_all_path(root_path)
     

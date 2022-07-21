@@ -25,7 +25,7 @@ def sum_point(population):
 def get_fitness_and_point(list_target, list_device):
 
 	penalty = 0
-	sum_point = 0
+	
 	max_point = 0
 	max_weight = 0
 
@@ -35,6 +35,7 @@ def get_fitness_and_point(list_target, list_device):
 		max_weight = max(max_weight, weight)
 
 	# phat ve khoi luong
+	sum_point = 0
 	for target in list_target:
 		weight = target.get_weight()
 		weight_deliver = sum_weight(target)
@@ -51,7 +52,6 @@ def get_fitness_and_point(list_target, list_device):
 
 
 		max_point += upper_bound*weight
-
 
 	depot = Target(-1, 0, 0, 0,0,0)
 	_,_,matrix_distance = set_distant(depot,list_target)
@@ -103,6 +103,7 @@ def get_fitness_and_point(list_target, list_device):
 		if trip == []:
 			break
 		
+		pre_point = 0
 		for id_target, d in trip:
 			distance += matrix_distance[id_target+1][pre_point]
 			pre_point = id_target

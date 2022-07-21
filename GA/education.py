@@ -124,6 +124,6 @@ def education(population, matrix_distance):
 
     for individual in population:
         processing(individual, matrix_distance)
-        show_info_individual(individual, text= "education")
+        
         new_population.append(individual)
     return new_population

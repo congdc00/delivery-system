@@ -1,7 +1,7 @@
 ﻿'''
 su dung Genetic Algorithm
 '''
-
+from calculator.weight import sum_weight
 from object.target import Target
 from util import load_data 
 from init.solution0 import init_solution0
@@ -21,11 +21,11 @@ from util.duplicate import copy_individual
     
 
 def find_best_individual(id, population):
-    max_fitness = 0
+    max_point = 0
     for i in range(0,len(population)):
-        fitness_i = population[i].get_fitness()
-        if fitness_i> max_fitness:
-            max_fitness = fitness_i
+        point_i = population[i].get_point()
+        if point_i > max_point:
+            max_point = point_i
             index_max = i
 
     best_individual = copy_individual(id, population[index_max])
@@ -38,6 +38,8 @@ def create_param():
     
     #Khoi tao list target
     list_target = load_list_target(ROOT_PATH_DATA)
+
+    
     depot, list_target, matrix_distance = set_distant(depot, list_target)
 
     # Khoi tao hang doi drone va truck
@@ -49,7 +51,14 @@ if __name__ == "__main__":
 
 
   
-    depot, list_device, list_target, matrix_distance = create_param()  
+    depot, list_device, list_target, matrix_distance = create_param() 
+    
+    max_point = 0
+    for target in list_target:
+        _,upper_bound = target.get_bound()
+        weight = target.get_weight()
+        max_point += weight*upper_bound
+    print("diem toi da: {}".format(max_point)) 
 
     list_solution_choice = [init_solution0, init_solution1]
 
@@ -62,7 +71,7 @@ if __name__ == "__main__":
         new_individual = Individual(index, new_list_device, new_list_target)
         population.append(new_individual)
 
-    for i in range (2, 2):
+    for i in range (2, 100):
         index += 1
         new_list_device, new_list_target = init_solution_random( list_device, depot, list_target )
         new_individual = Individual(index, new_list_device, new_list_target)
@@ -110,12 +119,12 @@ if __name__ == "__main__":
 
 
             #show_info_individual(new_individual, "new_individual")
-        # show_info_individual(new_individual1, text= "education")
-        # new_population = education(new_population, matrix_distance)
+        #show_info_individual(new_individual1, text= "bat ky")
+        new_population = education(new_population, matrix_distance)
 
         population = new_population
         
-        #show_info_population(population, type = "mini")
+        show_info_population(population, type = "mini")
 
    
 

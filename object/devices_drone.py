@@ -57,7 +57,6 @@ class Drone():
         
         for j in  range(0,len(self.trips)):
             for i in range (0,len(self.trips[j])):
-                print("mac o day {}".format(self.trips[j][i]))
                 id = self.trips[j][i][0]
                 if id == id_target:
                     count += 1
