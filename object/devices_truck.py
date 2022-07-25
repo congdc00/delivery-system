@@ -69,9 +69,22 @@ class Truck():
     def drop_down(self, weight_package):
         self.capacity -= weight_package
 
-    def append_turn(self,info, type):
-        self.trip.append(info)
-    
+    def append_turn(self,info, id_turn):
+        if id_turn != -1:
+            new_trip = []
+            a = self.trip[:id_turn]
+            b = self.trip[id_turn:]
+            for turn in a:
+                new_trip.append(turn)
+            
+            new_trip.append(info)
+
+            for turn in b:
+                new_trip.append(turn)
+            self.trip = new_trip
+        else:
+            self.trip.append(info)
+
     def reset_capacity(self):
         self.capacity = self.capacity_base
 
@@ -109,21 +122,5 @@ def create_list_truck(num_truck, info_truck_base):
 
     return list_truck
 
-# test
-if __name__ == "__main__":
-    test = "Truck"
-    if test == "Truck":
-        truck1 = Truck(0, 0.4, 1500, 60)
-        truck2 = Truck(1, 0.4, 1500, 60)
-        list_truck = []
-        list_truck.append(truck1)
-        list_truck.append(truck2)
-        list_truck[1].drop_down(25)
-        list_truck[0].drop_down(12)
-        print(list_truck[0].get_capacity())
-    else:
-        info = [0.6, 40, 30, 60]
-        list_drone = create_list_drone(2, info)
-        list_drone[1].drop_down(39)
-        print(list_drone[1].get_id())
+
    

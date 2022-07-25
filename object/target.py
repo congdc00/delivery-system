@@ -48,18 +48,25 @@ class Target():
 
 
     def add_turn(self, new_component, index = -1):
-        self.list_trip.append(new_component)
+        if index == -1:
+            self.list_trip.append(new_component)
+        else: 
+            self.list_trip = self.list_trip[:index] + [new_component] + self.list_trip[index:]
 
     def change_list_trip(self, new_trip):
         self.list_trip = new_trip
 
         
-    def pop_trip_from(self, index):
-        # tao trip con tach ra tu index
-        list_trip_pop = self.list_trip[index:]
+    def pop_trip_from(self, num_start_choice, num_end_choice):
+        if num_end_choice != -1:
+            # tao trip con tach ra tu index
+            list_trip_pop = self.list_trip[num_start_choice:num_end_choice]
 
-        # cat trip
-        self.list_trip = self.list_trip[:index]
+            # cat trip
+            self.list_trip = self.list_trip[:num_start_choice] + self.list_trip[num_end_choice:]
+        else:
+            list_trip_pop = self.list_trip[num_start_choice:]
+            self.list_trip = self.list_trip[:num_start_choice]
         
         return list_trip_pop
         

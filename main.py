@@ -82,7 +82,6 @@ if __name__ == "__main__":
         new_individual = Individual(index, new_list_device, new_list_target)
         
         population.append(new_individual)
-        show_info_individual(new_individual, text="ca the")
 
     for i in range (2, 100):
         index += 1
@@ -111,13 +110,16 @@ if __name__ == "__main__":
             population_tmp.append(individual_choice)
 
         #Lai ghep
-        for j in range (0, 40):
+        for j in range (0, 1):
             id += 2
             matrix_crossover = build_matrix_crossover_point(population)
             
             individual_adam, individual_eva = choice_list_crossover(population, matrix_crossover, rank = j)
             new_individual1, new_individual2 = crossover_chromosomes(id, individual_adam, individual_eva)
-
+            show_info_individual(individual_adam, text="adam")
+            show_info_individual(individual_eva, text="eval")
+            show_info_individual(new_individual1, text="con1")
+            show_info_individual(new_individual2, text="con2")
 
             population_tmp.append(new_individual1)
             population_tmp.append(new_individual2)
@@ -125,12 +127,12 @@ if __name__ == "__main__":
             
 
         #Dot bien
-        for j in range (0,20):
+        for j in range (0,2):
             id += 1
             individual_choice = choice_mutate(population)
-            show_info_individual(individual_choice, "ca the goc")
+            # show_info_individual(individual_choice, text="truoc dot bien")
             new_individual = mutate_chromosomes(id, individual_choice)
-            show_info_individual(new_individual, "ca the dot bien")
+            # show_info_individual(new_individual, text="sau dot bien")
             population_tmp.append(new_individual)
         
         #population_tmp = education(population_tmp, matrix_distance)

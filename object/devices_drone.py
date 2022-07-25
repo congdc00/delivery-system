@@ -34,9 +34,18 @@ class Drone():
     def create_trip(self, new_trip):
         self.trips.append(new_trip)
 
-    def append_turn(self,info, type = -1):
+    def append_turn(self,info, id_trip, id_turn = -1):
         try:
-            self.trips[type].append(info)
+            if id_turn == -1:
+                self.trips[id_trip].append(info)
+            else:
+                new_trip = []
+                trip = self.trips[id_trip]
+                new_trip = trip[:id_turn]
+                new_trip.append(info)
+                for turn in trip[id_turn:]:
+                    new_trip.append(turn)
+                self.trips[id_trip] = new_trip
         except:
             self.trips.append([])
             self.trips[0].append(info)
