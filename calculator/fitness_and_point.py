@@ -11,10 +11,15 @@ from object.target import Target
 
 def sum_fitness(population):
 	result = 0
+	count = 0
+	min_fitness = 0
 	for individual in population:
-		result += individual.get_fitness()
-
-	return result
+		count += 1
+		fitness = individual.get_fitness()
+		result += fitness
+		min_fitness = min(min_fitness, fitness) 
+	result += min_fitness*count
+	return result, min_fitness
 
 def sum_point(population):
 	result = 0

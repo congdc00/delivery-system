@@ -93,7 +93,7 @@ if __name__ == "__main__":
     
     
 
-    for i in range (0, 1000):
+    for i in range (0, 1):
         print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
         
         
@@ -128,7 +128,9 @@ if __name__ == "__main__":
         for j in range (0,20):
             id += 1
             individual_choice = choice_mutate(population)
+            show_info_individual(individual_choice, "ca the goc")
             new_individual = mutate_chromosomes(id, individual_choice)
+            show_info_individual(new_individual, "ca the dot bien")
             population_tmp.append(new_individual)
         
         #population_tmp = education(population_tmp, matrix_distance)

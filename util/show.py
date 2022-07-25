@@ -92,7 +92,8 @@ def show_info_individual(individual, text):
 def show_info_population(population, type):
     print("+ So quan the tao ra: {}".format(len(population)))
     print("+ Tong ham muc tieu: {}".format(sum_point(population)))
-    print("+ Tong fitness: {}". format(sum_fitness(population)))
+    sum_f,_ = sum_fitness(population)
+    print("+ Tong fitness: {}". format(sum_f))
     if type != "mini":
         print("(v.v)")
         show_info_individual(population[0], "Ca the tot nhat" )
