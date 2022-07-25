@@ -29,6 +29,15 @@ def find_best_individual(id, population):
             index_max = i
 
     best_individual = copy_individual(id, population[index_max])
+
+    # max_fitness = 0
+    # for i in range(0,len(population)):
+    #     fitness_i = population[i].get_fitness()
+    #     if fitness_i > max_fitness:
+    #         max_fitness = fitness_i
+    #         index_max = i
+
+    # best_individual = copy_individual(id, population[index_max])
     return best_individual
 
 
@@ -70,16 +79,18 @@ if __name__ == "__main__":
         new_list_device, new_list_target = init_solution( list_device, depot, list_target )
         new_individual = Individual(index, new_list_device, new_list_target)
         population.append(new_individual)
+        
 
     for i in range (2, 100):
         index += 1
         new_list_device, new_list_target = init_solution_random( list_device, depot, list_target )
         new_individual = Individual(index, new_list_device, new_list_target)
         population.append(new_individual)
+        
     
-        #show_info_individual(new_individual, "tao individual")
+    
 
-    for i in range (0, 100):
+    for i in range (0, 10):
         print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
         
         
@@ -97,7 +108,7 @@ if __name__ == "__main__":
             new_population.append(individual_choice)
 
         #Lai ghep
-        for j in range (0, 50):
+        for j in range (0, 1):
             id += 2
             matrix_crossover = build_matrix_crossover_point(population)
             
@@ -116,11 +127,8 @@ if __name__ == "__main__":
             individual_choice = choice_mutate(population)
             new_individual = mutate_chromosomes(id, individual_choice)
             new_population.append(new_individual)
-
-
-            #show_info_individual(new_individual, "new_individual")
         #show_info_individual(new_individual1, text= "bat ky")
-        new_population = education(new_population, matrix_distance)
+        #new_population = education(new_population, matrix_distance)
 
         population = new_population
         

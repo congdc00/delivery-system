@@ -74,8 +74,8 @@ def get_fitness_and_point(list_target, list_device):
 
 			if trip == []:
 				break
-		
-			for id_target, d in trip:
+			for turn in trip:
+				id_target = turn.get_target()
 				distance += matrix_distance[id_target+1][pre_point]
 				pre_point = id_target
 
@@ -104,7 +104,8 @@ def get_fitness_and_point(list_target, list_device):
 			break
 		
 		pre_point = 0
-		for id_target, d in trip:
+		for turn in trip:
+			id_target  = turn.get_target()
 			distance += matrix_distance[id_target+1][pre_point]
 			pre_point = id_target
 			

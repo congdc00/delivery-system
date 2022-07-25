@@ -10,7 +10,7 @@ from util.load_data import load_list_device, load_list_target
 from calculator.distant import get_time
 from util.show import showHistogram
 from config import NUM_DRONE, NUM_TRUCK, ROOT_PATH_DATA, COORDINATES_DEPOT
-
+from object.turn import Turn 
 
 def check_condition(device , cor_start, cor_end, type):
     speed = device.get_speed()
@@ -49,6 +49,7 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
     new_trip = []
     cd_start = COORDINATES_DEPOT
     list_neighbor = depot.get_list_neighbor()
+    id_device = device.get_id()
    
     max_rank = len(mask_target_wait)
     index_target_next = 0
@@ -81,7 +82,8 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
         time = get_time(speed_drone, cd_start, cd_end)
         device.update_time(time)
         device.update_capacity(weight_package)
-        new_trip.append([index_target_next, weight_package])
+        new_turn = Turn(id_target= index_target_next, id_device = id_device , bound= weight_package)
+        new_trip.append(new_turn)
         #print("+ tha diem {} trong luong {}".format(index_target_next, weight_package))
 
 
@@ -90,7 +92,7 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
         lower_bound, _ = target.get_bound()
         if lower_bound <= 0:
             mask_target_wait[index_target_next] = 1
-        target.add_trip([device.get_id(), weight_package])
+        target.add_turn(new_turn)
         list_target[index_target_next] = target
         
         # xem con diem nao co the di tiep khong

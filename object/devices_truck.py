@@ -53,28 +53,23 @@ class Truck():
                 break
     
 
-    def pop_target(self, id_target, numerical ):
-        '''
-        INPUT: 
-            id_target: id cua target mua thay doi
-            numerical: so thu tu cua target day trong trip cua device 
-            weight_package: trong luong cua goi hang moi (bang 0 la khong thay doi)
-        '''   
-        count = -1
+    def pop_turn(self, turn):
+        index_turn =hex(id(turn))
         
-        for i in range (0, len(self.trip)):
-            id = self.trip[i][0]
-            if id == id_target:
-                count += 1
-            if count == numerical:
+        for i in range(0, len(self.trip)):
+            turn = self.trip[i]
+            index_tmp = hex(id(turn))
+        
+            if index_tmp == index_turn:
                 self.trip.pop(i)
-                break
+                    
+                return True
 
     #capacity
     def drop_down(self, weight_package):
         self.capacity -= weight_package
 
-    def append_target(self,info, type):
+    def append_turn(self,info, type):
         self.trip.append(info)
     
     def reset_capacity(self):

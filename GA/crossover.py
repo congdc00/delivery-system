@@ -14,6 +14,9 @@ from object.individual import Individual
 def sum_difference(individual0, individual1):
     '''
     Ham tinh su khac biet giua hai ca the
+    status == 0 la duoi lower bound
+    status == 1 la tren lower bound
+    status == 2 la dat upper bound
     '''
     list_target0 = individual0.get_list_target()
     list_target1 = individual1.get_list_target()
@@ -66,13 +69,13 @@ def cut_trips(target, list_device):
     list_trip = target.get_trip()
     num_trip = len(list_trip)
     num_choice = random.randint(0,num_trip-1)
-    list_cut, list_num = target.pop_trip_from(num_choice)
+    list_cut = target.pop_trip_from(num_choice)
 
     # cap nhap lai device
     if len(list_cut) != 0:
-        for trip, num in zip(list_cut,list_num):
-            id_device = trip[0]
-            list_device[id_device].pop_target(target.get_id(), num)
+        for turn in list_cut:
+            id_device = turn.get_device()
+            list_device[id_device].pop_turn(turn)
 
     return list_cut, list_device
 
@@ -101,20 +104,19 @@ def crossover_chromosomes(id, individual_adam, individual_eva):
         list_cut1, list_device1 = cut_trips(target1, list_device1)
 
         #append trip
-        i=-1
-        for trips , target, list_device in zip([list_cut0,list_cut1],[target1, target0], [list_device1, list_device0]):
-            i+=1
-            target = list_target[i]
-            if trips != []:
-                for trip in trips:
-                    target.add_trip(trip)
+        for turns , target, list_device in zip([list_cut0,list_cut1],[target1, target0], [list_device1, list_device0]):
+
+            id_target = target.get_id()
+            if turns != []:
+                for turn in turns:
+                    #noi turn vao target moi
+                    target.add_turn(turn)
+                    turn.update_target(id_target)
 
                     # chinh sua ben device 
-                    id_device = trip[0]
-                    list_device[id_device].append_target([target.get_id(), trip[1]], type = 0)
+                    id_device = turn.get_device()
+                    list_device[id_device].append_turn(turn, type = 0)
                     
-
-
     new_individual0 = Individual(id-1, list_device0,  list_target0)
     new_individual1 = Individual(id,list_device1, list_target1)
 

@@ -1,6 +1,6 @@
 from calculator.weight import sum_weight
 from util.load_data import load_list_device
-from util.show import show_info_individual
+from util.show import show_info_individual, show_info_target, show_info_device
 
 # get list left over
 def get_llo_target(list_target, list_device):
@@ -96,9 +96,17 @@ def distribution_llo_target(list_lo_ts, list_target_wait, list_target, list_devi
 
 def fix_target(list_target, list_device):
 
+    # print("truoc khi sua --------------------------")
+    # show_info_target(list_target)
+    # show_info_device(list_device)
     list_lo_ts, list_target_wait = get_llo_target(list_target, list_device)
+    # print("sau khi sua (1) --------------------------")
+    # show_info_target(list_target)
+    # show_info_device(list_device)
     #distribution_llo_target(list_lo_ts, list_target_wait, list_target, list_device)
-
+    # print("sau khi sua (2) --------------------------")
+    # show_info_target(list_target)
+    # show_info_device(list_device)
     return list_target, list_device
 
 # def fix_device(list_target, list_device):

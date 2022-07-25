@@ -47,7 +47,7 @@ class Target():
             self.status = 0
 
 
-    def add_trip(self, new_component, index = -1):
+    def add_turn(self, new_component, index = -1):
         self.list_trip.append(new_component)
 
     def change_list_trip(self, new_trip):
@@ -60,19 +60,8 @@ class Target():
 
         # cat trip
         self.list_trip = self.list_trip[:index]
-
-        # tim chi muc cac trip con
-        dict_num = {}
-        list_num = []
-        for id_device_pop, _ in list_trip_pop:
-            if id_device_pop not in dict_num:
-                dict_num[id_device_pop] = 0
-                for id_device, _ in self.list_trip:
-                    if id_device_pop == id_device:
-                        dict_num[id_device_pop] += 1
-            list_num.append(dict_num[id_device_pop])
         
-        return list_trip_pop, list_num
+        return list_trip_pop
         
     def add_neighbor(self,id, distant):
         self.list_neighbor.append([id, distant])

@@ -1,7 +1,4 @@
 
-from tabnanny import check
-
-
 class Drone():
 
     def __init__(self,id,  speed, capacity, duration, working_time):
@@ -37,7 +34,7 @@ class Drone():
     def create_trip(self, new_trip):
         self.trips.append(new_trip)
 
-    def append_target(self,info, type = -1):
+    def append_turn(self,info, type = -1):
         try:
             self.trips[type].append(info)
         except:
@@ -69,31 +66,21 @@ class Drone():
             if break_now:
                 break   
 
-    def pop_target(self, id_target, numerical):
-        count = -1
-        break_now = False
-        
-        for j in  range(0,len(self.trips)):
-            if self.trips[j] == []:
-                self.trips.pop(j)
-            for i in range (0,len(self.trips[j])):
+    def pop_turn(self, turn):
+        index_turn =hex(id(turn))
+        for i in  range(0, len(self.trips)):
+            trip = self.trips[i]
+            for j in range(0, len(trip)):
+                turn = trip[j]
+                index_tmp = hex(id(turn))
+            
+                if index_tmp == index_turn:
+                    trip.pop(j)
 
-                id = self.trips[j][i][0]
-                if id == id_target:
-                    count += 1
-                if count == numerical:
-                    self.trips[j].pop(i)
+                    if len(trip) == 0:
+                        self.trips.pop(i)
 
-                    # neu trip rong thi xoa di
-                    if len(self.trips[j]) == 0 and len(self.trips) >1:
-                        self.trips.pop(j)
-
-                    break_now = True
-                
-                if break_now:
-                    break 
-            if break_now:
-                break    
+                    return True
 
 
     # RESET lai khi ve kho

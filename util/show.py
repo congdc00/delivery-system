@@ -39,6 +39,17 @@ def showHistogram(list_target):
 
     plt.show()
 
+def show_info_target(list_target):
+    for target in list_target:
+        print("Target (ID: {}) co trip la: {}".format(target.get_id(), target.get_trip() ))
+def show_info_device(list_device):
+    for device in list_device:
+        try:
+            trip = device.get_trip()
+        except:
+            trip = device.get_trips()
+        print("Device (ID: {}) co trip la: {}".format(device.get_id(), trip))
+
 def show_info_individual(individual, text):
 
     print("\n \t \t <-<-<-<-<-<-<-<-<{}>->->->->->->->->".format(text))
@@ -50,16 +61,34 @@ def show_info_individual(individual, text):
     list_target = individual.get_list_target()
 
     for target in list_target:
-        print("target (ID {}): {}".format(target.get_id(), target.get_trip()))
+        print("\n \t target (ID {}):".format(target.get_id()), end='')
+
+        for turn in target.get_trip():
+            print("[{},{}]".format(turn.get_device(), turn.get_bound()), end='')
 
     print("\n+ Info list device:")
     list_device = individual.get_list_device()
     for device in list_device:
+        print("\t device (ID :{}):".format(device.get_id()),end='')
+        print("[",end='')
         if device.get_id()<NUM_DRONE:
-            print("device (ID :{}): {}".format(device.get_id(), device.get_trips()))
+            trips = device.get_trips()
+            
+            for trip in trips:
+                print("[",end='')
+                for turn in trip:
+                    id_target = turn.get_target()
+                    bound = turn.get_bound()
+                    print("[{},{}]".format(id_target, bound), end='')
+                print("]",end='')
+            
         else:
-            print("device (ID :{}): {}".format(device.get_id(), device.get_trip()))
-
+            trip = device.get_trip()
+            for turn in trip:
+                id_target = turn.get_target()
+                bound = turn.get_bound()
+                print("[{},{}]".format(id_target, bound), end='')
+        print("]")
 def show_info_population(population, type):
     print("+ So quan the tao ra: {}".format(len(population)))
     print("+ Tong ham muc tieu: {}".format(sum_point(population)))
