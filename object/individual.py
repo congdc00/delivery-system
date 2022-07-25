@@ -6,7 +6,7 @@ from calculator.fitness_and_point import get_fitness_and_point
 class Individual():
     def __init__(self,id, list_device, list_target):
         self.id = id
-        self.status = 0
+        self.status = 1
         self.list_device = list_device
         self.list_target = list_target
         self.point, self.fitness = get_fitness_and_point(list_target, list_device)

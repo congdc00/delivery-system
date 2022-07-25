@@ -76,6 +76,14 @@ class Target():
     def get_weight(self):
         return self.weight
 
+    def get_weight_delivered(self):
+        sum_weight = 0
+        for turn in self.list_trip:
+            bound = turn.get_bound()
+            sum_weight += bound
+
+        return sum_weight
+        
     def get_status(self):
         return self.status
     
@@ -104,12 +112,11 @@ class Target():
 
     def get_neighbor_by_rank(self, rank, mask):
         while rank < len(self.list_neighbor) - 1:
-
             index_target, distance = self.list_neighbor[rank]
             if index_target != -1:
                 if mask[index_target] == 0:
                     return [index_target, distance]
             if rank > 0:   
                 rank += 1
-            if rank <0:
+            if rank < 0:
                 rank -= 1

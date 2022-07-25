@@ -2,6 +2,8 @@
 import sys
 import copy
 
+from zmq import device
+
 sys.path.append('/Users/dinhchicong/Project/scheduled-deliver')
 import numpy as np
 import csv
@@ -14,13 +16,12 @@ from object.turn import Turn
 
 def check_condition(device , cor_start, cor_end, type):
     speed = device.get_speed()
-    if type == "drone":
-        duration = device.get_duration()
-
+    
     working_time = device.get_working_time()
     time_need = get_time(speed, cor_start, cor_end) + get_time(speed, cor_end, COORDINATES_DEPOT)
 
     if type == "drone":
+        duration = device.get_duration()
         if time_need > duration:
             return False
         
@@ -47,8 +48,10 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
     '''
 
     new_trip = []
-    cd_start = COORDINATES_DEPOT
     id_device = device.get_id()
+    speed_drone = device.get_speed()
+    
+    cd_start = COORDINATES_DEPOT
     if type == "drone":
         index_target_next,_ = depot.get_neighbor_by_rank(1, mask_target_wait)
     else:
@@ -59,14 +62,13 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
     
     while check_condition(device, cd_start, cd_end, type = type):
 
-
         target = list_target[index_target_next]
         lower_bound, upper_bound = target.get_bound()
 
         
         weight_drone = device.get_capacity()
         #print("trong luong cua drone con lai {}".format(weight_drone))
-        if type != "drone" or lower_bound == 0:
+        if type != "drone":
             weight_package = min(upper_bound, weight_drone)
         else:
             weight_package = min(lower_bound, weight_drone)
@@ -76,7 +78,7 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
 
 
         # Cap nhap gia tri cho device
-        speed_drone = device.get_speed()
+        
         time = get_time(speed_drone, cd_start, cd_end)
         device.update_time(time)
         device.update_capacity(weight_package)
@@ -101,11 +103,16 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
         # Chuyen sang diem tiep theo
         cd_start = cd_end
 
-        index_target_next, _ = target.get_neighbor_by_rank(1, mask_target_wait)
-        cd_end = list_target[index_target_next].get_coordinate()
+        try:
+            index_target_next, _ = target.get_neighbor_by_rank(1, mask_target_wait)
+            cd_end = list_target[index_target_next].get_coordinate()
+        except:
+            break
     #print("--------")
     #print("trip duoc them vao {}".format(new_trip))
     #print("--------")
+    time = get_time(speed_drone, cd_start, COORDINATES_DEPOT)
+    device.update_time(time)
     if len(new_trip) != 0:
         device.create_trip(new_trip)
     return device, mask_target_wait, list_target
@@ -135,9 +142,11 @@ def schedule_drone( list_drone, mask_target_wait, depot,list_target):
 
                 # tao trip moi cho drone
                 old_time = drone.get_working_time()
+                
                 drone, mask_target_wait, list_target = create_trip(drone, mask_target_wait, depot, list_target, type ="drone")
+                
                 new_time = drone.get_working_time()
-
+                
                 #quay ve kho va reset lai suc chua va thoi gian
                 drone.reset_capacity()
                 drone.reset_duration()
@@ -162,7 +171,6 @@ def schedule_truck(list_truck, mask_target_wait,depot, list_target):
     for i in range (0, len(list_truck)):
 
         truck  = list_truck[i]
-        
         truck, mask_target_wait, list_target = create_trip(truck, mask_target_wait,depot, list_target, type="truck")
         if check_available(mask_target_wait) == False:
             break
@@ -188,6 +196,11 @@ def init_solution0(list_device, depot, list_target):
     # khoi tao hang doi target
     num_target = len(new_list_target)
     mask_target_wait = [0]*num_target
+    for target in new_list_target:
+        id_target = target.get_id()
+        lower_bound,_ = target.get_bound_base()
+        if lower_bound == 0:
+            mask_target_wait[id_target] = 1
 
     # Lap lich
     new_list_drone, mask_target_wait, new_list_target = schedule_drone(new_list_drone, mask_target_wait,depot, new_list_target)

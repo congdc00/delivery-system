@@ -19,14 +19,15 @@ from GA.crossover import choice_list_crossover, crossover_chromosomes, build_mat
 from GA.selection import selection_chromosomes
 from GA.education import education
 from util.duplicate import copy_individual
-    
+from GA.screening import choice_new_population
 
 def find_best_individual(id, population):
-    max_point = 0
+    max_fitness = 0
+    index_max = 0
     for i in range(0,len(population)):
-        point_i = population[i].get_point()
-        if point_i > max_point:
-            max_point = point_i
+        fitness_i = population[i].get_fitness()
+        if fitness_i > max_fitness:
+            max_fitness += fitness_i
             index_max = i
 
     best_individual = copy_individual(id, population[index_max])
@@ -56,14 +57,6 @@ def create_param():
     list_device = load_list_device()
 
     return depot, list_device, list_target, matrix_distance
-def choice_new_population(population):
-    new_population = []
-    for individual in population:
-        status = individual.get_status()
-        if status == 1:
-            new_population.append(individual)
-
-    return new_population
 
 if __name__ == "__main__":
 
@@ -78,7 +71,7 @@ if __name__ == "__main__":
         max_point += weight*upper_bound
     print("diem toi da: {}".format(max_point)) 
 
-    list_solution_choice = [init_solution0, init_solution1]
+    list_solution_choice = [init_solution0, init_solution1] 
 
     # Tao init solution
     population = []
@@ -87,21 +80,20 @@ if __name__ == "__main__":
         index += 1
         new_list_device, new_list_target = init_solution( list_device, depot, list_target )
         new_individual = Individual(index, new_list_device, new_list_target)
-        new_individual.update_status(1)
-        population.append(new_individual)
         
+        population.append(new_individual)
+        show_info_individual(new_individual, text="ca the")
 
     for i in range (2, 100):
         index += 1
         new_list_device, new_list_target = init_solution_random( list_device, depot, list_target )
         new_individual = Individual(index, new_list_device, new_list_target)
-        new_individual.update_status(1)
         population.append(new_individual)
         
     
     
 
-    for i in range (0, 10):
+    for i in range (0, 1000):
         print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
         
         
@@ -119,7 +111,7 @@ if __name__ == "__main__":
             population_tmp.append(individual_choice)
 
         #Lai ghep
-        for j in range (0, 1):
+        for j in range (0, 40):
             id += 2
             matrix_crossover = build_matrix_crossover_point(population)
             
@@ -139,12 +131,8 @@ if __name__ == "__main__":
             new_individual = mutate_chromosomes(id, individual_choice)
             population_tmp.append(new_individual)
         
-        population_tmp = education(population_tmp, matrix_distance)
+        #population_tmp = education(population_tmp, matrix_distance)
 
         population = choice_new_population(population_tmp)
         
         show_info_population(population, type = "mini")
-
-   
-
-    

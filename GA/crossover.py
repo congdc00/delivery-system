@@ -68,7 +68,11 @@ def cut_trips(target, list_device):
     '''
     list_trip = target.get_trip()
     num_trip = len(list_trip)
-    num_choice = random.randint(0,num_trip-1)
+    try:
+        num_choice = random.randint(0,num_trip-1)
+    except:
+        return [], list_device
+        
     list_cut = target.pop_trip_from(num_choice)
 
     # cap nhap lai device

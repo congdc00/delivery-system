@@ -67,7 +67,7 @@ def load_list_target(root_path):
     '''
 
     # File thuc hien
-    name_file = '20.5.1.csv'
+    name_file = '20.5.3.csv'
     # Lấy danh sách các path
     dict_path = get_all_path(root_path)
     

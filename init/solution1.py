@@ -47,8 +47,10 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
     '''
 
     new_trip = []
+    speed_drone = device.get_speed()
     cd_start = COORDINATES_DEPOT
     id_device = device.get_id()
+    speed_drone = device.get_speed()
     
     if type == "drone":
         index_target_next,_ = depot.get_neighbor_by_rank(-1, mask_target_wait)
@@ -60,9 +62,9 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
     
     while check_condition(device, cd_start, cd_end, type = type):
 
-
         target = list_target[index_target_next]
         lower_bound, upper_bound = target.get_bound()
+
 
         
         weight_drone = device.get_capacity()
@@ -77,7 +79,7 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
 
 
         # Cap nhap gia tri cho drone
-        speed_drone = device.get_speed()
+
         time = get_time(speed_drone, cd_start, cd_end)
         device.update_time(time)
         device.update_capacity(weight_package)
@@ -89,6 +91,7 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
 
         # cap nhap gia tri cho target
         target.update_bound(weight_package, type = 1)
+
         lower_bound, _ = target.get_bound()
         if lower_bound <= 0:
             mask_target_wait[index_target_next] = 1
@@ -102,11 +105,16 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
         # Chuyen sang diem tiep theo
         cd_start = cd_end
 
-        index_target_next, _ = target.get_neighbor_by_rank(1, mask_target_wait)
-        cd_end = list_target[index_target_next].get_coordinate()
+        try:
+            index_target_next, _ = target.get_neighbor_by_rank(1, mask_target_wait)
+            cd_end = list_target[index_target_next].get_coordinate()
+        except:
+            break
     #print("--------")
     #print("trip duoc them vao {}".format(new_trip))
     #print("--------")
+    time = get_time(speed_drone, cd_start, COORDINATES_DEPOT)
+    device.update_time(time)
     if len(new_trip) != 0:
         device.create_trip(new_trip)
     return device, mask_target_wait, list_target
@@ -186,6 +194,11 @@ def init_solution1(list_device ,depot, list_target):
     # khoi tao hang doi target
     num_target = len(list_target)
     mask_target_wait = [0]*num_target
+    for target in new_list_target:
+        id_target = target.get_id()
+        lower_bound,_ = target.get_bound_base()
+        if lower_bound == 0:
+            mask_target_wait[id_target] = 1
 
     # Lap lich
     new_list_drone, mask_target_wait, new_list_target = schedule_drone(new_list_drone, mask_target_wait,depot, new_list_target)

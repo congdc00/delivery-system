@@ -48,6 +48,7 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
 
     new_trip = []
     cd_start = COORDINATES_DEPOT
+    speed_drone = device.get_speed()
     list_neighbor = depot.get_list_neighbor()
     id_device = device.get_id()
    
@@ -63,6 +64,7 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
 
 
         target = list_target[index_target_next]
+        
         lower_bound, upper_bound = target.get_bound()
 
         
@@ -78,7 +80,7 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
 
 
         # Cap nhap gia tri cho drone
-        speed_drone = device.get_speed()
+        
         time = get_time(speed_drone, cd_start, cd_end)
         device.update_time(time)
         device.update_capacity(weight_package)
@@ -110,6 +112,8 @@ def create_trip(device, mask_target_wait, depot, list_target, type):
     #print("--------")
     #print("trip duoc them vao {}".format(new_trip))
     #print("--------")
+    time = get_time(speed_drone, cd_start, COORDINATES_DEPOT)
+    device.update_time(time)
     if len(new_trip) != 0:
         device.create_trip(new_trip)
     return device, mask_target_wait, list_target
