@@ -1,6 +1,7 @@
 ﻿'''
 su dung Genetic Algorithm
 '''
+from pickletools import read_unicodestring1
 from calculator.weight import sum_weight
 from object.target import Target
 from util import load_data 
@@ -55,6 +56,14 @@ def create_param():
     list_device = load_list_device()
 
     return depot, list_device, list_target, matrix_distance
+def choice_new_population(population):
+    new_population = []
+    for individual in population:
+        status = individual.get_status()
+        if status == 1:
+            new_population.append(individual)
+
+    return new_population
 
 if __name__ == "__main__":
 
@@ -78,6 +87,7 @@ if __name__ == "__main__":
         index += 1
         new_list_device, new_list_target = init_solution( list_device, depot, list_target )
         new_individual = Individual(index, new_list_device, new_list_target)
+        new_individual.update_status(1)
         population.append(new_individual)
         
 
@@ -85,6 +95,7 @@ if __name__ == "__main__":
         index += 1
         new_list_device, new_list_target = init_solution_random( list_device, depot, list_target )
         new_individual = Individual(index, new_list_device, new_list_target)
+        new_individual.update_status(1)
         population.append(new_individual)
         
     
@@ -94,18 +105,18 @@ if __name__ == "__main__":
         print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
         
         
-        new_population = []
+        population_tmp = []
         id = 0
         
         #Chon individual tot nhat
         best_individual = find_best_individual(id, population)
-        new_population.append(best_individual)
+        population_tmp.append(best_individual)
         
         #Chon loc
         for j in range (0,20):
             id += 1
             individual_choice = selection_chromosomes(id, population)
-            new_population.append(individual_choice)
+            population_tmp.append(individual_choice)
 
         #Lai ghep
         for j in range (0, 1):
@@ -116,8 +127,8 @@ if __name__ == "__main__":
             new_individual1, new_individual2 = crossover_chromosomes(id, individual_adam, individual_eva)
 
 
-            new_population.append(new_individual1)
-            new_population.append(new_individual2)
+            population_tmp.append(new_individual1)
+            population_tmp.append(new_individual2)
 
             
 
@@ -126,11 +137,11 @@ if __name__ == "__main__":
             id += 1
             individual_choice = choice_mutate(population)
             new_individual = mutate_chromosomes(id, individual_choice)
-            new_population.append(new_individual)
-        #show_info_individual(new_individual1, text= "bat ky")
-        #new_population = education(new_population, matrix_distance)
+            population_tmp.append(new_individual)
+        
+        population_tmp = education(population_tmp, matrix_distance)
 
-        population = new_population
+        population = choice_new_population(population_tmp)
         
         show_info_population(population, type = "mini")
 

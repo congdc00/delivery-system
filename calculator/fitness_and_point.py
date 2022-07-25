@@ -43,12 +43,12 @@ def get_fitness_and_point(list_target, list_device):
 		ratio = weight_deliver/upper_bound
 		if weight_deliver < lower_bound:
 			penalty -= ratio*weight
-		elif weight_deliver < upper_bound or weight_deliver > upper_bound:
+		elif weight_deliver < upper_bound:
 			penalty -= 0
 			sum_point += weight_deliver*weight
 		else:
 			penalty += ratio*weight
-			sum_point += weight_deliver*weight
+			sum_point += upper_bound*weight
 
 
 		max_point += upper_bound*weight

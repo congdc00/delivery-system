@@ -6,6 +6,7 @@ from calculator.fitness_and_point import get_fitness_and_point
 class Individual():
     def __init__(self,id, list_device, list_target):
         self.id = id
+        self.status = 0
         self.list_device = list_device
         self.list_target = list_target
         self.point, self.fitness = get_fitness_and_point(list_target, list_device)
@@ -24,6 +25,12 @@ class Individual():
     def update_target(self,target, index):
         self.list_target[index] = target
         self.point, self.fitness = get_fitness_and_point(self.list_target, self.list_device)
+
+    def update_status(self, status):
+        self.status = status
+
+    def get_status(self):
+        return self.status
 
     def get_id(self):
         return self.id
