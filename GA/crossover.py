@@ -55,20 +55,20 @@ def choice_list_crossover(population, matrix_crossover, rank):
     point_crossover = 0
     index_best_choice = [0, 0]
     
-    # if rank == 0:
-    rows = len(matrix_crossover)
-    columns = len(matrix_crossover[0])
-    for i in range (0, rows):
-        for j in range (0, columns):
-            if point_crossover < matrix_crossover[i][j]:
-                index_best_choice = [i, j]
-                point_crossover = matrix_crossover[i][j]
+    if rank < 10:
+        rows = len(matrix_crossover)
+        columns = len(matrix_crossover[0])
+        for i in range (0, rows):
+            for j in range (0, columns):
+                if point_crossover < matrix_crossover[i][j]:
+                    index_best_choice = [i, j]
+                    point_crossover = matrix_crossover[i][j]
 
-    i = index_best_choice[0]
-    j = index_best_choice[1]
-    # else:                
-    #     i = random.randint(0, len(population)-1)    
-    #     j = random.randint(0, len(population)-1)     
+        i = index_best_choice[0]
+        j = index_best_choice[1]
+    else:                
+        i = random.randint(0, len(population)-1)    
+        j = random.randint(0, len(population)-1)     
 
     return population[i], population[j]
 
@@ -263,7 +263,7 @@ def crossover_device(id, individual_adam, individual_eva):
 def crossover_chromosomes(id, individual_adam, individual_eva):
 
     lucky_num = random.random()
-    if lucky_num <= 0.5:
+    if lucky_num <= 0.6:
         new_individual0, new_individual1 = crossover_target(id, individual_adam, individual_eva)
     else:
         new_individual0, new_individual1 = crossover_device(id, individual_adam, individual_eva)

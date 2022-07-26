@@ -85,6 +85,7 @@ if __name__ == "__main__":
         new_individual = Individual(index, new_list_device, new_list_target)
         
         population.append(new_individual)
+        show_info_individual(new_individual, text="init_solution")
 
     for i in range (2, 100):
         index += 1
@@ -97,7 +98,7 @@ if __name__ == "__main__":
     fitness_log =[]
     count = 0
     max_fitness = 0
-    for i in range (0, 1000):
+    for i in range (0, 100):
         print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
         
         
@@ -109,13 +110,13 @@ if __name__ == "__main__":
         population_tmp.append(best_individual)
         
         #Chon loc
-        for j in range (0,20):
+        for j in range (0,60):
             id += 1
             individual_choice = selection_chromosomes(id, population)
             population_tmp.append(individual_choice)
 
         #Lai ghep
-        for j in range (0, 40):
+        for j in range (0, 60):
             id += 2
             matrix_crossover = build_matrix_crossover_point(population)
             
@@ -128,7 +129,7 @@ if __name__ == "__main__":
             
 
         #Dot bien
-        for j in range (0,20):
+        for j in range (0,40):
             id += 1
             individual_choice = choice_mutate(population)
             # show_info_individual(individual_choice, text="truoc dot bien")
@@ -150,8 +151,10 @@ if __name__ == "__main__":
             max_fitness = fitness_tmp
             count =0 
         
-        if count == 100:
+        if count == 20:
             break
 
     show_histogram(fitness_log)
     show_map(best_individual)
+
+    

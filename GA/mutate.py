@@ -95,9 +95,14 @@ def mutate_chromosomes(id, individual):
                     id_trip = random.randint(0, num_trip-1)
                 else:
                     id_trip = 0
-                trip_tmp = trips[id_trip]
-                num_turn = len(trip_tmp)  
-                id_turn = random.randint(0, num_turn-1)
+
+                try:
+                    trip_tmp = trips[id_trip]
+                    num_turn = len(trip_tmp)  
+                    id_turn = random.randint(0, num_turn-1)
+                except:
+                    break
+                
 
                 device.append_turn(turn, id_trip, id_turn)
             else:
