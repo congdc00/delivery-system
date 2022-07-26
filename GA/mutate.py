@@ -56,7 +56,13 @@ def mutate_turn(turn):
     #     id_device_new = random.randint(0, NUM_DRONE+NUM_TRUCK-1)
     #     turn.update_target(id_device_new)
 
-
+def check_same(turn_tmp, turn):
+    
+    if hex(id(turn_tmp)) == hex(id(turn)):
+        # print("hai cai giong nhau la {} va {}".format(turn_tmp.get_target(), turn.get_target()))
+        return True
+    else:
+        return False
 
 def mutate_chromosomes(id, individual):
 
@@ -68,15 +74,14 @@ def mutate_chromosomes(id, individual):
         target = list_target[j]
         id_target = target.get_id()
         trip = target.get_trip()
-
-        # dot bien
-        for turn in trip:
-            tmp = random.random()
-            if tmp<0.3:
-                mutate_turn(turn)
-        
         tmp = random.random()
-        if tmp<0.5:
+        # dot bien
+        if tmp<0.2:
+            for turn in trip:
+                tmp_x = random.random()
+                if tmp_x<0.3:
+                    mutate_turn(turn)
+        elif tmp>=0.2 and tmp<=0.6:
 
             weight = random.randint(1,10)
             id_device = random.randint(0, NUM_DRONE+NUM_TRUCK-1)
@@ -102,35 +107,50 @@ def mutate_chromosomes(id, individual):
                 id_turn = random.randint(0, num_turn-1)
                 device.append_turn(turn, id_turn)
 
-        # else:
-        #     print("trip cu {}".format(trip))
-        #     num_turn = len(trip)
-        #     try:
-        #         lucky_num = random.randint(0, num_turn-1)
-        #     except: 
-        #         lucky_num = 0
-        #     # bo o ben device
-        #     print("turn la {}".format(turn.get_target()))
-        #     id_device = turn.get_device()
-        #     device = list_device[id_device]
+        else:
+            num_turn = len(trip)
+            if num_turn != 0:
+                # print("trip cu o target {} la {}".format(target.get_id(), trip))
+                try:
+                    lucky_num = random.randint(0, num_turn-1)
+                except: 
+                    lucky_num = 0
+                # bo o ben device
+                
+                turn = trip[lucky_num]
+                id_device = turn.get_device()
+                device = list_device[id_device]
+                
+                if id_device < NUM_DRONE:
+                    check =False
+                    list_trip = device.get_trips()
+                    for j in range(0, len(list_trip)):
+                        trip_tmp = list_trip[j]
+                        for i in range (0, len(trip_tmp)):
+                            
+                            turn_tmp = trip_tmp[i]
+                            if check_same(turn_tmp,turn):
+                                # print("drone (ID {}) bo {}".format (device.get_id(), i))
+                                trip_tmp.pop(i)
+                                list_trip[j] = trip_tmp
+                                check = True
+                            if len(trip_tmp) == 0:
+                                list_trip.pop(j)
 
-        #     if id_device < NUM_DRONE:
-        #         trips = device.get_trips()
-        #         for trip_tmp in trips:
-        #             for i in range (0, len(trip_tmp)):
-        #                 turn_tmp = trip_tmp[i]
-        #                 if hex(id(turn_tmp)) == hex(id(trip[lucky_num])):
-        #                     trip.pop(i)
-        #     else:
-        #         trip_tmp = device.get_trip()
-        #         for i in range (0, len(trip)):
-        #             turn_tmp = trip_tmp[i]
-        #             if hex(id(turn_tmp)) == hex(id(trip[lucky_num])):
-        #                 trip.pop(i)
+                            if check: break
+                        
+                        if check: break
+                else:
+                    trip_tmp = device.get_trip()
+                    for i in range (0, len(trip_tmp)):
+                        turn_tmp = trip_tmp[i]
+                        if check_same(turn_tmp,turn):
+                            trip_tmp.pop(i)
+                            break
 
-        #     # bo o ben target
-        #     trip.pop(lucky_num)
-        #     print("trip moi {}".format(trip))
+                # bo o ben target
+                trip.pop(lucky_num)
+                # print("trip moi {}".format(trip))
 
     new_individual = copy_individual(id, new_individual)
     return new_individual

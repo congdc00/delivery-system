@@ -123,9 +123,7 @@ def crossover_target(id, individual_adam, individual_eva):
         # cut trip
         
         list_cut0, list_device0 = cut_trips(target0, list_device0)
-        print("target {} cat ra duoc : {}".format(x, list_cut0))
         list_cut1, list_device1 = cut_trips(target1, list_device1)
-        print("target {} cat ra duoc : {}".format(y, list_cut1))
 
         
         
@@ -145,7 +143,6 @@ def crossover_target(id, individual_adam, individual_eva):
 
                     # chinh sua ben device 
                     id_device = turn.get_device()
-                    print(" [{},{}] noi vao target  {}".format(turn.get_device(), turn.get_bound(), id_target))
                     device = list_device[id_device]
 
                     if id_device < NUM_DRONE:
