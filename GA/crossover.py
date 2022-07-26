@@ -152,7 +152,13 @@ def crossover_target(id, individual_adam, individual_eva):
                             id_trip_choice = random.randint(0, num_trips-1)
                         except:
                             id_trip_choice = 0 
-                        trip = trips[id_trip_choice]
+                        
+                        try: 
+                            trip = trips[id_trip_choice]
+                            
+                        except:
+                            trips.append([])
+                            trip = trips[id_trip_choice]
                         num_turn = len(trip)
                         try:
                             id_turn_choice = random.randint(0, num_turn-1)
@@ -174,6 +180,22 @@ def crossover_target(id, individual_adam, individual_eva):
     return new_individual0, new_individual1 
 
 def crossover_device(id, individual_adam, individual_eva):
+    # individual_son0 = copy.deepcopy(individual_adam)
+    # individual_son1 = copy.deepcopy(individual_eva)
+
+    # list_target0 = individual_son0.get_list_target()
+    # list_device0 = individual_son0.get_list_device()
+
+    # list_target1 = individual_son1.get_list_target()
+    # list_device1 = individual_son1.get_list_device()
+
+    # for i in range(0, 5):
+    #     id_device_adam = random.randint(0, NUM_DRONE+NUM_TRUCK - 1)
+    #     device_adam = list_device0[id_device_adam]
+
+    #     id_device_eva = random.randint(0, NUM_DRONE+NUM_TRUCK - 1)
+    #     device_eva = list_device0[id_device_eva]
+
     individual_son0 = copy.deepcopy(individual_adam)
     individual_son1 = copy.deepcopy(individual_eva)
 
@@ -183,24 +205,79 @@ def crossover_device(id, individual_adam, individual_eva):
     list_target1 = individual_son1.get_list_target()
     list_device1 = individual_son1.get_list_device()
 
-    for i in range(0, 5):
-        id_device_adam = random.randint(0, NUM_DRONE+NUM_TRUCK - 1)
-        device_adam = list_device0[id_device_adam]
+    num_target = len(list_target0)
+    for i in range (0, 5):
+        
+        x = random.randint (0,num_target-1)
+        y = random.randint (0,num_target-1)
+        target0 = list_target0[x]
+        target1 = list_target1[y]
 
-        id_device_eva = random.randint(0, NUM_DRONE+NUM_TRUCK - 1)
-        device_eva = list_device0[id_device_eva]
+        # cut trip
+        
+        list_cut0, list_device0 = cut_trips(target0, list_device0)
+        list_cut1, list_device1 = cut_trips(target1, list_device1)
 
+        
+        
+        #append trip
+        for turns , target, list_device in zip([list_cut0,list_cut1],[target1, target0], [list_device1, list_device0]):
+            
+            id_target = target.get_id()
+            
+            if turns != []:
+                for turn in turns:
+                    #noi turn vao target moi
+                    list_turn = target.get_trip()
+                    num_turn = len(list_turn)
+                    lucky_num = random.randint(0, num_turn)
+                    target.add_turn(turn, index = lucky_num)
+                    turn.update_target(id_target)
 
+                    # chinh sua ben device 
+                    id_device = turn.get_device()
+                    device = list_device[id_device]
+
+                    if id_device < NUM_DRONE:
+                        trips = device.get_trips()
+                        num_trips = len(trips)
+                        try:
+                            id_trip_choice = random.randint(0, num_trips-1)
+                        except:
+                            id_trip_choice = 0 
+                        
+                        try: 
+                            trip = trips[id_trip_choice]
+                            
+                        except:
+                            trips.append([])
+                            trip = trips[id_trip_choice]
+                        num_turn = len(trip)
+                        try:
+                            id_turn_choice = random.randint(0, num_turn-1)
+                        except:
+                            id_turn_choice = 0
+                        device.append_turn(turn, id_trip = id_trip_choice, id_turn = id_turn_choice)
+                    else:
+                        trip = device.get_trip()
+                        num_turn = len(trip)
+                        try:
+                            id_turn_choice = random.randint(0, num_turn-1)
+                        except:
+                            id_turn_choice = 0
+                        device.append_turn(turn, id_turn = id_turn_choice)
+
+                    
     new_individual0 = Individual(id-1, list_device0,  list_target0)
     new_individual1 = Individual(id,list_device1, list_target1)
-    return new_individual0, new_individual1 
+    return new_individual0, new_individual1     
 
 def crossover_chromosomes(id, individual_adam, individual_eva):
 
     lucky_num = random.random()
-    if lucky_num <= 2:
+    if lucky_num <= 0.5:
         new_individual0, new_individual1 = crossover_target(id, individual_adam, individual_eva)
-    # else:
-    #     new_individual0, new_individual1 = crossover_device(id, individual_adam, individual_eva)
+    else:
+        new_individual0, new_individual1 = crossover_device(id, individual_adam, individual_eva)
     
     return new_individual0, new_individual1

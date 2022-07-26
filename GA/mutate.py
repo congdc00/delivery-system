@@ -59,7 +59,6 @@ def mutate_turn(turn):
 def check_same(turn_tmp, turn):
     
     if hex(id(turn_tmp)) == hex(id(turn)):
-        # print("hai cai giong nhau la {} va {}".format(turn_tmp.get_target(), turn.get_target()))
         return True
     else:
         return False
@@ -76,12 +75,12 @@ def mutate_chromosomes(id, individual):
         trip = target.get_trip()
         tmp = random.random()
         # dot bien
-        if tmp<0.2:
+        if tmp<0.9:
             for turn in trip:
                 tmp_x = random.random()
                 if tmp_x<0.3:
                     mutate_turn(turn)
-        elif tmp>=0.2 and tmp<=0.6:
+        elif tmp>=0.9 and tmp<=0.95:
 
             weight = random.randint(1,10)
             id_device = random.randint(0, NUM_DRONE+NUM_TRUCK-1)
@@ -104,7 +103,10 @@ def mutate_chromosomes(id, individual):
             else:
                 trip_tmp = device.get_trip()
                 num_turn = len(trip_tmp)  
-                id_turn = random.randint(0, num_turn-1)
+                try:
+                    id_turn = random.randint(0, num_turn-1)
+                except:
+                    id_turn = 0
                 device.append_turn(turn, id_turn)
 
         else:

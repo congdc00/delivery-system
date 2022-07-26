@@ -2,6 +2,8 @@
 su dung Genetic Algorithm
 '''
 from pickletools import read_unicodestring1
+
+from numpy import histogram
 from calculator.weight import sum_weight
 from object.target import Target
 from util import load_data 
@@ -20,6 +22,7 @@ from GA.selection import selection_chromosomes
 from GA.education import education
 from util.duplicate import copy_individual
 from GA.screening import choice_new_population
+from util.show import show_histogram, show_map
 
 def find_best_individual(id, population):
     max_fitness = 0
@@ -91,8 +94,10 @@ if __name__ == "__main__":
         
     
     
-
-    for i in range (0, 1):
+    fitness_log =[]
+    count = 0
+    max_fitness = 0
+    for i in range (0, 1000):
         print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
         
         
@@ -123,7 +128,7 @@ if __name__ == "__main__":
             
 
         #Dot bien
-        for j in range (0,1):
+        for j in range (0,20):
             id += 1
             individual_choice = choice_mutate(population)
             # show_info_individual(individual_choice, text="truoc dot bien")
@@ -134,5 +139,19 @@ if __name__ == "__main__":
         population_tmp = education(population_tmp, matrix_distance)
 
         population = choice_new_population(population_tmp)
-        
         show_info_population(population, type = "mini")
+
+        fitness_tmp = population[0].get_fitness()
+        fitness_log.append(fitness_tmp)
+        if max_fitness == fitness_tmp:
+            count += 1
+            
+        else:
+            max_fitness = fitness_tmp
+            count =0 
+        
+        if count == 100:
+            break
+
+    show_histogram(fitness_log)
+    show_map(best_individual)

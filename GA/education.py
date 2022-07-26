@@ -1,6 +1,6 @@
 from turtle import update
 from calculator.weight import sum_weight
-from config import NUM_DRONE, NUM_TRUCK
+from config import CAP_DRONE, CAP_TRUCK, NUM_DRONE, NUM_TRUCK
 from util.load_data import load_list_device
 from util.show import show_info_individual, show_info_target, show_info_device
 import random
@@ -46,7 +46,7 @@ def fix_target(list_target, list_device):
             add_weight = lower_bound - weight_delivered
             index_turn_choice = choice_device(target, list_device)
             if index_turn_choice != -1:
-                print('bo xung them cho target {}'.format(target.get_id()))
+                # print('bo xung them cho target {}'.format(target.get_id()))
                 turn = list_turn[index_turn_choice]
                 weight_turn = turn.get_bound()
                 new_weight = weight_turn + add_weight
@@ -55,9 +55,58 @@ def fix_target(list_target, list_device):
                 
 
 
-def fix_device(list_target, list_device):
+def fix_device( list_device):
 
-    return True
+    for device in list_device:
+        id_device = device.get_id()
+        if id_device < NUM_DRONE:
+            trips = device.get_trips()
+            for trip in trips:
+                sum_weight = 0
+                max_weight = 0
+                id_max_weight = 0
+                count = -1
+                for turn in trip:
+                    weight = turn.get_bound()
+                    sum_weight += weight
+                    count += 1
+                    if weight > max_weight:
+                        max_weight = weight
+                        id_max_weight = count
+                
+                if sum_weight > CAP_DRONE:
+                    turn = trip[id_max_weight]
+                    
+                    if sum_weight - CAP_DRONE >= turn.get_bound():
+                        turn.update_bound(1)
+                    
+                    else:
+                        turn.update_bound( turn.get_bound() - (sum_weight - CAP_DRONE))
+
+        else:
+            trip = device.get_trip()
+            sum_weight = 0
+            max_weight = 0
+            id_max_weight = 0
+            count = -1
+            for turn in trip:
+                weight = turn.get_bound()
+                sum_weight += weight
+                count += 1
+                if weight > max_weight:
+                    max_weight = weight
+                    id_max_weight = count
+            
+            if sum_weight > CAP_TRUCK:
+                turn = trip[id_max_weight]
+                
+                if sum_weight - CAP_TRUCK >= turn.get_bound():
+                    turn.update_bound(1)
+                    
+                else:
+                    turn.update_bound(turn.get_bound() - (sum_weight - CAP_TRUCK))
+
+
 
 def processing(individual, matrix_distance):
     
@@ -68,14 +117,17 @@ def processing(individual, matrix_distance):
     fix_target(list_target, list_device)
     
     # xu ly thiet bi
-    fix_device(list_target, list_device)
+    # show_info_individual(individual, text="truoc khi education")
+    fix_device(list_device)
+    # show_info_individual(individual, text="sau khi education")
 
 
 def education(population, matrix_distance):
     # education tung ca the
 
     for individual in population:
-        show_info_individual(individual, text="truoc khi education")
-        processing(individual, matrix_distance)
-        show_info_individual(individual, text="sau khi education")
+        fitness = individual.get_fitness()
+        if fitness < -30:
+            processing(individual, matrix_distance)
+        
     return population
