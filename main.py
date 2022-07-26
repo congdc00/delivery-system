@@ -92,7 +92,7 @@ if __name__ == "__main__":
     
     
 
-    for i in range (0, 100):
+    for i in range (0, 1):
         print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
         
         
@@ -131,7 +131,7 @@ if __name__ == "__main__":
             # show_info_individual(new_individual, text="sau dot bien")
             population_tmp.append(new_individual)
         
-        #population_tmp = education(population_tmp, matrix_distance)
+        population_tmp = education(population_tmp, matrix_distance)
 
         population = choice_new_population(population_tmp)
         
