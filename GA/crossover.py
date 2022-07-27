@@ -263,7 +263,7 @@ def crossover_device(id, individual_adam, individual_eva):
 def crossover_chromosomes(id, individual_adam, individual_eva):
 
     lucky_num = random.random()
-    if lucky_num <= 0.6:
+    if lucky_num <= 0.3:
         new_individual0, new_individual1 = crossover_target(id, individual_adam, individual_eva)
     else:
         new_individual0, new_individual1 = crossover_device(id, individual_adam, individual_eva)
