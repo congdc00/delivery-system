@@ -26,49 +26,10 @@
     </style>
 </head>
 <body>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">
-                Bán hàng
-            </a>
-            <div class="navbar-search search col-sm-7 col-xs-11">
-                  <form class="d-flex" action="/search" method="get">
-                      <input class="form-control me-2" type="search" placeholder="Nhập sản phẩm cần tìm" name="query" id="query">
-                      <button class="btn btn-outline-success" type="submit">
-                            <i class="bi bi-search"></i>
-                      </button>
-                  </form>
-                </div>
-            <div class="nav justify-content-end" id="navbarScroll">
-                {% if user.username %}
-                    <div class="dropdown">
-                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                            Xin chào {{user.username}}
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
-                            <li><a class="dropdown-item active" href="{% url 'notifications' %}">Thông báo</a></li>
-                            <li><a class="dropdown-item" href="{% url 'order' %}">Theo dõi đơn hàng</a></li>
-                            <li><a class="dropdown-item" href="{% url 'information' %}">Thông tin cá nhân</a></li>
-                            <li><a class="dropdown-item" href="{% url 'contact' %}">contact</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{% url 'logout' %}">Đăng xuất</a></li>
-                        </ul>
-                    </div>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Đăng nhập</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'register' %}">Đăng ký</a>
-                    </li>
-                {% endif %}
-                <a  class="btn btn-primary"  href="{% url 'cart' %}">
-                    <i class="bi bi-cart4"></i>
-
-                </a>
-            </div>
-        </div>
-    </nav>
+   
+    <title>
+        Đây là hệ thống giao hàng của đinh chí công
+    </title>
 
     <div class="container">
         {% block content %}
