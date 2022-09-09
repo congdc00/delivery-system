@@ -2,7 +2,7 @@ import random
 
 import sys
 
-sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
+sys.path.append('/Users/dinhchicong/Project/delivery-system/back_end/schedule_delivery')
 
 from calculator.fitness_and_point import sum_fitness
 from util.duplicate import copy_individual

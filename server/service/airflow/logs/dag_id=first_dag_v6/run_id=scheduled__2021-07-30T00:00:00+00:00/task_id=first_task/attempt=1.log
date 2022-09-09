@@ -1,0 +1,34 @@
+[2022-09-08T10:33:41.796+0000] {taskinstance.py:1171} INFO - Dependencies all met for <TaskInstance: first_dag_v6.first_task scheduled__2021-07-30T00:00:00+00:00 [queued]>
+[2022-09-08T10:33:41.810+0000] {taskinstance.py:1171} INFO - Dependencies all met for <TaskInstance: first_dag_v6.first_task scheduled__2021-07-30T00:00:00+00:00 [queued]>
+[2022-09-08T10:33:41.811+0000] {taskinstance.py:1368} INFO - 
+--------------------------------------------------------------------------------
+[2022-09-08T10:33:41.815+0000] {taskinstance.py:1369} INFO - Starting attempt 1 of 6
+[2022-09-08T10:33:41.816+0000] {taskinstance.py:1370} INFO - 
+--------------------------------------------------------------------------------
+[2022-09-08T10:33:41.832+0000] {taskinstance.py:1389} INFO - Executing <Task(BashOperator): first_task> on 2021-07-30 00:00:00+00:00
+[2022-09-08T10:33:41.837+0000] {standard_task_runner.py:52} INFO - Started process 3770 to run task
+[2022-09-08T10:33:41.855+0000] {standard_task_runner.py:79} INFO - Running: ['***', 'tasks', 'run', 'first_dag_v6', 'first_task', 'scheduled__2021-07-30T00:00:00+00:00', '--job-id', '146', '--raw', '--subdir', 'DAGS_FOLDER/example_dags.py', '--cfg-path', '/tmp/tmpb99o327o', '--error-file', '/tmp/tmp2_7efptj']
+[2022-09-08T10:33:41.862+0000] {standard_task_runner.py:80} INFO - Job 146: Subtask first_task
+[2022-09-08T10:33:41.933+0000] {task_command.py:371} INFO - Running <TaskInstance: first_dag_v6.first_task scheduled__2021-07-30T00:00:00+00:00 [running]> on host c56eb7ae2624
+[2022-09-08T10:33:42.392+0000] {taskinstance.py:1583} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=coder2j
+AIRFLOW_CTX_DAG_ID=first_dag_v6
+AIRFLOW_CTX_TASK_ID=first_task
+AIRFLOW_CTX_EXECUTION_DATE=2021-07-30T00:00:00+00:00
+AIRFLOW_CTX_TRY_NUMBER=1
+AIRFLOW_CTX_DAG_RUN_ID=scheduled__2021-07-30T00:00:00+00:00
+[2022-09-08T10:33:42.400+0000] {subprocess.py:62} INFO - Tmp dir root location: 
+ /tmp
+[2022-09-08T10:33:42.413+0000] {subprocess.py:74} INFO - Running command: ['/bin/bash', '-c', 'hello day la dinh chi cong']
+[2022-09-08T10:33:42.442+0000] {subprocess.py:85} INFO - Output:
+[2022-09-08T10:33:42.445+0000] {subprocess.py:92} INFO - /bin/bash: line 1: hello: command not found
+[2022-09-08T10:33:42.447+0000] {subprocess.py:96} INFO - Command exited with return code 127
+[2022-09-08T10:33:42.530+0000] {taskinstance.py:1902} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/operators/bash.py", line 197, in execute
+    f'Bash command failed. The command returned a non-zero exit code {result.exit_code}.'
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 127.
+[2022-09-08T10:33:42.542+0000] {taskinstance.py:1412} INFO - Marking task as UP_FOR_RETRY. dag_id=first_dag_v6, task_id=first_task, execution_date=20210730T000000, start_date=20220908T103341, end_date=20220908T103342
+[2022-09-08T10:33:42.568+0000] {standard_task_runner.py:97} ERROR - Failed to execute job 146 for task first_task (Bash command failed. The command returned a non-zero exit code 127.; 3770)
+[2022-09-08T10:33:42.626+0000] {local_task_job.py:156} INFO - Task exited with return code 1
+[2022-09-08T10:33:42.825+0000] {local_task_job.py:279} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,6 +1,6 @@
 import sys
 
-sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
+sys.path.append('/Users/dinhchicong/Project/delivery-system/back_end/schedule_delivery')
 from object.individual import Individual
 
 def copy_individual(id, individual):

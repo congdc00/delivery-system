@@ -4,7 +4,7 @@ import copy
 
 from zmq import device
 
-sys.path.append('/Users/dinhchicong/Project/scheduled-deliver')
+sys.path.append('/Users/dinhchicong/Project/delivery-system/back_end/schedule_delivery')
 import numpy as np
 import csv
 from util.load_data import load_list_device, load_list_target

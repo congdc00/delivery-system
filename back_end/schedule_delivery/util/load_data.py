@@ -1,6 +1,6 @@
 ﻿import sys
 
-sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
+sys.path.append('/Users/dinhchicong/Project/delivery-system/back_end/schedule_delivery')
 
 import csv
 import glob

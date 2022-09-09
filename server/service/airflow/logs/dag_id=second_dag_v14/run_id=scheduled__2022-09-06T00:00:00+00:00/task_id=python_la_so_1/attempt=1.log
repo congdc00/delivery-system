@@ -1,0 +1,24 @@
+[2022-09-08T11:27:31.994+0000] {taskinstance.py:1171} INFO - Dependencies all met for <TaskInstance: second_dag_v14.python_la_so_1 scheduled__2022-09-06T00:00:00+00:00 [queued]>
+[2022-09-08T11:27:32.001+0000] {taskinstance.py:1171} INFO - Dependencies all met for <TaskInstance: second_dag_v14.python_la_so_1 scheduled__2022-09-06T00:00:00+00:00 [queued]>
+[2022-09-08T11:27:32.002+0000] {taskinstance.py:1368} INFO - 
+--------------------------------------------------------------------------------
+[2022-09-08T11:27:32.003+0000] {taskinstance.py:1369} INFO - Starting attempt 1 of 6
+[2022-09-08T11:27:32.003+0000] {taskinstance.py:1370} INFO - 
+--------------------------------------------------------------------------------
+[2022-09-08T11:27:32.012+0000] {taskinstance.py:1389} INFO - Executing <Task(PythonOperator): python_la_so_1> on 2022-09-06 00:00:00+00:00
+[2022-09-08T11:27:32.016+0000] {standard_task_runner.py:52} INFO - Started process 1766 to run task
+[2022-09-08T11:27:32.018+0000] {standard_task_runner.py:79} INFO - Running: ['***', 'tasks', 'run', 'second_dag_v14', 'python_la_so_1', 'scheduled__2022-09-06T00:00:00+00:00', '--job-id', '35', '--raw', '--subdir', 'DAGS_FOLDER/create_dag_with_python_operator.py', '--cfg-path', '/tmp/tmpndwe7w9h', '--error-file', '/tmp/tmp_a0c1kfa']
+[2022-09-08T11:27:32.020+0000] {standard_task_runner.py:80} INFO - Job 35: Subtask python_la_so_1
+[2022-09-08T11:27:32.061+0000] {task_command.py:371} INFO - Running <TaskInstance: second_dag_v14.python_la_so_1 scheduled__2022-09-06T00:00:00+00:00 [running]> on host e458dbb0fb9f
+[2022-09-08T11:27:32.103+0000] {taskinstance.py:1583} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=coder2j
+AIRFLOW_CTX_DAG_ID=second_dag_v14
+AIRFLOW_CTX_TASK_ID=python_la_so_1
+AIRFLOW_CTX_EXECUTION_DATE=2022-09-06T00:00:00+00:00
+AIRFLOW_CTX_TRY_NUMBER=1
+AIRFLOW_CTX_DAG_RUN_ID=scheduled__2022-09-06T00:00:00+00:00
+[2022-09-08T11:27:32.105+0000] {logging_mixin.py:115} INFO - hello world
+[2022-09-08T11:27:32.106+0000] {python.py:173} INFO - Done. Returned value was: None
+[2022-09-08T11:27:32.321+0000] {taskinstance.py:1412} INFO - Marking task as SUCCESS. dag_id=second_dag_v14, task_id=python_la_so_1, execution_date=20220906T000000, start_date=20220908T112731, end_date=20220908T112732
+[2022-09-08T11:27:32.362+0000] {local_task_job.py:156} INFO - Task exited with return code 0
+[2022-09-08T11:27:32.387+0000] {local_task_job.py:279} INFO - 0 downstream tasks scheduled from follow-on schedule check

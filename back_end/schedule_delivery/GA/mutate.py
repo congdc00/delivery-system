@@ -7,7 +7,7 @@ from config import NUM_DRONE, NUM_TRUCK
 from util.load_data import load_list_device
 from util.show import show_info_individual
 
-sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
+sys.path.append('/Users/dinhchicong/Project/delivery-system/back_end/schedule_delivery')
 
 from util.duplicate import copy_individual
 from object.turn import Turn

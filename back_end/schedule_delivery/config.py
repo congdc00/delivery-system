@@ -1,4 +1,4 @@
-ROOT_PATH_DATA = '/Users/dinhchicong/Project/scheduled-delivery/data/data_test'
+ROOT_PATH_DATA = '/Users/dinhchicong/Project/delivery-system/back_end/schedule_delivery/data/data_test'
 
 #param
 

@@ -9,7 +9,7 @@ import sys
 
 from util.show import show_info_individual
 
-sys.path.append('/Users/dinhchicong/Project/scheduled-delivery')
+sys.path.append('/Users/dinhchicong/Project/delivery-system/back_end/schedule_delivery')
 
 from util.duplicate import copy_individual
 from util.find import find_device_by_id

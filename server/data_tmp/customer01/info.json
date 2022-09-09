@@ -1,0 +1,31 @@
+{
+    "info_customer":{
+        "full_name": "dinh chi cong",
+        "age": 22,
+        "phone_number": "0866080755",
+        "level_customer": 0,
+        "location": {
+            "street": "duong Linh Nam",
+            "district": "quan Hoang Mai",
+            "city": "Hanoi",
+            "nation": "Vietnam",
+            "coordinate": [20.9796604, 105.8887476]
+        }
+    },
+    "info_order":{
+        "type": "express",
+        "time_order": "Sat Jul 13 09:09:43 2019"
+    },
+    "info_package":{
+        "0":{
+            "id_product": "9999110101010",
+            "number": "5",
+            "id_warehouse": "00001"
+        },
+        "1":{
+            "id_product": "080348234234",
+            "number": "1",
+            "id_warehouse": "00001"
+        }
+    }
+}

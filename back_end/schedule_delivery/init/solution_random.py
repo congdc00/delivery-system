@@ -2,7 +2,7 @@
 import sys
 import copy
 
-sys.path.append('/Users/dinhchicong/Project/scheduled-deliver')
+sys.path.append('/Users/dinhchicong/Project/delivery-system/back_end/schedule_delivery')
 import numpy as np
 import csv
 import random

@@ -1,7 +1,7 @@
 
 import sys
 
-sys.path.append('/home/congdc/project/scheduled-delivery')
+sys.path.append('/Users/dinhchicong/Project/delivery-system/back_end/schedule_delivery')
 
 from config import NUM_DRONE
 

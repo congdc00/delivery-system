@@ -1,0 +1,21 @@
+{
+    "info_customer":{
+        "full_name": "dinh chi cong",
+        "age": 22,
+        "phone_number": "0866080755",
+        "weight": 0,
+        "location": [105.8412,21.0245]
+    },
+    "info_package":{
+        "0":{
+            "id_product": "9999110101010",
+            "number": "5",
+            "id_warehouse": "00001"
+        },
+        "1":{
+            "id_product": "080348234234",
+            "number": "1",
+            "id_warehouse": "00001"
+        }
+    }
+}

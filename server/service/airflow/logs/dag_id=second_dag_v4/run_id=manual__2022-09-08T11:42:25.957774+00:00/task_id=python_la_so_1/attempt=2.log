@@ -1,0 +1,34 @@
+[2022-09-08T11:44:28.495+0000] {taskinstance.py:1171} INFO - Dependencies all met for <TaskInstance: second_dag_v4.python_la_so_1 manual__2022-09-08T11:42:25.957774+00:00 [queued]>
+[2022-09-08T11:44:28.503+0000] {taskinstance.py:1171} INFO - Dependencies all met for <TaskInstance: second_dag_v4.python_la_so_1 manual__2022-09-08T11:42:25.957774+00:00 [queued]>
+[2022-09-08T11:44:28.504+0000] {taskinstance.py:1368} INFO - 
+--------------------------------------------------------------------------------
+[2022-09-08T11:44:28.506+0000] {taskinstance.py:1369} INFO - Starting attempt 2 of 6
+[2022-09-08T11:44:28.508+0000] {taskinstance.py:1370} INFO - 
+--------------------------------------------------------------------------------
+[2022-09-08T11:44:28.518+0000] {taskinstance.py:1389} INFO - Executing <Task(PythonOperator): python_la_so_1> on 2022-09-08 11:42:25.957774+00:00
+[2022-09-08T11:44:28.524+0000] {standard_task_runner.py:52} INFO - Started process 3013 to run task
+[2022-09-08T11:44:28.533+0000] {standard_task_runner.py:79} INFO - Running: ['***', 'tasks', 'run', 'second_dag_v4', 'python_la_so_1', 'manual__2022-09-08T11:42:25.957774+00:00', '--job-id', '51', '--raw', '--subdir', 'DAGS_FOLDER/create_dag_with_python_operator.py', '--cfg-path', '/tmp/tmpq81v14cw', '--error-file', '/tmp/tmpz981lzmx']
+[2022-09-08T11:44:28.536+0000] {standard_task_runner.py:80} INFO - Job 51: Subtask python_la_so_1
+[2022-09-08T11:44:28.601+0000] {task_command.py:371} INFO - Running <TaskInstance: second_dag_v4.python_la_so_1 manual__2022-09-08T11:42:25.957774+00:00 [running]> on host e458dbb0fb9f
+[2022-09-08T11:44:28.657+0000] {taskinstance.py:1583} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=coder2j
+AIRFLOW_CTX_DAG_ID=second_dag_v4
+AIRFLOW_CTX_TASK_ID=python_la_so_1
+AIRFLOW_CTX_EXECUTION_DATE=2022-09-08T11:42:25.957774+00:00
+AIRFLOW_CTX_TRY_NUMBER=2
+AIRFLOW_CTX_DAG_RUN_ID=manual__2022-09-08T11:42:25.957774+00:00
+[2022-09-08T11:44:28.660+0000] {taskinstance.py:1902} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/operators/python.py", line 171, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/operators/python.py", line 189, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/create_dag_with_python_operator.py", line 16, in first_function
+    comment = ti.xcom_pull(task_id = "python2")
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/utils/session.py", line 71, in wrapper
+    return func(*args, session=session, **kwargs)
+TypeError: xcom_pull() got an unexpected keyword argument 'task_id'
+[2022-09-08T11:44:28.671+0000] {taskinstance.py:1412} INFO - Marking task as UP_FOR_RETRY. dag_id=second_dag_v4, task_id=python_la_so_1, execution_date=20220908T114225, start_date=20220908T114428, end_date=20220908T114428
+[2022-09-08T11:44:28.682+0000] {standard_task_runner.py:97} ERROR - Failed to execute job 51 for task python_la_so_1 (xcom_pull() got an unexpected keyword argument 'task_id'; 3013)
+[2022-09-08T11:44:28.708+0000] {local_task_job.py:156} INFO - Task exited with return code 1
+[2022-09-08T11:44:28.729+0000] {local_task_job.py:279} INFO - 0 downstream tasks scheduled from follow-on schedule check

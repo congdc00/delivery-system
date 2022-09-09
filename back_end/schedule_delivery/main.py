@@ -98,7 +98,7 @@ if __name__ == "__main__":
     fitness_log =[]
     count = 0
     max_fitness = 0
-    for i in range (0, 50):
+    for i in range (0, 20):
         print("\t ------------------------------vong lap thu {} -----------------------------".format(i))
         
         
@@ -154,8 +154,6 @@ if __name__ == "__main__":
         if fitness_tmp == 1.0:
             break
 
-    print(fitness_log)
-
-#show_map(best_individual)
+    show_map(best_individual)
 
     
