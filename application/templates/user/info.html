@@ -1,0 +1,71 @@
+{% extends "base/base.html" %}
+
+{% block title %}Info user{% endblock %}
+
+{% block content %}
+<h1>Quản lý thông tin</h1>
+
+<br>
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-2">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-info" role="tab" aria-controls="list-info">Thông tin cá nhân</a>
+          <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-service" role="tab" aria-controls="llist-service">Điều khoản dịch vụ</a>
+          <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-history" role="tab" aria-controls="list-history">Lịch sử truy cập</a>
+          <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-company" role="tab" aria-controls="list-company">Quản lý doanh nghiệp</a>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="list-info" role="tabpanel" aria-labelledby="list-home-list">
+                <div class="shadow-sm p-3 mb-5 bg-body rounded">
+                        <div class="accordion-body">
+                            Họ và tên
+                            <input class="form-control" type="text" placeholder={{username}} aria-label="Disabled input example" disabled>
+                            <br>
+                            Số thẻ
+                            <input class="form-control" type="text" placeholder={{id_card}} aria-label="Disabled input example" disabled>
+                            <br>
+                            Ngày sinh
+                            <input class="form-control" type="text" placeholder={{dob}} aria-label="Disabled input example" disabled>
+                            <br>
+                            Giới tính
+                            <input class="form-control" type="text" placeholder={{sex}} aria-label="Disabled input example" disabled>
+                            <br>
+                            Quốc tịch 
+                            <input class="form-control" type="text" placeholder={{nationality}} aria-label="Disabled input example" disabled>
+                            <br>
+                            Quê quán
+                            <input class="form-control" type="text" placeholder={{place_of_origin}} aria-label="Disabled input example" disabled>
+                            <br>
+                            Thường trú
+                            <input class="form-control" type="text" placeholder={{place_of_recidence}} aria-label="Disabled input example" disabled>
+                            <br>
+                            Mã số thuế
+                            <input class="form-control" type="text" placeholder={{date_of_expiry}} aria-label="Disabled input example" disabled>
+                            <br>
+                            Gmail
+                              <input class="form-control" type="text" placeholder={{email}} aria-label="Disabled input example" disabled>
+                            <br>
+                            Mật khẩu
+                              <input class="form-control" type="text" placeholder={{password}} aria-label="Disabled input example" disabled>
+                            <br>
+                            <form method="POST">
+                              <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">email</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                              </div>
+                              <button type="submit" class="btn btn-primary">Thay đổi</button>
+                            </form>
+                        </div>
+                </div>
+
+          </div>
+        
+        </div>
+      </div>
+</div>
+
+{% endblock %}

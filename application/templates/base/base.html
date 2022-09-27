@@ -12,24 +12,83 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
+    <!-- Background-->
+    <style>
+      html, body{
+          height: 100%;
+          background-color: #fdf5e6
+
+      }
+    </style>
 </head>
 <body>
-    <nav class="navbar bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-            <img src="https://github.com/congdinhchi/delivery-system/blob/dev_cong/application/static/logo_axava.png" alt="logo" width="30" height="24" class="d-inline-block align-text-top">
-            Delivery system
-          </a>
+  
+    <nav class="navbar sticky-top navbar-expand-lg" style="background-color: #faebd7;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+          <img src="https://drive.google.com/uc?id=1VDI8lfuXMDRM3KTwWw03Oh9P6GmOvOk1" alt="logo" width="30" height="30" class="d-inline-block align-text-top">
+          CongDC Delivery system 
+        </a>
+        {% block navbar %}
+        {% endblock %}  
+        {% if session_key %}
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-light">
+              Thông báo <span class="badge text-bg-secondary">4</span>
+            </button>
+          {% if admin %}
+         
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                  Trung tâm điều khiển
+              </button>
+              <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
+                  <li><a class="dropdown-item " href="#">Bản đồ hành trình</a></li>
+                  <li><a class="dropdown-item " href="#">Quản lý đơn hàng</a></li>
+                  <li><a class="dropdown-item " href="#">Quản lý thiết bị</a></li>
+                  <li><a class="dropdown-item " href="#">Quản lý kho</a></li>
+                  <li><a class="dropdown-item " href="#">Đối tác</a></li>
+                  <li><a class="dropdown-item " href="#">Kiểm soát hệ thống</a></li>
+                  <li><a class="dropdown-item " href="/setting">Cài đặt</a></li>
+              </ul>
+            </div>
+          {% else %}
+          <div class="dropdown">
+            <button class="btn btn-outline-seccondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                Quản lý tài khoản
+            </button>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
+                
+                <li><a class="dropdown-item " href="/info-user">Thông tin cá nhân</a></li>
+                <li><a class="dropdown-item " href="#">Quản lý doanh thu</a></li>
+                <li><a class="dropdown-item " href="#">Doanh nghiệp</a></li>
+                <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+            </ul>
+          </div>
+          {% endif %}
+          </div>
+        {% else %}
+        <div class="nav justify-content-end" id="navbarScroll">
+          <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/login">Đăng nhập</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/register">Đăng ký</a>
+          </li>
         </div>
-    </nav>
+        {% endif %}
 
+      </div>
+      
+    </nav>
     {% block content%}
     {% endblock%}
-    
+
 </body>
 
 <!-- Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
