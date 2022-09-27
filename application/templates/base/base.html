@@ -53,18 +53,32 @@
               </ul>
             </div>
           {% else %}
-          <div class="dropdown">
-            <button class="btn btn-outline-seccondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                Quản lý tài khoản
-            </button>
-            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
-                
-                <li><a class="dropdown-item " href="/info-user">Thông tin cá nhân</a></li>
-                <li><a class="dropdown-item " href="#">Quản lý doanh thu</a></li>
-                <li><a class="dropdown-item " href="#">Doanh nghiệp</a></li>
-                <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
-            </ul>
-          </div>
+            {% if enterprise %}
+              <div class="dropdown">
+                <button class="btn btn-outline-seccondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                    Quản lý tài khoản doanh nghiệp
+                </button>
+                <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
+                    <li><a class="dropdown-item " href="/info">Thông tin doanh nghiệp</a></li>
+                    <li><a class="dropdown-item " href="#">Quản lý doanh thu</a></li>
+                    <li><a class="dropdown-item " href="/logout-enterprise">Cá nhân</a></li>
+                    <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                </ul>
+              </div>
+            {% else %}
+              <div class="dropdown">
+                <button class="btn btn-outline-seccondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                    Quản lý tài khoản
+                </button>
+                <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
+                    
+                    <li><a class="dropdown-item " href="/info">Thông tin cá nhân</a></li>
+                    <li><a class="dropdown-item " href="#">Quản lý doanh thu</a></li>
+                    <li><a class="dropdown-item " href="/user-to-enterprise">Doanh nghiệp</a></li>
+                    <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                </ul>
+              </div>
+            {% endif %}
           {% endif %}
           </div>
         {% else %}

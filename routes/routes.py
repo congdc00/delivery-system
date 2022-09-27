@@ -1,6 +1,8 @@
 
 from flask import request, redirect, url_for, render_template, session,flash
 from flask_cors import cross_origin
+
+from application.models import enterprise
 from . import app
 from app import db
 from loguru import logger
@@ -10,6 +12,8 @@ from application.controller.user.info import info_post,info_get
 from application.controller.admin.admin import admin_get
 from application.controller.authentication.logout import logout_get
 from application.controller.admin.setting import setting_get
+from application.controller.user.u2e import u2e_get, u2e_post
+from application.controller.enterprise.register_enterprise import register_e_get
 
 @app.route('/', methods = ['POST', 'GET'])
 @cross_origin(origins='*')
@@ -17,6 +21,11 @@ def index():
     if "session_key" in session:
         session_key = session['session_key']
         admin = session['admin']
+
+        if "enterprise" in session:
+            enterprise = session['enterprise']
+            return render_template("index.html", session_key = session_key, admin = admin, enterprise = enterprise)
+
         return render_template("index.html", session_key = session_key, admin = admin)
     else:
         return render_template("index.html")
@@ -30,7 +39,7 @@ def admin():
 
         return redirect(url_for("index"))
 
-@app.route('/info-user', methods = ['GET'])
+@app.route('/info', methods = ['GET'])
 @cross_origin(origins='*')
 def info_user():
     if request.method == "POST":
@@ -70,6 +79,29 @@ def register():
 def setting():
     if request.method == "GET":
         return setting_get(session)
+
+@app.route('/user-to-enterprise', methods = ['GET', 'POST'])
+@cross_origin(origins='*')
+def u2e():
+    if request.method == "GET":
+        return u2e_get(session)
+    
+    if request.method == "POST":
+        return u2e_post(session, request)
+
+@app.route('/register-enterprise', methods = ['GET', 'POST'])
+@cross_origin(origins='*')
+def register_enterprise():
+    if request.method == "GET":
+        return register_e_get(session)
+
+@app.route('/logout-enterprise', methods = ['GET', 'POST'])
+@cross_origin(origins='*')
+def logout_enterprise():
+    if request.method == "GET":
+        if "enterprise" in session:
+            session.pop("enterprise", None)
+            return redirect(url_for('index'))
 
 # @app.route('/add', methods = ['POST', 'GET'])
 # @cross_origin(origins='*')

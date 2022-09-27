@@ -17,6 +17,7 @@ class User(db.Model):
     date_of_expiry = db.Column(db.String(80), unique=False)
     tax_id_number = db.Column(db.String(20), unique=True)
     admin = db.Column(db.Boolean, unique=False, default=False)
+    money = db.Column(db.Integer, unique=False)
 
     def __init__(self, email, phone_number, password, username, id_card, dob, sex, nationality, place_of_origin, place_of_recidence, date_of_expiry, tax_id_number) :
 
