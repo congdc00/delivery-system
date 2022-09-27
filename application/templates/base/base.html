@@ -33,9 +33,9 @@
         {% endblock %}  
         {% if session_key %}
           <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="button" class="btn btn-light">
+            <a type="button" class="btn btn-light" href="/notification">
               Thông báo <span class="badge text-bg-secondary">4</span>
-            </button>
+            </a>
           {% if admin %}
          
             <div class="dropdown">
@@ -60,7 +60,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
                     <li><a class="dropdown-item " href="/info">Thông tin doanh nghiệp</a></li>
-                    <li><a class="dropdown-item " href="#">Quản lý doanh thu</a></li>
+                    <li><a class="dropdown-item " href="/revenue">Quản lý doanh thu</a></li>
                     <li><a class="dropdown-item " href="/logout-enterprise">Cá nhân</a></li>
                     <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
                 </ul>
@@ -73,7 +73,7 @@
                 <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
                     
                     <li><a class="dropdown-item " href="/info">Thông tin cá nhân</a></li>
-                    <li><a class="dropdown-item " href="#">Quản lý doanh thu</a></li>
+                    <li><a class="dropdown-item " href="/revenue">Quản lý doanh thu</a></li>
                     <li><a class="dropdown-item " href="/user-to-enterprise">Doanh nghiệp</a></li>
                     <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
                 </ul>

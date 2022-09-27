@@ -1,0 +1,30 @@
+{% extends "base/base.html" %}
+
+{% block title %} Thông báo {% endblock %}
+
+{% block content %}
+<br>
+{%if list_notification %}
+    {% if admin %}
+    {% else %}
+        {% if enterprise %}
+        {% else %}
+        {% endif %}
+    {% endif %}
+    <div class="container-fluid">
+        <div class="list-group">
+            {% for notification in list_notification %}
+                <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{notification.title}}</h5>
+                    <small>{{notification.time}}</small>
+                    </div>
+                    <p class="mb-1">{{notification.content}}</p>
+                    <small> Thông báo </small>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}

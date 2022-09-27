@@ -14,6 +14,8 @@ from application.controller.authentication.logout import logout_get
 from application.controller.admin.setting import setting_get
 from application.controller.user.u2e import u2e_get, u2e_post
 from application.controller.enterprise.register_enterprise import register_e_get
+from application.controller.user.revenue import revenue_get, revenue_post
+from application.controller.notification import notification_get, notification_post
 
 @app.route('/', methods = ['POST', 'GET'])
 @cross_origin(origins='*')
@@ -103,6 +105,23 @@ def logout_enterprise():
             session.pop("enterprise", None)
             return redirect(url_for('index'))
 
+@app.route('/revenue', methods = ['GET', 'POST'])
+@cross_origin(origins='*')
+def revenue():
+    if request.method == "GET":
+        return revenue_get(session)
+    
+    if request.method == "POST":
+        return revenue_post(session, request)
+
+@app.route('/notification', methods = ['GET', 'POST'])
+@cross_origin(origins='*')
+def notification():
+    if request.method == "GET":
+        return notification_get(session)
+    
+    if request.method == "POST":
+        return notification_post(session, request)
 # @app.route('/add', methods = ['POST', 'GET'])
 # @cross_origin(origins='*')
 # def add():

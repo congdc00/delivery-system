@@ -1,0 +1,17 @@
+{% extends "base/base.html" %}
+
+{% block title %} Tạo đơn hàng mới {% endblock %}
+
+{% block content %}
+<br>
+{%if list_notification %}
+    {% if admin %}
+    {% else %}
+        {% if enterprise %}
+        {% else %}
+        {% endif %}
+    {% endif %}
+
+{% endif %}
+
+{% endblock %}
