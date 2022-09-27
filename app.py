@@ -27,7 +27,7 @@ migrate = Migrate(app, db)
 
 import routes
 
-import application.models.user
+from application.models import user, customer, package
 
 if __name__ == "__main__":
 
