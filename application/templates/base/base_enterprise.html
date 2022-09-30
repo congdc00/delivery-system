@@ -1,0 +1,21 @@
+{% extends "base/base.html" %}
+
+{% block nav%}
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a type="button" class="btn btn-light" href="/notification">
+      Thông báo <span class="badge text-bg-secondary">4</span>
+    </a>
+    <div class="dropdown">
+        <button class="btn btn-outline-seccondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            Quản lý tài khoản doanh nghiệp
+        </button>
+        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item " href="{{url_for('enterprise.info_enterprise')}}">Thông tin doanh nghiệp</a></li>
+            <li><a class="dropdown-item " href="{{url_for('enterprise.revenue_enterprise')}}">Quản lý doanh thu</a></li>
+            <li><a class="dropdown-item " href="{{url_for('enterprise.logout_enterprise')}}">Cá nhân</a></li>
+            <li><a class="dropdown-item" href="{{url_for('authentication.logout')}}">Đăng xuất</a></li>
+        </ul>
+    </div>
+</div>
+
+{% endblock%}

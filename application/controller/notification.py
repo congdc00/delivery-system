@@ -21,6 +21,7 @@ def notification_get(session):
         user = User.query.filter_by(email = session_key).first()
         id_user = user.id
         list_notification = Notification.query.filter_by(id_receiver = id_user)
+        
         return render_template("notification.html", admin = admin, session_key = session_key, list_notification = list_notification)
     
     #enterprise

@@ -1,4 +1,4 @@
-
+# enterprise to user
 from . import db
 
 class E2U(db.Model):

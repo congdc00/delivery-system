@@ -1,0 +1,24 @@
+{% extends "base/base.html" %}
+
+{% block nav%}
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a type="button" class="btn btn-light" href="{{url_for('admin.notification_admin')}}">
+      Thông báo <span class="badge text-bg-secondary">4</span>
+    </a>
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            Trung tâm điều khiển
+        </button>
+        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item " href="/scheduler-map">Bản đồ hành trình</a></li>
+            <li><a class="dropdown-item " href="#">Quản lý đơn hàng</a></li>
+            <li><a class="dropdown-item " href="#">Quản lý thiết bị</a></li>
+            <li><a class="dropdown-item " href="#">Quản lý kho</a></li>
+            <li><a class="dropdown-item " href="#">Đối tác</a></li>
+            <li><a class="dropdown-item " href="#">Kiểm soát hệ thống</a></li>
+            <li><a class="dropdown-item " href="admin/setting">Cài đặt</a></li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base/base_enterprise.html" %}
+
+{% block title %}revenue enterprise{% endblock %}
+
+{% block content %}
+<br>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-2">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">Thống kê</a>
+          <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">Lịch sử</a>
+          <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Nạp - Rút</a>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                <div class="shadow-sm p-3 mb-5 bg-body rounded">
+                        <div class="accordion-body">
+                          
+                        </div>
+                </div>
+
+          </div>
+          <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+              <div class="shadow-sm p-3 mb-5 bg-body rounded">
+                  
+              </div>
+          </div>
+          <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+              <div class="shadow-sm p-3 mb-5 bg-body rounded">
+                
+              </div>
+          </div>
+          <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+              <div class="shadow-sm p-3 mb-5 bg-body rounded">
+                    <div class="accordion-body">
+                      Tài khoản:
+                        <input class="form-control" type="text" placeholder="#" aria-label="Disabled input example" disabled>
+                      <br>
+                      Số điện thoại:
+                        <input class="form-control" type="text" placeholder=# aria-label="Disabled input example" disabled>
+                      <br>
+                      Địa chỉ email:
+                      <input class="form-control" type="text" placeholder=# aria-label="Disabled input example" disabled>
+                      <br>
+                      <div class="d-grid gap-2 col-3 mx-auto">
+                        <a href="#" class="btn btn-primary" role="button">Cập nhập</a>
+                      <a href="#" class="btn btn-primary" role="button">Đổi mật khẩu</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="col-sm-3">
+            <div class="shadow-sm p-3 mb-5 bg-body rounded">
+                <h4> Số tiền kiếm được <span class="badge bg-warning"> {{enterprise.money}}</span></h4>   
+            </div>
+           <div class="shadow-sm p-3 mb-5 bg-body rounded">
+               <h4> Xuất báo cáo </h4>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

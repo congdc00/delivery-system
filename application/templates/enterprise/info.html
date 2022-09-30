@@ -1,0 +1,38 @@
+{% extends "base/base_enterprise.html" %}
+
+{% block title %}Info Enterprise{% endblock %}
+
+{% block content %}
+<h1>Quản lý thông tin</h1>
+<br>
+
+<div class="container-fluid">
+    <div class="row">
+    <div class="col-2">
+        <div class="list-group" id="list-tab" role="tablist">
+        <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-info" role="tab" aria-controls="list-info">Thông tin doanh nghiệp</a>
+        <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-service" role="tab" aria-controls="llist-service">Điều khoản hợp đồng</a>
+        <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-history" role="tab" aria-controls="list-history">Lịch sử tương tác</a>
+        </div>
+    </div>
+    <div class="col-7">
+        <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="list-info" role="tabpanel" aria-labelledby="list-home-list">
+                <div class="shadow-sm p-3 mb-5 bg-body rounded">
+                        <div class="accordion-body">
+                            Tên doanh nghiệp
+                            <input class="form-control" type="text" placeholder="{{enterprise.name}}" aria-label="Disabled input example" disabled>
+                            <br>
+                            Mã số thuế
+                            <input class="form-control" type="text" placeholder="{{enterprise.tax_id_number}}" aria-label="Disabled input example" disabled>
+                            <br>
+
+                        </div>
+                </div>
+
+        </div>
+        
+        </div>
+    </div>
+</div>
+{% endblock %}

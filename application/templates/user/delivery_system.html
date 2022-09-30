@@ -1,0 +1,152 @@
+{% extends "base/base.html" %}
+
+{% block title %} Hệ thống vận chuyển {% endblock %}
+
+{% block content %}
+<br>
+
+<h1 style="text-align:center;"> Hệ thống vận chuyển
+{% if enterprise %}
+     của doanh nghiệp
+{% else %}
+     cá nhân
+{% endif %}
+</h1>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-depot-list" data-bs-toggle="list" href="#list-depot" role="tab" aria-controls="list-info">Điểm lấy hàng</a>
+                <a class="list-group-item list-group-item-action" id="list-product-list" data-bs-toggle="list" href="#list-product" role="tab" aria-controls="list-product">Các mặt hàng</a>
+                <a class="list-group-item list-group-item-action" id="list-customer-list" data-bs-toggle="list" href="#list-customer" role="tab" aria-controls="list-history">Người nhận</a>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="list-depot" role="tabpanel" aria-labelledby="list-depot-list">
+                    <div class="shadow-sm p-3 mb-5 bg-body rounded">
+                        <div class="accordion-body">
+                            <h3> Các điểm lấy hàng của bạn  
+                                <a type="button" class="btn btn-primary" href="/create-depot">
+                                    Tạo mới
+                                </a> 
+                            </h3>
+                            
+                            <div class="list-group">
+                                {% for depot in list_depot %}
+                                <div class="form-check">
+                                    <div class="row justify-content-between">
+                                        <div class="col-4">
+                                            <input class="form-check-input" type="checkbox" value="{{depot.name}}" id="flexCheckChecked">
+                                            <label class="form-check-label" for="flexCheckChecked">
+                                                {{depot.name}}
+                                            </label>
+                                        </div>
+                                        <div class="col-2">
+                                            <a type="button" class="btn btn-warning col-auto" href="#">
+                                                Chỉnh sửa
+                                            </a> 
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %} 
+                                <br>
+                                <div class="row justify-content-start">
+                                    <div class="col-1">
+                                        <a type="button" class="btn btn-danger col-auto" href="#">
+                                            Xoá
+                                        </a> 
+                                    </div>
+                                </div>
+                            </div>     
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="list-product" role="tabpanel" aria-labelledby="list-product-list">
+                    <div class="shadow-sm p-3 mb-5 bg-body rounded">
+                        <div class="accordion-body">
+                            <h3> Các mặt hàng của bạn
+                                <a type="button" class="btn btn-primary" href="/create-product">
+                                    Tạo mới
+                                </a> 
+                            </h3>
+                            
+                            <div class="list-group">
+                                {% for product in list_product %}
+                                <div class="form-check">
+                                    <div class="row justify-content-between">
+                                        <div class="col-4">
+                                            <input class="form-check-input" type="checkbox" value="{{product.name}}" id="flexCheckChecked">
+                                            <label class="form-check-label" for="flexCheckChecked">
+                                                {{product.name}}
+                                            </label>
+                                        </div>
+                                        <div class="col-2">
+                                            <a type="button" class="btn btn-warning col-auto" href="#">
+                                                Chỉnh sửa
+                                            </a> 
+                                        </div>
+                                      </div>
+                                </div>
+                                {% endfor %} 
+                                <br>
+                                <div class="row justify-content-start">
+                                    <div class="col-1">
+                                        <a type="button" class="btn btn-danger col-auto" href="#">
+                                            Xoá
+                                        </a> 
+                                    </div>
+                                </div>
+                            </div>     
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="list-customer" role="tabpanel" aria-labelledby="list-customer-list">
+                    <div class="shadow-sm p-3 mb-5 bg-body rounded">
+                        <div class="accordion-body">
+                            <h3> Khách nhận của bạn
+                                <a type="button" class="btn btn-primary" href="/create-customer">
+                                    Tạo mới
+                                </a> 
+                            </h3>
+                            
+                            <div class="list-group">
+                                {% for customer in list_customer %}
+                                <div class="form-check">
+                                    <div class="row justify-content-between">
+                                        <div class="col-4">
+                                            <input class="form-check-input" type="checkbox" value="{{customer.name}}" id="flexCheckChecked">
+                                            <label class="form-check-label" for="flexCheckChecked">
+                                                {{customer.name}}
+                                            </label>
+                                        </div>
+                                        <div class="col-2">
+                                            <a type="button" class="btn btn-warning col-auto" href="#">
+                                                Chỉnh sửa
+                                            </a> 
+                                        </div>
+                                      </div>
+                                </div>
+                                {% endfor %} 
+                                <br>
+                                <div class="row justify-content-start">
+                                    <div class="col-1">
+                                        <a type="button" class="btn btn-danger col-auto" href="#">
+                                            Xoá
+                                        </a> 
+                                    </div>
+                                </div>
+                            </div>     
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

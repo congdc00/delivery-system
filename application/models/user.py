@@ -1,7 +1,8 @@
 
+from flask_login import UserMixin
 from . import db
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
     phone_number = db.Column(db.String(10), unique=True)

@@ -4,13 +4,6 @@
 
 {% block content %}
 <br>
-{%if list_notification %}
-    {% if admin %}
-    {% else %}
-        {% if enterprise %}
-        {% else %}
-        {% endif %}
-    {% endif %}
     <div class="container-fluid">
         <div class="list-group">
             {% for notification in list_notification %}
@@ -25,6 +18,4 @@
             {% endfor %}
         </div>
     </div>
-{% endif %}
-
 {% endblock %}

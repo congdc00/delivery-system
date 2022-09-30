@@ -22,7 +22,7 @@ def register_post(request, db):
             flash(message = "Bạn đã đăng ký tài khoản thành công!", category = "info")
             logger.info("Add new user")
 
-    return "authentication/register.html"
+    return render_template("authentication/register.html")
 
 def register_get():
     return render_template("authentication/register.html")

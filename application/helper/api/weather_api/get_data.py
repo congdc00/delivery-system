@@ -3,7 +3,7 @@ from multiprocessing import current_process
 from urllib import response
 import requests
 
-API_KEY = open('./weather_api/api_key', 'r').read()
+API_KEY = open('./api_key', 'r').read()
 CITY = "Hanoi"
 NUM_DAY = "5"
 

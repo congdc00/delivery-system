@@ -1,104 +1,32 @@
 
 from flask import request, redirect, url_for, render_template, session,flash
-from flask_cors import cross_origin
-
-from application.models import enterprise
 from . import app
 from app import db
-from loguru import logger
-from application.controller.authentication.register import register_post, register_get
-from application.controller.authentication.login import login_post, login_get
-from application.controller.user.info import info_post,info_get
-from application.controller.admin.admin import admin_get
-from application.controller.authentication.logout import logout_get
-from application.controller.admin.setting import setting_get
-from application.controller.user.u2e import u2e_get, u2e_post
-from application.controller.enterprise.register_enterprise import register_e_get
 from application.controller.user.revenue import revenue_get, revenue_post
 from application.controller.notification import notification_get, notification_post
+from application.controller.user.delivery_system import delivery_system_get, delivery_system_post
+from application.controller.user.depot.create_depot import create_depot_get, create_depot_post
+from application.controller.user.customer.create_customer import create_customer_get, create_customer_post
+from application.controller.user.product.create_product import create_product_get, create_product_post
+from application.controller.user.order.manage_order import manage_order_get, manage_order_post
+from application.controller.user.order.create_order import create_order_get, create_order_post
+from application.controller.user.order.info_order import info_order_get, info_order_post 
+from application.controller.admin.scheduler_map import scheduler_map_get, scheduler_map_post
+from application.controller.index import index_get
+
+
+
+
 
 @app.route('/', methods = ['POST', 'GET'])
-@cross_origin(origins='*')
 def index():
-    if "session_key" in session:
-        session_key = session['session_key']
-        admin = session['admin']
+    return index_get(session)
 
-        if "enterprise" in session:
-            enterprise = session['enterprise']
-            return render_template("index.html", session_key = session_key, admin = admin, enterprise = enterprise)
 
-        return render_template("index.html", session_key = session_key, admin = admin)
-    else:
-        return render_template("index.html")
 
-@app.route('/admin', methods = ['GET'])
-@cross_origin(origins='*')
-def admin():
-    if request.method == "GET":
-        if 'admin' in session and session['admin']:
-            return admin_get()
 
-        return redirect(url_for("index"))
-
-@app.route('/info', methods = ['GET'])
-@cross_origin(origins='*')
-def info_user():
-    if request.method == "POST":
-        return info_post(request, session)
-    
-    if request.method == "GET":
-        return info_get(db, session)
-
-@app.route('/login', methods = ['GET', 'POST'])
-@cross_origin(origins='*')
-def login():
-    
-    if request.method == "POST":
-        return login_post(request, session, db)
-
-    if request.method == "GET":
-        return login_get()
-
-@app.route('/logout', methods = ['GET', 'POST'])
-@cross_origin(origins='*')
-def logout():
-    if request.method == "GET":
-        return logout_get(session)
-
-@app.route('/register', methods = ['GET', 'POST'])
-@cross_origin(origins='*')
-def register():
-    if request.method == "POST":
-        result = register_post(request, db)
-        return render_template(result)
-
-    if request.method == "GET":
-        return register_get()
-
-@app.route('/setting', methods = ['GET', 'POST'])
-@cross_origin(origins='*')
-def setting():
-    if request.method == "GET":
-        return setting_get(session)
-
-@app.route('/user-to-enterprise', methods = ['GET', 'POST'])
-@cross_origin(origins='*')
-def u2e():
-    if request.method == "GET":
-        return u2e_get(session)
-    
-    if request.method == "POST":
-        return u2e_post(session, request)
-
-@app.route('/register-enterprise', methods = ['GET', 'POST'])
-@cross_origin(origins='*')
-def register_enterprise():
-    if request.method == "GET":
-        return register_e_get(session)
 
 @app.route('/logout-enterprise', methods = ['GET', 'POST'])
-@cross_origin(origins='*')
 def logout_enterprise():
     if request.method == "GET":
         if "enterprise" in session:
@@ -106,7 +34,6 @@ def logout_enterprise():
             return redirect(url_for('index'))
 
 @app.route('/revenue', methods = ['GET', 'POST'])
-@cross_origin(origins='*')
 def revenue():
     if request.method == "GET":
         return revenue_get(session)
@@ -115,13 +42,85 @@ def revenue():
         return revenue_post(session, request)
 
 @app.route('/notification', methods = ['GET', 'POST'])
-@cross_origin(origins='*')
 def notification():
     if request.method == "GET":
         return notification_get(session)
     
     if request.method == "POST":
         return notification_post(session, request)
+
+@app.route('/delivery-system', methods = ['GET', 'POST'])
+def delivery_system():
+    if request.method == "GET":
+        return delivery_system_get(session)
+    
+    if request.method == "POST":
+        return delivery_system_post(session, request)
+
+@app.route('/create-depot', methods = ['GET', 'POST'])
+def create_depot():
+    if request.method == "GET":
+        return create_depot_get(session)
+    
+    if request.method == "POST":
+        return create_depot_post(db, session, request)
+
+@app.route('/create-customer', methods = ['GET', 'POST'])
+def create_customer():
+    if request.method == "GET":
+        return create_customer_get(session)
+    
+    if request.method == "POST":
+        return create_customer_post(db, session, request)
+
+@app.route('/create-product', methods = ['GET', 'POST'])
+def create_product():
+    if request.method == "GET":
+        return create_product_get(session)
+    
+    if request.method == "POST":
+        return create_product_post(db, session, request)
+
+@app.route('/manage-order', methods = ['GET', 'POST'])
+def manage_order():
+    if request.method == "GET":
+        return manage_order_get(session)
+    
+    if request.method == "POST":
+        return manage_order_post(db, session, request)
+
+@app.route('/create-order', methods = ['GET', 'POST'])
+def create_order():
+    if request.method == "GET":
+        return create_order_get(session)
+    
+    if request.method == "POST":
+        return create_order_post(db, session, request)
+
+@app.route('/api/create-order', methods = ['GET', 'POST'])
+def api_create_order():
+    if request.method == "GET":
+        return create_order_get(session)
+    
+    if request.method == "POST":
+        return create_order_post(db, session, request)
+
+
+@app.route('/info-order/<id_order>', methods = ['GET', 'POST'])
+def info_order(id_order):
+    if request.method == "GET":
+        return info_order_get(session, id_order)
+    
+    if request.method == "POST":
+        return info_order_post(db, session, request)
+
+@app.route('/scheduler-map', methods = ['GET', 'POST'])
+def scheduler_map():
+    if request.method == "GET":
+        return scheduler_map_get(session)
+    
+    if request.method == "POST":
+        return scheduler_map_post(db, session, request)
 # @app.route('/add', methods = ['POST', 'GET'])
 # @cross_origin(origins='*')
 # def add():

@@ -12,7 +12,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__, template_folder= TEMPLATE_FOLDER)
 
 # Apply flask cors de moi domain khac deu goi duoc
-CORS(app)
+CORS(app = app, origins='*')
 
 # config
 app.config.from_object(Config)
@@ -27,7 +27,7 @@ migrate = Migrate(app, db)
 
 import routes
 
-from application.models import user, customer, package, product, enterprise, e2u, notification
+from application.models import order, user, customer, product, enterprise, e2u, notification, depot, o2p
 
 if __name__ == "__main__":
 

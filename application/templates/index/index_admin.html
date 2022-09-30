@@ -1,0 +1,24 @@
+{% extends "base/base_admin.html" %}
+
+{% block title%} Home {% endblock%}
+
+{% block content%}
+
+<!-- Thong bao -->
+
+{% with messages = get_flashed_messages()%}
+    {% if messages %}
+        {% for m in messages %}
+            <div class="row justify-content-center">
+                <div class="alert alert-success col-4" role="alert">
+                    {{m}}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<!-- Noi dung -->
+
+
+{% endblock%}

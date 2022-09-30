@@ -29,71 +29,9 @@
           <img src="https://drive.google.com/uc?id=1VDI8lfuXMDRM3KTwWw03Oh9P6GmOvOk1" alt="logo" width="30" height="30" class="d-inline-block align-text-top">
           CongDC Delivery system 
         </a>
-        {% block navbar %}
-        {% endblock %}  
-        {% if session_key %}
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a type="button" class="btn btn-light" href="/notification">
-              Thông báo <span class="badge text-bg-secondary">4</span>
-            </a>
-          {% if admin %}
-         
-            <div class="dropdown">
-              <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                  Trung tâm điều khiển
-              </button>
-              <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
-                  <li><a class="dropdown-item " href="#">Bản đồ hành trình</a></li>
-                  <li><a class="dropdown-item " href="#">Quản lý đơn hàng</a></li>
-                  <li><a class="dropdown-item " href="#">Quản lý thiết bị</a></li>
-                  <li><a class="dropdown-item " href="#">Quản lý kho</a></li>
-                  <li><a class="dropdown-item " href="#">Đối tác</a></li>
-                  <li><a class="dropdown-item " href="#">Kiểm soát hệ thống</a></li>
-                  <li><a class="dropdown-item " href="/setting">Cài đặt</a></li>
-              </ul>
-            </div>
-          {% else %}
-            {% if enterprise %}
-              <div class="dropdown">
-                <button class="btn btn-outline-seccondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                    Quản lý tài khoản doanh nghiệp
-                </button>
-                <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
-                    <li><a class="dropdown-item " href="/info">Thông tin doanh nghiệp</a></li>
-                    <li><a class="dropdown-item " href="/revenue">Quản lý doanh thu</a></li>
-                    <li><a class="dropdown-item " href="/logout-enterprise">Cá nhân</a></li>
-                    <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
-                </ul>
-              </div>
-            {% else %}
-              <div class="dropdown">
-                <button class="btn btn-outline-seccondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                    Quản lý tài khoản
-                </button>
-                <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
-                    
-                    <li><a class="dropdown-item " href="/info">Thông tin cá nhân</a></li>
-                    <li><a class="dropdown-item " href="/revenue">Quản lý doanh thu</a></li>
-                    <li><a class="dropdown-item " href="/user-to-enterprise">Doanh nghiệp</a></li>
-                    <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
-                </ul>
-              </div>
-            {% endif %}
-          {% endif %}
-          </div>
-        {% else %}
-        <div class="nav justify-content-end" id="navbarScroll">
-          <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/login">Đăng nhập</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/register">Đăng ký</a>
-          </li>
-        </div>
-        {% endif %}
-
+        {% block nav %}
+        {% endblock %}
       </div>
-      
     </nav>
     {% block content%}
     {% endblock%}
