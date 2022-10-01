@@ -1,0 +1,55 @@
+{% extends "base/base_enterprise.html" %}
+
+{% block title%} Thêm sản phẩm {% endblock%}
+
+{% block content%}
+<br><br>
+{% with messages = get_flashed_messages()%}
+    {% if messages %}
+        {% for m in messages %}
+            <div class="row justify-content-center">
+                <div class="alert alert-success col-4" role="alert">
+                    {{m}}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<br><br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="nameProduct" class="form-label">Tên sản phẩm</label>
+                            <input type="text" class="form-control" id="nameProduct" name="nameProduct" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="idProduct" class="form-label">Mã số sản phẩm theo hệ thống của bạn</label>
+                            <input type="text" class="form-control" id="idProduct" name="idProduct" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="depot" class="form-label">Điểm nhận</label>
+                            <select name = "idDepot" class="form-select" id="depot" aria-label="Default select example">
+                                <option selected>Lựa chọn điểm cung cấp</option>
+                                {% for depot in list_depot %}
+                                <option value="{{depot.id}}">{{depot.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Cam kết với điều khoản dịch vụ</label>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Tạo</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

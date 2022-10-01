@@ -3,7 +3,7 @@ from application.models.user import User
 from application.models.notification import Notification
 from application.models.e2u import E2U
 from application.models.enterprise import Enterprise
-from application.helper.check_session import get_type_session
+from application.helper.check.check_login import get_type_session
 from loguru import logger
 
 def notification_get(session):

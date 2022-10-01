@@ -27,7 +27,7 @@ migrate = Migrate(app, db)
 
 import routes
 
-from application.models import order, user, customer, product, enterprise, e2u, notification, depot, o2p
+from application.models import order, user, customer, product, enterprise, e2u, notification, depot, o2p, device
 
 if __name__ == "__main__":
 

@@ -1,0 +1,61 @@
+{% extends "base/base_enterprise.html" %}
+
+{% block title%} Tạo đơn 1 {% endblock%}
+
+{% block content%}
+<br><br>
+{% with messages = get_flashed_messages()%}
+    {% if messages %}
+        {% for m in messages %}
+            <div class="row justify-content-center">
+                <div class="alert alert-success col-4" role="alert">
+                    {{m}}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<br><br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-5">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="list-group">
+                            {% for product in list_product %}
+                            <div class="form-check">
+                                <div class="row justify-content-between">
+                                    
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-text">
+                                                <input class="form-check-input mt-0" type="checkbox" id="flexCheckChecked" value="{{product.id}}" aria-label="Checkbox for following text input" name = "checkbox">
+                                                <label class="form-check-label" for="flexCheckChecked">
+                                                    {{product.name}}
+                                                </label>
+                                            </div>
+                                            <input type="text" class="form-control" aria-label="Text input with checkbox" name = "{{product.id}}_number">
+                                            
+                                        </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                            {% endfor %} 
+                            <br>
+                            <div class="row justify-content-start">
+                                <div class="col-1">
+                                    <button type="submit" class="btn btn-primary">Chọn</button>
+                                </div>
+                            </div>
+                        </div>     
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

@@ -1,17 +1,11 @@
-{% extends "base/base.html" %}
+{% extends "base/base_user.html" %}
 
 {% block title %} Hệ thống vận chuyển {% endblock %}
 
 {% block content %}
 <br>
 
-<h1 style="text-align:center;"> Hệ thống vận chuyển
-{% if enterprise %}
-     của doanh nghiệp
-{% else %}
-     cá nhân
-{% endif %}
-</h1>
+<h1 style="text-align:center;"> Hệ thống vận chuyển cá nhân </h1>
 
 <div class="container-fluid">
     <div class="row">
@@ -28,7 +22,7 @@
                     <div class="shadow-sm p-3 mb-5 bg-body rounded">
                         <div class="accordion-body">
                             <h3> Các điểm lấy hàng của bạn  
-                                <a type="button" class="btn btn-primary" href="/create-depot">
+                                <a type="button" class="btn btn-primary" href="{{url_for('user.create_depot')}}">
                                     Tạo mới
                                 </a> 
                             </h3>
@@ -68,7 +62,7 @@
                     <div class="shadow-sm p-3 mb-5 bg-body rounded">
                         <div class="accordion-body">
                             <h3> Các mặt hàng của bạn
-                                <a type="button" class="btn btn-primary" href="/create-product">
+                                <a type="button" class="btn btn-primary" href="{{url_for('user.create_product')}}">
                                     Tạo mới
                                 </a> 
                             </h3>
@@ -107,7 +101,7 @@
                     <div class="shadow-sm p-3 mb-5 bg-body rounded">
                         <div class="accordion-body">
                             <h3> Khách nhận của bạn
-                                <a type="button" class="btn btn-primary" href="/create-customer">
+                                <a type="button" class="btn btn-primary" href="{{url_for('user.create_customer')}}">
                                     Tạo mới
                                 </a> 
                             </h3>

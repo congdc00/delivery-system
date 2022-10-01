@@ -1,19 +1,16 @@
 from flask import render_template, redirect, url_for
 from application.models.user import User
 from application.models.notification import Notification
-from application.models.e2u import E2U
-from application.models.enterprise import Enterprise
-from application.helper.check_session import get_type_session
 from flask_login import current_user
 from loguru import logger
 
 def notification_get(session):
     if current_user.is_authenticated:
         if session['type'] == 2:
-            id_user = current_user.get_id()
-            list_notification = Notification.query.filter_by(id_receiver = id_user)
+            id_enterprise = current_user.get_id()
+            list_notification = Notification.query.filter_by(id_receiver = id_enterprise, is_user = False)
             
-            return render_template("admin/notification.html", list_notification = list_notification)
+            return render_template("enterprise/notification.html", list_notification = list_notification)
         else:
             return redirect(url_for("index"))
     else:

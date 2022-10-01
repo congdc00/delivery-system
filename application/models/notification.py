@@ -8,6 +8,7 @@ class Notification(db.Model):
     time = db.Column(db.String(120), unique=False)
     id_sender = db.Column(db.Integer, unique=False)
     id_receiver = db.Column(db.Integer, unique=False)
+    is_user =  db.Column(db.Boolean, unique=True) #True: User, False: Enterprise
     type = db.Column(db.Integer, unique=False)
 
     def __init__(self, title, content, time, id_sender, id_receiver, type) :

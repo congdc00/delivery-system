@@ -1,23 +1,20 @@
-from flask import render_template, redirect, url_for,flash
-from application.models.order import Order
+from flask import render_template, redirect, url_for
 from application.models.user import User
-from application.models.depot import Depot
-from application.models.customer import Customer
-from application.models.product import Product
+from application.models.notification import Notification
+from application.models.e2u import E2U
 from application.models.enterprise import Enterprise
-from application.helper.check_session import get_type_session
+from flask_login import current_user
 from loguru import logger
 
 def scheduler_map_get(session):
-    type = get_type_session(session)
+    if current_user.is_authenticated:
+        if session['type'] == 0:
 
-    if type != 0 :
-        return redirect(url_for("index"))
+            return render_template("admin/scheduler_map.html")
+        else:
+            return redirect(url_for("index"))
     else:
-    
-        session_key = session['session_key']
-        admin = session['admin']
-        return render_template("admin/scheduler_map.html", session_key = session_key, admin = admin)
+        return redirect(url_for("index"))
     
 
 def scheduler_map_post(db, session, request):

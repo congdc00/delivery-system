@@ -1,0 +1,38 @@
+{% extends "base/base_user.html" %}
+
+{% block title%} Register {% endblock%}
+
+{% block content%}
+
+<br><br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="nameDepot" class="form-label">Tên kho</label>
+                            <input type="text" class="form-control" id="nameDepot" name="nameDepot" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">Số điện thoại</label>
+                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Địa chỉ</label>
+                            <input type="text" class="form-control" id="address" name="address">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Cam kết với điều khoản dịch vụ</label>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Tạo</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

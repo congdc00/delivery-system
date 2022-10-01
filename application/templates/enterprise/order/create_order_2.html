@@ -1,0 +1,64 @@
+{% extends "base/base_enterprise.html" %}
+
+{% block title%} Tạo đơn {% endblock%}
+
+{% block content%}
+<br><br>
+{% with messages = get_flashed_messages()%}
+    {% if messages %}
+        {% for m in messages %}
+            <div class="row justify-content-center">
+                <div class="alert alert-success col-4" role="alert">
+                    {{m}}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<br><br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="nameOrder" class="form-label"> Tên đơn hàng </label>
+                            <input type="text" class="form-control" id="nameOrder" name="nameOrder" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="type" class="form-label"> Loại giao hàng </label>
+                            <select name = "type" class="form-select" id="type" aria-label="Default select example">
+                                <option selected>Lựa chọn loại</option>
+                                <option value="0">Giao thường</option>
+                                <option value="1">Giao hàng hoả tốc</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="depot" class="form-label">Người nhận</label>
+                            <select name = "customer" class="form-select" id="depot" aria-label="Default select example">
+                                <option selected>Lựa chọn điểm cung cấp</option>
+                                {% for customer in list_customer %}
+                                <option value="{{customer.id}}">{{customer.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="content" class="form-label"> Nội dung gửi </label>
+                            <input type="text" class="form-control" id="content" name="content" >
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Cam kết với điều khoản dịch vụ</label>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Tạo</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

@@ -1,6 +1,6 @@
-{% extends "base/base.html" %}
+{% extends "base/base_enterprise.html" %}
 
-{% block title%} Thêm sản phẩm {% endblock%}
+{% block title%} Tạo người nhận {% endblock%}
 
 {% block content%}
 <br><br>
@@ -24,21 +24,18 @@
                 <div class="card-body">
                     <form method="POST">
                         <div class="mb-3">
-                            <label for="nameProduct" class="form-label">Tên sản phẩm</label>
-                            <input type="text" class="form-control" id="nameProduct" name="nameProduct" >
+                            <label for="name" class="form-label">Tên người nhận</label>
+                            <input type="text" class="form-control" id="name" name="name" >
                         </div>
+                        
                         <div class="mb-3">
-                            <label for="idProduct" class="form-label">Mã số sản phẩm theo hệ thống của bạn</label>
-                            <input type="text" class="form-control" id="idProduct" name="idProduct" >
+                            <label for="address" class="form-label">Địa chỉ</label>
+                            <input type="text" class="form-control" id="address" name="address">
                         </div>
+
                         <div class="mb-3">
-                            <label for="depot" class="form-label">Điểm nhận</label>
-                            <select name = "idDepot" class="form-select" id="depot" aria-label="Default select example">
-                                <option selected>Lựa chọn điểm cung cấp</option>
-                                {% for depot in list_depot %}
-                                <option value="{{depot.id}}">{{depot.name}}</option>
-                                {% endfor %}
-                            </select>
+                            <label for="phoneNum" class="form-label">Số điện thoại</label>
+                            <input type="text" class="form-control" id="phoneNum" name="phoneNum">
                         </div>
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1">

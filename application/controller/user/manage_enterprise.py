@@ -16,7 +16,7 @@ def list_enterprise():
             enterprise = Enterprise.query.filter_by(id = id_enterprise).first()
             list_e.append(enterprise)
         
-        return render_template("user/manage_enterprise.html", list_e = list_e)
+        return render_template("user/manage/my_enterprise.html", list_e = list_e)
     else:
         return redirect(url_for("index"))
 

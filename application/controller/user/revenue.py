@@ -10,7 +10,7 @@ def revenue_get(session):
     if current_user.is_authenticated and session['type'] == 1:
         id_user = current_user.get_id()
         user = User.query.filter_by(id = id_user).first()
-        return render_template("user/revenue.html", user = user)
+        return render_template("user/manage/revenue.html", user = user)
     else:
         return redirect(url_for("index"))
 

@@ -1,0 +1,53 @@
+{% extends "base/base_user.html" %}
+
+{% block title%} Tạo thiết bị mới {% endblock%}
+
+{% block content%}
+<br><br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-5">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="name_device" class="form-label">Tên thiết bị</label>
+                            <input type="text" class="form-control" id="name_device" name="name_device" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Kiểu dáng</label>
+                            <select name = "type" class="form-select" id="type" aria-label="Default select example">
+                                <option selected>Lựa chọn điểm cung cấp</option>
+                                <option value="0">Drone có kho chứa</option>
+                                <option value="1">Drone không có kho chứa</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="info" class="form-label">Thông tin</label>
+                            <input type="text" class="form-control" id="info" name="info">
+                        </div>
+                        <div class="mb-3">
+                            <label for="limit_weight" class="form-label">Giới hạn tải trọng</label>
+                            <input type="text" class="form-control" id="limit_weight" name="limit_weight">
+                        </div>
+                        <div class="mb-3">
+                            <label for="made_by" class="form-label">Hãng sản xuất</label>
+                            <input type="text" class="form-control" id="made_by" name="made_by">
+                        </div>
+                        <div class="mb-3">
+                            <label for="made_in" class="form-label">Quốc gia</label>
+                            <input type="text" class="form-control" id="made_in" name="made_in">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Cam kết với điều khoản dịch vụ</label>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Tạo</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

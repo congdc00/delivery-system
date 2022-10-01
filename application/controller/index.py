@@ -5,10 +5,10 @@ def index_get(session):
     if current_user.is_authenticated:
 
         if session['type'] == 0:
-            return render_template("index/index_admin.html")
+            return render_template("admin/dashboard.html")
         elif session['type'] == 1:
-            return render_template("index/index_user.html")
+            return render_template("user/dashboard.html")
         else:
-            return render_template("index/index_enterprise.html")
+            return render_template("enterprise/dashboard.html")
     else:
-        return render_template("index/index_guest.html")
+        return render_template("index.html")

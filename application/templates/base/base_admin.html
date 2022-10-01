@@ -10,13 +10,13 @@
             Trung tâm điều khiển
         </button>
         <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
-            <li><a class="dropdown-item " href="/scheduler-map">Bản đồ hành trình</a></li>
+            <li><a class="dropdown-item " href="{{url_for('admin.scheduler_map')}}">Bản đồ hành trình</a></li>
             <li><a class="dropdown-item " href="#">Quản lý đơn hàng</a></li>
             <li><a class="dropdown-item " href="#">Quản lý thiết bị</a></li>
             <li><a class="dropdown-item " href="#">Quản lý kho</a></li>
             <li><a class="dropdown-item " href="#">Đối tác</a></li>
             <li><a class="dropdown-item " href="#">Kiểm soát hệ thống</a></li>
-            <li><a class="dropdown-item " href="admin/setting">Cài đặt</a></li>
+            <li><a class="dropdown-item " href="{{url_for('admin.setting')}}">Cài đặt</a></li>
         </ul>
     </div>
 </div>

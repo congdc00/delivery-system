@@ -3,8 +3,6 @@ from distutils.log import info
 import email
 from flask import render_template, redirect, url_for
 from application.models.enterprise import Enterprise
-from application.models.user import User
-from application.helper.check_session import get_type_session
 from flask_login import current_user
 
 def info_get(session):
